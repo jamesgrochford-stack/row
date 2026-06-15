@@ -18,7 +18,23 @@
 }
 html,body{background:var(--bg);color:var(--t1);font-family:var(--font);font-size:15px;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
 body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
-.bento{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+
+/* Day banner */
+.day-banner{border-radius:var(--r);padding:18px 16px;display:flex;align-items:center;gap:14px}
+.day-banner.training-eve{background:linear-gradient(135deg,rgba(110,231,183,.12),rgba(125,211,252,.06));border:1px solid rgba(110,231,183,.2)}
+.day-banner.training-morn{background:linear-gradient(135deg,rgba(251,191,36,.1),rgba(251,146,60,.06));border:1px solid rgba(251,191,36,.2)}
+.day-banner.free{background:linear-gradient(135deg,rgba(125,211,252,.08),rgba(167,139,250,.05));border:1px solid rgba(125,211,252,.15)}
+.day-banner.match{background:linear-gradient(135deg,rgba(251,191,36,.15),rgba(251,191,36,.05));border:1px solid rgba(251,191,36,.3)}
+.day-banner.recovery{background:linear-gradient(135deg,rgba(167,139,250,.1),rgba(110,231,183,.04));border:1px solid rgba(167,139,250,.2)}
+.d-emoji{font-size:40px;flex-shrink:0;line-height:1}
+.d-info{flex:1;min-width:0}
+.d-name{font-size:19px;font-weight:800;letter-spacing:-.01em;margin-bottom:2px}
+.d-date{font-size:11px;color:var(--t3);font-family:var(--mono);letter-spacing:.06em;margin-bottom:4px}
+.d-desc{font-size:13px;color:var(--t2)}
+.d-wake{text-align:right;flex-shrink:0}
+.d-wake-lbl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.1em}
+.d-wake-t{font-size:24px;font-weight:800;font-family:var(--mono);color:var(--green)}
 
 /* Cards */
 .card{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:16px}
@@ -26,90 +42,77 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 .card-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
 .badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:var(--s2);color:var(--t2)}
 
-/* Day Banner */
-.day-banner{background:linear-gradient(135deg,rgba(110,231,183,.1),rgba(125,211,252,.06));border:1px solid rgba(110,231,183,.18);border-radius:var(--r);padding:16px;display:flex;align-items:center;gap:14px}
-.day-emoji{font-size:38px;flex-shrink:0}
-.day-info{flex:1;min-width:0}
-.day-name{font-size:18px;font-weight:700;margin-bottom:3px}
-.day-date{font-size:11px;color:var(--t3);font-family:var(--mono);letter-spacing:.06em}
-.day-desc{font-size:13px;color:var(--t2);margin-top:4px}
-.day-wake{text-align:right;flex-shrink:0}
-.wake-lbl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.1em}
-.wake-t{font-size:22px;font-weight:700;font-family:var(--mono);color:var(--green)}
-
-/* Garmin */
-.garmin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+/* Garmin tiles */
+.g-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
 .g-tile{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:10px 8px;text-align:center}
-.g-val{font-size:22px;font-weight:700;font-family:var(--mono);min-height:30px;display:flex;align-items:center;justify-content:center}
-.g-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-top:4px}
+.g-val{font-size:22px;font-weight:700;font-family:var(--mono);min-height:28px;display:flex;align-items:center;justify-content:center}
+.g-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-top:3px}
 .g-tile.sleep .g-val{color:var(--purple)}
 .g-tile.hrv .g-val{color:var(--green)}
 .g-tile.rhr .g-val{color:var(--blue)}
-.g-tile.dur .g-val{color:var(--yellow);font-size:16px}
-.g-tile.bed .g-val,.g-tile.wkt .g-val{font-size:15px;color:var(--t2)}
-.garmin-form{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g-tile.dur .g-val{color:var(--yellow);font-size:15px}
+.g-tile.bed .g-val,.g-tile.wkt .g-val{font-size:14px;color:var(--t2)}
+.g-form{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .fg{display:flex;flex-direction:column;gap:4px}
 .fl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3)}
-.fi{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:8px 10px;color:var(--t1);font-family:var(--mono);font-size:14px;font-weight:600;width:100%;-webkit-appearance:none;transition:border-color .15s}
+.fi{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:8px 10px;color:var(--t1);font-family:var(--mono);font-size:14px;font-weight:600;width:100%;-webkit-appearance:none}
 .fi:focus{outline:none;border-color:var(--b2)}
-
-/* Buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t1);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
 .btn:hover{background:var(--s2)}
 .btn-green{background:rgba(110,231,183,.1);border-color:rgba(110,231,183,.22);color:var(--green)}
-.btn-full{width:100%;margin-top:10px}
 
 /* Schedule */
 .sched-list{display:flex;flex-direction:column;gap:5px}
-.sched-item{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--b)}
-.sched-time{font-size:11px;font-family:var(--mono);font-weight:600;color:var(--t3);white-space:nowrap;padding-top:1px;min-width:50px}
-.sched-text{font-size:13px;color:var(--t2);line-height:1.4}
-.sched-item.hl{border-color:rgba(110,231,183,.2)}
-.sched-item.hl .sched-time{color:var(--green)}
-.sched-item.hl .sched-text{color:var(--t1);font-weight:600}
-.sched-item.past{opacity:.4}
+.sched-row{display:flex;gap:10px;align-items:flex-start;padding:9px 11px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--b)}
+.sched-row.hl{border-color:rgba(110,231,183,.22)}
+.sched-row.hl .sched-time{color:var(--green)}
+.sched-row.hl .sched-tx{color:var(--t1);font-weight:600}
+.sched-row.past{opacity:.38}
+.sched-time{font-size:11px;font-family:var(--mono);font-weight:600;color:var(--t3);white-space:nowrap;min-width:48px;padding-top:1px}
+.sched-tx{font-size:13px;color:var(--t2);line-height:1.4}
 
-/* Habits */
+/* Habits — hardcoded HTML, toggled by JS */
 .habit-list{display:flex;flex-direction:column;gap:5px}
-.habit{display:flex;align-items:center;gap:10px;padding:9px 10px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;transition:background .15s}
-.habit.done{background:rgba(110,231,183,.05);border-color:rgba(110,231,183,.16)}
-.hcheck{width:20px;height:20px;border-radius:6px;border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;transition:all .15s}
-.habit.done .hcheck{background:var(--green);border-color:var(--green);color:#000}
-.hname{flex:1;font-size:13px;color:var(--t2);transition:color .15s}
-.habit.done .hname{color:var(--t1)}
-.hstreak{font-size:11px;font-family:var(--mono);font-weight:600;color:var(--t3);background:var(--s);padding:2px 6px;border-radius:999px}
-.habit.done .hstreak{color:var(--yellow)}
-.prog-bar{height:5px;background:var(--b);border-radius:999px;overflow:hidden;margin-top:12px}
-.prog-fill{height:100%;background:var(--green);border-radius:999px;transition:width .4s ease}
+.habit{display:flex;align-items:center;gap:10px;padding:10px 11px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;transition:background .15s}
+.habit.done{background:rgba(110,231,183,.05);border-color:rgba(110,231,183,.18)}
+.hchk{width:20px;height:20px;border-radius:6px;border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;transition:all .15s;color:#000}
+.habit.done .hchk{background:var(--green);border-color:var(--green)}
+.hico{font-size:16px;flex-shrink:0}
+.hlbl{flex:1;font-size:13px;color:var(--t2);transition:color .15s}
+.habit.done .hlbl{color:var(--t1)}
+.hstr{font-size:11px;font-family:var(--mono);font-weight:600;color:var(--t3);background:var(--s);padding:2px 7px;border-radius:999px;flex-shrink:0}
+.habit.done .hstr{color:var(--yellow)}
+.hprog{height:5px;background:var(--b);border-radius:999px;overflow:hidden;margin-top:12px}
+.hprog-fill{height:100%;background:var(--green);border-radius:999px;transition:width .4s}
 
 /* Water */
 .water-row{display:flex;align-items:center;gap:14px;margin-bottom:12px}
-.w-circle{position:relative;width:80px;height:80px;flex-shrink:0}
-.w-circle svg{width:80px;height:80px;transform:rotate(-90deg)}
+.w-ring-wrap{position:relative;width:80px;height:80px;flex-shrink:0}
+.w-ring-wrap svg{width:80px;height:80px;transform:rotate(-90deg)}
 .w-track{fill:none;stroke:var(--b);stroke-width:6}
 .w-fill{fill:none;stroke:var(--blue);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .5s ease}
 .w-txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.w-amt{font-size:15px;font-weight:700;font-family:var(--mono);color:var(--blue);line-height:1}
-.w-unit{font-size:8px;color:var(--t3);font-weight:600;text-transform:uppercase}
+.w-ml{font-size:14px;font-weight:700;font-family:var(--mono);color:var(--blue);line-height:1}
+.w-u{font-size:8px;color:var(--t3);font-weight:600;text-transform:uppercase}
 .w-info{flex:1}
-.w-pct{font-size:26px;font-weight:700}
-.w-tgt{font-size:12px;color:var(--t3);margin-top:2px}
-.w-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:4px}
+.w-pct{font-size:28px;font-weight:800;line-height:1}
+.w-tgt{font-size:12px;color:var(--t3);margin-top:3px}
+.w-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .wbtn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;background:rgba(125,211,252,.07);border:1px solid rgba(125,211,252,.14);border-radius:var(--rs);cursor:pointer;color:var(--blue);font-family:var(--font);font-size:10px;font-weight:700;-webkit-tap-highlight-color:transparent;transition:background .15s}
-.wbtn:hover{background:rgba(125,211,252,.14)}
-.wbtn:active{opacity:.7}
+.wbtn:active{opacity:.65}
 .wbv{font-size:15px;font-family:var(--mono)}
+.w-reset{font-size:11px;padding:5px 10px;margin-top:8px}
 
 /* Todos */
 .todo-add{display:flex;gap:8px;margin-bottom:10px}
-.todo-in{flex:1;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:9px 12px;color:var(--t1);font-family:var(--font);font-size:14px}
+.todo-in{flex:1;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:9px 12px;color:var(--t1);font-family:var(--font);font-size:14px;-webkit-appearance:none}
 .todo-in:focus{outline:none;border-color:var(--b2)}
 .todo-list{display:flex;flex-direction:column;gap:5px}
-.todo{display:flex;align-items:center;gap:10px;padding:9px 10px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs)}
-.tcheck{width:18px;height:18px;border-radius:50%;border:2px solid var(--b2);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .15s}
-.todo.done .tcheck{background:var(--green);border-color:var(--green);color:#000}
+.todo-row{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs)}
+.tchk{width:18px;height:18px;border-radius:50%;border:2px solid var(--b2);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .15s;color:#000}
+.todo-row.done .tchk{background:var(--green);border-color:var(--green)}
 .ttxt{flex:1;font-size:13px;color:var(--t2);cursor:pointer}
-.todo.done .ttxt{text-decoration:line-through;color:var(--t4)}
+.todo-row.done .ttxt{text-decoration:line-through;color:var(--t4)}
 .tdel{background:none;border:none;color:var(--t4);cursor:pointer;font-size:18px;padding:0 2px;-webkit-tap-highlight-color:transparent;line-height:1}
 
 /* Bottom nav */
@@ -120,31 +123,31 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 </style>
 </head>
 <body>
-<div class="bento">
+<div class="wrap">
 
-  <!-- Day Banner -->
-  <div class="day-banner">
-    <div class="day-emoji" id="dEmoji"></div>
-    <div class="day-info">
-      <div class="day-name" id="dName"></div>
-      <div class="day-date" id="dDate"></div>
-      <div class="day-desc" id="dDesc"></div>
+  <!-- Day Banner — populated by JS -->
+  <div class="day-banner" id="dayBanner">
+    <div class="d-emoji" id="dEmoji">⚽</div>
+    <div class="d-info">
+      <div class="d-name" id="dName">Evening Training Day</div>
+      <div class="d-date" id="dDate"></div>
+      <div class="d-desc" id="dDesc">Club training 18:00–19:30</div>
     </div>
-    <div class="day-wake">
-      <div class="wake-lbl">Wake</div>
-      <div class="wake-t" id="dWake"></div>
+    <div class="d-wake">
+      <div class="d-wake-lbl">Wake</div>
+      <div class="d-wake-t" id="dWake">07:30</div>
     </div>
   </div>
 
   <!-- Garmin -->
   <div class="card">
     <div class="card-hd">
-      <span class="card-title">⌚ Garmin Data</span>
-      <button class="btn" id="gEditBtn" onclick="toggleGarmin()">Edit</button>
+      <span class="card-title">⌚ Garmin</span>
+      <button class="btn" id="gBtn" onclick="toggleGarmin()">Edit</button>
     </div>
     <div id="gDisplay">
-      <div class="garmin-grid">
-        <div class="g-tile sleep"><div class="g-val" id="gSleep">—</div><div class="g-lbl">Sleep Score</div></div>
+      <div class="g-grid">
+        <div class="g-tile sleep"><div class="g-val" id="gSleep">—</div><div class="g-lbl">Sleep</div></div>
         <div class="g-tile hrv"><div class="g-val" id="gHrv">—</div><div class="g-lbl">HRV ms</div></div>
         <div class="g-tile rhr"><div class="g-val" id="gRhr">—</div><div class="g-lbl">RHR bpm</div></div>
         <div class="g-tile bed"><div class="g-val" id="gBed">—</div><div class="g-lbl">Bedtime</div></div>
@@ -153,7 +156,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
       </div>
     </div>
     <div id="gForm" style="display:none">
-      <div class="garmin-form">
+      <div class="g-form">
         <div class="fg"><label class="fl">Sleep Score</label><input class="fi" id="fSleep" type="number" placeholder="85"></div>
         <div class="fg"><label class="fl">HRV (ms)</label><input class="fi" id="fHrv" type="number" placeholder="65"></div>
         <div class="fg"><label class="fl">RHR (bpm)</label><input class="fi" id="fRhr" type="number" placeholder="48"></div>
@@ -161,24 +164,152 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
         <div class="fg"><label class="fl">Wake Time</label><input class="fi" id="fWake" type="time"></div>
         <div class="fg"><label class="fl">Duration</label><input class="fi" id="fDur" type="text" placeholder="8h 20m"></div>
       </div>
-      <button class="btn btn-green btn-full" onclick="saveGarmin()">Save</button>
+      <button class="btn btn-green" style="width:100%;margin-top:10px" onclick="saveGarmin()">Save</button>
     </div>
   </div>
 
-  <!-- Schedule -->
+  <!-- Schedule — hardcoded per day type, shown via JS display:none -->
   <div class="card">
     <div class="card-hd"><span class="card-title">📅 Today's Schedule</span></div>
-    <div class="sched-list" id="schedList"></div>
+
+    <!-- Monday: Evening Training -->
+    <div class="sched-list" id="sched-1">
+      <div class="sched-row"><div class="sched-time">07:30</div><div class="sched-tx">Wake up · morning skincare · SPF</div></div>
+      <div class="sched-row"><div class="sched-time">09:00</div><div class="sched-tx">Study block — Chemistry / Physics</div></div>
+      <div class="sched-row"><div class="sched-time">12:00</div><div class="sched-tx">Lunch</div></div>
+      <div class="sched-row"><div class="sched-time">13:00</div><div class="sched-tx">Study block 2 or rest</div></div>
+      <div class="sched-row"><div class="sched-time">17:30</div><div class="sched-tx">Pre-training meal (carbs)</div></div>
+      <div class="sched-row hl"><div class="sched-time">18:00</div><div class="sched-tx">Club training — Treaty United U20s</div></div>
+      <div class="sched-row hl"><div class="sched-time">19:30</div><div class="sched-tx">Training ends · post-training nutrition (30 min window)</div></div>
+      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
+      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    </div>
+
+    <!-- Tuesday: Morning Training -->
+    <div class="sched-list" id="sched-2" style="display:none">
+      <div class="sched-row"><div class="sched-time">06:15</div><div class="sched-tx">Wake up · quick breakfast + kit</div></div>
+      <div class="sched-row hl"><div class="sched-time">07:30</div><div class="sched-tx">Club training — Treaty United U20s</div></div>
+      <div class="sched-row"><div class="sched-time">09:00</div><div class="sched-tx">Training ends</div></div>
+      <div class="sched-row hl"><div class="sched-time">09:30</div><div class="sched-tx">Post-training nutrition (30 min window)</div></div>
+      <div class="sched-row"><div class="sched-time">11:00</div><div class="sched-tx">Study block — Maths / Applied Maths</div></div>
+      <div class="sched-row"><div class="sched-time">14:00</div><div class="sched-tx">Lunch</div></div>
+      <div class="sched-row"><div class="sched-time">15:00</div><div class="sched-tx">Study block 2 or rest</div></div>
+      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
+      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    </div>
+
+    <!-- Wednesday: Free Day -->
+    <div class="sched-list" id="sched-3" style="display:none">
+      <div class="sched-row"><div class="sched-time">07:30</div><div class="sched-tx">Wake up · morning skincare · SPF</div></div>
+      <div class="sched-row"><div class="sched-time">09:00</div><div class="sched-tx">Study block — Irish / English</div></div>
+      <div class="sched-row"><div class="sched-time">12:00</div><div class="sched-tx">Lunch</div></div>
+      <div class="sched-row hl"><div class="sched-time">14:00</div><div class="sched-tx">Gym — Wednesday programme</div></div>
+      <div class="sched-row hl"><div class="sched-time">15:30</div><div class="sched-tx">Post-gym nutrition (30 min window)</div></div>
+      <div class="sched-row"><div class="sched-time">16:00</div><div class="sched-tx">Study block 2</div></div>
+      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
+      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    </div>
+
+    <!-- Thursday: Morning Training -->
+    <div class="sched-list" id="sched-4" style="display:none">
+      <div class="sched-row"><div class="sched-time">06:15</div><div class="sched-tx">Wake up · quick breakfast + kit</div></div>
+      <div class="sched-row hl"><div class="sched-time">07:30</div><div class="sched-tx">Club training — Treaty United U20s</div></div>
+      <div class="sched-row"><div class="sched-time">09:00</div><div class="sched-tx">Training ends</div></div>
+      <div class="sched-row hl"><div class="sched-time">09:30</div><div class="sched-tx">Post-training nutrition (30 min window)</div></div>
+      <div class="sched-row"><div class="sched-time">11:00</div><div class="sched-tx">Study block — Physics / Chemistry</div></div>
+      <div class="sched-row"><div class="sched-time">14:00</div><div class="sched-tx">Lunch</div></div>
+      <div class="sched-row"><div class="sched-time">15:00</div><div class="sched-tx">Study block 2 or rest</div></div>
+      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
+      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    </div>
+
+    <!-- Friday: Free Day -->
+    <div class="sched-list" id="sched-5" style="display:none">
+      <div class="sched-row"><div class="sched-time">07:30</div><div class="sched-tx">Wake up · morning skincare · SPF</div></div>
+      <div class="sched-row"><div class="sched-time">09:00</div><div class="sched-tx">Study block — Accounting / Maths</div></div>
+      <div class="sched-row"><div class="sched-time">12:00</div><div class="sched-tx">Lunch</div></div>
+      <div class="sched-row"><div class="sched-time">13:00</div><div class="sched-tx">Study block 2</div></div>
+      <div class="sched-row"><div class="sched-time">16:00</div><div class="sched-tx">Individual football skills / rest</div></div>
+      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
+      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    </div>
+
+    <!-- Saturday: Match Day -->
+    <div class="sched-list" id="sched-6" style="display:none">
+      <div class="sched-row"><div class="sched-time">07:00</div><div class="sched-tx">Wake up</div></div>
+      <div class="sched-row"><div class="sched-time">07:30</div><div class="sched-tx">Breakfast — 3h pre-match (carbs focus)</div></div>
+      <div class="sched-row hl"><div class="sched-time">09:00</div><div class="sched-tx">3-Action Rule mental rehearsal</div></div>
+      <div class="sched-row"><div class="sched-time">09:30</div><div class="sched-tx">Dynamic warm-up + activation</div></div>
+      <div class="sched-row"><div class="sched-time">10:30</div><div class="sched-tx">Pre-match team warm-up</div></div>
+      <div class="sched-row hl"><div class="sched-time">11:00</div><div class="sched-tx">Match — Treaty United U20s</div></div>
+      <div class="sched-row hl"><div class="sched-time">12:30</div><div class="sched-tx">Post-match nutrition (30 min window)</div></div>
+      <div class="sched-row"><div class="sched-time">14:00</div><div class="sched-tx">Recovery + stretch</div></div>
+      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
+    </div>
+
+    <!-- Sunday: Recovery Day -->
+    <div class="sched-list" id="sched-0" style="display:none">
+      <div class="sched-row"><div class="sched-time">08:00</div><div class="sched-tx">Wake up · morning skincare · SPF</div></div>
+      <div class="sched-row"><div class="sched-time">08:30</div><div class="sched-tx">Breakfast</div></div>
+      <div class="sched-row hl"><div class="sched-time">10:00</div><div class="sched-tx">Gym — Sunday programme</div></div>
+      <div class="sched-row hl"><div class="sched-time">11:30</div><div class="sched-tx">Post-gym nutrition (30 min window)</div></div>
+      <div class="sched-row"><div class="sched-time">12:00</div><div class="sched-tx">Foam roll + stretch</div></div>
+      <div class="sched-row"><div class="sched-time">14:00</div><div class="sched-tx">Study block or rest</div></div>
+      <div class="sched-row"><div class="sched-time">18:00</div><div class="sched-tx">Dinner</div></div>
+      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
+      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    </div>
   </div>
 
-  <!-- Habits -->
+  <!-- Habits — hardcoded HTML, state toggled by JS -->
   <div class="card">
     <div class="card-hd">
       <span class="card-title">✅ Daily Habits</span>
-      <span class="badge" id="hBadge">0/8</span>
+      <span class="badge" id="hBadge">0 / 8</span>
     </div>
-    <div class="habit-list" id="habitList"></div>
-    <div class="prog-bar"><div class="prog-fill" id="hProg" style="width:0%"></div></div>
+    <div class="habit-list">
+      <div class="habit" id="h-am-skin" onclick="toggleHabit('am-skin')">
+        <div class="hchk" id="hc-am-skin"></div>
+        <span class="hico">🌅</span><span class="hlbl">Morning skincare</span>
+        <span class="hstr" id="hs-am-skin">—</span>
+      </div>
+      <div class="habit" id="h-pm-skin" onclick="toggleHabit('pm-skin')">
+        <div class="hchk" id="hc-pm-skin"></div>
+        <span class="hico">🌙</span><span class="hlbl">Evening skincare</span>
+        <span class="hstr" id="hs-pm-skin">—</span>
+      </div>
+      <div class="habit" id="h-retainer" onclick="toggleHabit('retainer')">
+        <div class="hchk" id="hc-retainer"></div>
+        <span class="hico">🦷</span><span class="hlbl">Retainer</span>
+        <span class="hstr" id="hs-retainer">—</span>
+      </div>
+      <div class="habit" id="h-spf" onclick="toggleHabit('spf')">
+        <div class="hchk" id="hc-spf"></div>
+        <span class="hico">☀️</span><span class="hlbl">SPF applied</span>
+        <span class="hstr" id="hs-spf">—</span>
+      </div>
+      <div class="habit" id="h-journal" onclick="toggleHabit('journal')">
+        <div class="hchk" id="hc-journal"></div>
+        <span class="hico">📓</span><span class="hlbl">Journal entry</span>
+        <span class="hstr" id="hs-journal">—</span>
+      </div>
+      <div class="habit" id="h-phone" onclick="toggleHabit('phone')">
+        <div class="hchk" id="hc-phone"></div>
+        <span class="hico">📵</span><span class="hlbl">Phone down by 21:30</span>
+        <span class="hstr" id="hs-phone">—</span>
+      </div>
+      <div class="habit" id="h-water" onclick="toggleHabit('water')">
+        <div class="hchk" id="hc-water"></div>
+        <span class="hico">💧</span><span class="hlbl">Water 2.5L</span>
+        <span class="hstr" id="hs-water">—</span>
+      </div>
+      <div class="habit" id="h-nutrition" onclick="toggleHabit('nutrition')">
+        <div class="hchk" id="hc-nutrition"></div>
+        <span class="hico">🥗</span><span class="hlbl">Post-training nutrition</span>
+        <span class="hstr" id="hs-nutrition">—</span>
+      </div>
+    </div>
+    <div class="hprog"><div class="hprog-fill" id="hProg" style="width:0%"></div></div>
   </div>
 
   <!-- Water -->
@@ -188,17 +319,17 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
       <span class="badge" id="wBadge">0 ml</span>
     </div>
     <div class="water-row">
-      <div class="w-circle">
+      <div class="w-ring-wrap">
         <svg viewBox="0 0 80 80">
           <circle class="w-track" cx="40" cy="40" r="33"/>
           <circle class="w-fill" cx="40" cy="40" r="33" id="wRing" stroke-dasharray="207.3" stroke-dashoffset="207.3"/>
         </svg>
-        <div class="w-txt"><div class="w-amt" id="wAmt">0</div><div class="w-unit">ml</div></div>
+        <div class="w-txt"><div class="w-ml" id="wAmt">0</div><div class="w-u">ml</div></div>
       </div>
       <div class="w-info">
         <div class="w-pct" id="wPct">0%</div>
         <div class="w-tgt" id="wTgt">Target: — L</div>
-        <button class="btn" onclick="resetWater()" style="font-size:11px;padding:5px 10px;margin-top:8px">Reset</button>
+        <button class="btn w-reset" onclick="resetWater()">Reset</button>
       </div>
     </div>
     <div class="w-btns">
@@ -212,7 +343,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
   <div class="card">
     <div class="card-hd">
       <span class="card-title">📋 To-Do</span>
-      <span class="badge" id="tBadge">🔥 0</span>
+      <span class="badge" id="tBadge">0 / 0</span>
     </div>
     <div class="todo-add">
       <input class="todo-in" id="tIn" placeholder="Add task…" onkeydown="if(event.key==='Enter')addTodo()">
@@ -233,155 +364,72 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 </nav>
 
 <script>
-// ── Utilities ────────────────────────────────────────────────────────────────
+// ── Utils ────────────────────────────────────────────────────────────────────
 function el(id) { return document.getElementById(id); }
+function todayKey() {
+  var d = new Date();
+  return d.getFullYear() + '-' + ('0'+(d.getMonth()+1)).slice(-2) + '-' + ('0'+d.getDate()).slice(-2);
+}
 function dateKey(d) {
-  var dt = d || new Date();
-  return dt.getFullYear() + '-' +
-    String(dt.getMonth() + 1).padStart(2, '0') + '-' +
-    String(dt.getDate()).padStart(2, '0');
+  return d.getFullYear() + '-' + ('0'+(d.getMonth()+1)).slice(-2) + '-' + ('0'+d.getDate()).slice(-2);
 }
-function lsGet(key, def) {
-  try { var v = localStorage.getItem(key); return v !== null ? JSON.parse(v) : def; } catch(e) { return def; }
-}
-function lsSet(key, val) {
-  try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
-}
+function lsGet(k, def) { try { var v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : def; } catch(e) { return def; } }
+function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
 
-// ── Day config ───────────────────────────────────────────────────────────────
-var DAY_TYPES = {
-  0: { name: 'Recovery Day',      emoji: '🧘', wake: '08:00', desc: 'Gym session · foam roll · rest',         water: 2000 },
-  1: { name: 'Evening Training',  emoji: '⚽', wake: '07:30', desc: 'Club training 18:00–19:30',              water: 2500 },
-  2: { name: 'Morning Training',  emoji: '🌅', wake: '06:15', desc: 'Club training 07:30–09:00',              water: 2500 },
-  3: { name: 'Gym + Study Day',   emoji: '📖', wake: '07:30', desc: 'Wednesday gym session · study blocks',   water: 2000 },
-  4: { name: 'Morning Training',  emoji: '🌅', wake: '06:15', desc: 'Club training 07:30–09:00',              water: 2500 },
-  5: { name: 'Free Day',          emoji: '📚', wake: '07:30', desc: 'Study · individual football if wanted',  water: 2000 },
-  6: { name: 'Match Day',         emoji: '🏆', wake: '07:00', desc: 'Pre-match prep · Treaty United U20s',   water: 2500 }
+// ── Day setup ────────────────────────────────────────────────────────────────
+var NOW = new Date();
+var DOW = NOW.getDay(); // 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat
+var TODAY = todayKey();
+
+var DAY_CFG = {
+  0: { name:'Recovery Day',         emoji:'🧘', wake:'08:00', desc:'Gym session · foam roll · rest',        cls:'recovery',     water:2000 },
+  1: { name:'Evening Training Day', emoji:'⚽', wake:'07:30', desc:'Club training 18:00–19:30',             cls:'training-eve', water:2500 },
+  2: { name:'Morning Training Day', emoji:'🌅', wake:'06:15', desc:'Club training 07:30–09:00',             cls:'training-morn',water:2500 },
+  3: { name:'Free Day',             emoji:'📖', wake:'07:30', desc:'Study blocks · gym session',            cls:'free',         water:2000 },
+  4: { name:'Morning Training Day', emoji:'🌅', wake:'06:15', desc:'Club training 07:30–09:00',             cls:'training-morn',water:2500 },
+  5: { name:'Free Day',             emoji:'📚', wake:'07:30', desc:'Study · individual football optional',  cls:'free',         water:2000 },
+  6: { name:'Match Day',            emoji:'🏆', wake:'07:00', desc:'Pre-match prep · Treaty United U20s',  cls:'match',        water:2500 }
 };
-
-var SCHEDULES = {
-  0: [
-    { t: '08:00', tx: 'Wake up', h: false },
-    { t: '08:30', tx: 'Breakfast + morning skincare + SPF', h: false },
-    { t: '10:00', tx: 'Gym — Sunday programme', h: true },
-    { t: '11:30', tx: 'Post-gym nutrition (30 min window)', h: true },
-    { t: '12:00', tx: 'Foam roll + stretch + ice bath if possible', h: false },
-    { t: '14:00', tx: 'Study block', h: false },
-    { t: '18:00', tx: 'Dinner', h: false },
-    { t: '21:30', tx: 'Phone down · journal · evening skincare · retainer', h: true }
-  ],
-  1: [
-    { t: '07:30', tx: 'Wake up', h: false },
-    { t: '08:00', tx: 'Morning skincare + SPF', h: false },
-    { t: '09:00', tx: 'School', h: false },
-    { t: '14:30', tx: 'School ends · light snack', h: false },
-    { t: '15:00', tx: 'Study block', h: false },
-    { t: '17:30', tx: 'Pre-training meal (carb-heavy)', h: false },
-    { t: '18:00', tx: 'Club training — Treaty United U20s', h: true },
-    { t: '19:30', tx: 'Training ends', h: false },
-    { t: '20:00', tx: 'Post-training nutrition (30 min window)', h: true },
-    { t: '21:30', tx: 'Phone down · journal · evening skincare · retainer', h: true }
-  ],
-  2: [
-    { t: '06:15', tx: 'Wake up', h: false },
-    { t: '06:30', tx: 'Quick breakfast + kit ready', h: false },
-    { t: '07:30', tx: 'Club training — Treaty United U20s', h: true },
-    { t: '09:00', tx: 'Training ends', h: false },
-    { t: '09:30', tx: 'Post-training nutrition (30 min window)', h: true },
-    { t: '10:00', tx: 'School', h: false },
-    { t: '16:00', tx: 'Study block', h: false },
-    { t: '21:30', tx: 'Phone down · journal · evening skincare · retainer', h: true }
-  ],
-  3: [
-    { t: '07:30', tx: 'Wake up', h: false },
-    { t: '08:00', tx: 'Morning skincare + SPF', h: false },
-    { t: '09:00', tx: 'School', h: false },
-    { t: '14:30', tx: 'School ends', h: false },
-    { t: '15:00', tx: 'Gym — Wednesday programme', h: true },
-    { t: '16:30', tx: 'Post-gym nutrition (30 min window)', h: true },
-    { t: '17:00', tx: 'Study block', h: false },
-    { t: '21:30', tx: 'Phone down · journal · evening skincare · retainer', h: true }
-  ],
-  4: [
-    { t: '06:15', tx: 'Wake up', h: false },
-    { t: '06:30', tx: 'Quick breakfast + kit ready', h: false },
-    { t: '07:30', tx: 'Club training — Treaty United U20s', h: true },
-    { t: '09:00', tx: 'Training ends', h: false },
-    { t: '09:30', tx: 'Post-training nutrition (30 min window)', h: true },
-    { t: '10:00', tx: 'School', h: false },
-    { t: '16:00', tx: 'Study block', h: false },
-    { t: '21:30', tx: 'Phone down · journal · evening skincare · retainer', h: true }
-  ],
-  5: [
-    { t: '07:30', tx: 'Wake up', h: false },
-    { t: '08:00', tx: 'Morning skincare + SPF', h: false },
-    { t: '09:00', tx: 'School', h: false },
-    { t: '14:30', tx: 'School ends', h: false },
-    { t: '15:00', tx: 'Study block', h: false },
-    { t: '17:00', tx: 'Individual football / skills session (optional)', h: false },
-    { t: '19:00', tx: 'Dinner', h: false },
-    { t: '21:30', tx: 'Phone down · journal · evening skincare · retainer', h: true }
-  ],
-  6: [
-    { t: '07:00', tx: 'Wake up', h: false },
-    { t: '07:30', tx: 'Breakfast — 3h before kick-off (carb focus)', h: false },
-    { t: '09:00', tx: '3-Action Rule mental rehearsal', h: true },
-    { t: '09:30', tx: 'Dynamic warm-up + activation', h: false },
-    { t: '10:30', tx: 'Pre-match team warm-up', h: false },
-    { t: '11:00', tx: 'Match — Treaty United U20s', h: true },
-    { t: '12:30', tx: 'Post-match nutrition (30 min window)', h: true },
-    { t: '14:00', tx: 'Recovery + stretch', h: false },
-    { t: '21:30', tx: 'Phone down · journal · evening skincare · retainer', h: true }
-  ]
-};
-
-var HABITS = [
-  { id: 'am-skin',   label: 'Morning skincare',       icon: '🌅' },
-  { id: 'pm-skin',   label: 'Evening skincare',        icon: '🌙' },
-  { id: 'retainer',  label: 'Retainer',                icon: '🦷' },
-  { id: 'spf',       label: 'SPF applied',             icon: '☀️' },
-  { id: 'journal',   label: 'Journal entry',           icon: '📓' },
-  { id: 'phone',     label: 'Phone down by 21:30',     icon: '📵' },
-  { id: 'water',     label: 'Water target hit',        icon: '💧' },
-  { id: 'nutrition', label: 'Post-training nutrition', icon: '🥗' }
-];
-
-// ── Boot ─────────────────────────────────────────────────────────────────────
-var NOW   = new Date();
-var DOW   = NOW.getDay();                    // 0=Sun … 6=Sat
-var DI    = DAY_TYPES[DOW];
-var TODAY = dateKey(NOW);
+var D = DAY_CFG[DOW];
+var WATER_TARGET = D.water;
 var HABIT_KEY = 'jm_habits_' + TODAY;
-var WATER_KEY = 'jm_water_' + TODAY;
+var WATER_KEY  = 'jm_water_'  + TODAY;
 var GARMIN_KEY = 'jm_garmin_' + TODAY;
-var WATER_TARGET = DI.water;
+var HABIT_IDS  = ['am-skin','pm-skin','retainer','spf','journal','phone','water','nutrition'];
 
 // ── Day banner ───────────────────────────────────────────────────────────────
-(function renderBanner() {
+(function() {
   var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   var MONS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  el('dEmoji').textContent = DI.emoji;
-  el('dName').textContent  = DI.name;
-  el('dDesc').textContent  = DI.desc;
-  el('dWake').textContent  = DI.wake;
-  el('dDate').textContent  = DAYS[DOW] + ' · ' + NOW.getDate() + ' ' + MONS[NOW.getMonth()] + ' ' + NOW.getFullYear();
+  el('dayBanner').className = 'day-banner ' + D.cls;
+  el('dEmoji').textContent  = D.emoji;
+  el('dName').textContent   = D.name;
+  el('dDesc').textContent   = D.desc;
+  el('dWake').textContent   = D.wake;
+  el('dDate').textContent   = DAYS[DOW] + ' · ' + NOW.getDate() + ' ' + MONS[NOW.getMonth()] + ' ' + NOW.getFullYear();
 })();
 
-// ── Schedule ─────────────────────────────────────────────────────────────────
-(function renderSchedule() {
-  var items = SCHEDULES[DOW] || [];
-  var nowMins = NOW.getHours() * 60 + NOW.getMinutes();
-  var html = '';
-  for (var i = 0; i < items.length; i++) {
-    var s = items[i];
-    var parts = s.t.split(':');
-    var sMins = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
-    var cls = 'sched-item';
-    if (s.h) cls += ' hl';
-    if (sMins < nowMins) cls += ' past';
-    html += '<div class="' + cls + '"><div class="sched-time">' + s.t + '</div><div class="sched-text">' + s.tx + '</div></div>';
+// ── Schedule — show correct day block, dim past items ────────────────────────
+(function() {
+  // Hide all, show today's
+  for (var d = 0; d <= 6; d++) {
+    var s = el('sched-' + d);
+    if (s) s.style.display = (d === DOW) ? '' : 'none';
   }
-  el('schedList').innerHTML = html || '<div style="color:var(--t3);font-size:13px;padding:8px">No schedule for today.</div>';
+  // Dim past rows
+  var nowMins = NOW.getHours() * 60 + NOW.getMinutes();
+  var todaySched = el('sched-' + DOW);
+  if (todaySched) {
+    var rows = todaySched.querySelectorAll('.sched-row');
+    for (var i = 0; i < rows.length; i++) {
+      var timeEl = rows[i].querySelector('.sched-time');
+      if (timeEl) {
+        var parts = timeEl.textContent.split(':');
+        var rowMins = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+        if (rowMins < nowMins) rows[i].classList.add('past');
+      }
+    }
+  }
 })();
 
 // ── Garmin ───────────────────────────────────────────────────────────────────
@@ -396,27 +444,20 @@ function loadGarmin() {
   el('gDur').textContent   = d.dur   || '—';
 }
 function toggleGarmin() {
-  var f = el('gForm'), btn = el('gEditBtn');
-  var open = f.style.display !== 'none';
+  var f = el('gForm'), open = f.style.display !== 'none';
   f.style.display = open ? 'none' : 'block';
-  btn.textContent = open ? 'Edit' : 'Cancel';
+  el('gBtn').textContent = open ? 'Edit' : 'Cancel';
   if (!open) {
     var d = lsGet(GARMIN_KEY, {});
-    el('fSleep').value = d.sleep || '';
-    el('fHrv').value   = d.hrv   || '';
-    el('fRhr').value   = d.rhr   || '';
-    el('fBed').value   = d.bed   || '';
-    el('fWake').value  = d.wake  || '';
-    el('fDur').value   = d.dur   || '';
+    el('fSleep').value = d.sleep || ''; el('fHrv').value = d.hrv || '';
+    el('fRhr').value   = d.rhr   || ''; el('fBed').value = d.bed || '';
+    el('fWake').value  = d.wake  || ''; el('fDur').value = d.dur || '';
   }
 }
 function saveGarmin() {
-  lsSet(GARMIN_KEY, {
-    sleep: el('fSleep').value, hrv: el('fHrv').value, rhr: el('fRhr').value,
-    bed:   el('fBed').value,   wake: el('fWake').value, dur: el('fDur').value
-  });
-  loadGarmin();
-  toggleGarmin();
+  lsSet(GARMIN_KEY, { sleep:el('fSleep').value, hrv:el('fHrv').value, rhr:el('fRhr').value,
+                      bed:el('fBed').value,   wake:el('fWake').value, dur:el('fDur').value });
+  loadGarmin(); toggleGarmin();
 }
 loadGarmin();
 
@@ -431,97 +472,80 @@ function habitStreak(id) {
   }
   return streak;
 }
-function renderHabits() {
+function refreshHabits() {
   var data = lsGet(HABIT_KEY, {});
   var done = 0;
-  var html = '';
-  for (var i = 0; i < HABITS.length; i++) {
-    var h = HABITS[i];
-    var ok = !!data[h.id];
+  for (var i = 0; i < HABIT_IDS.length; i++) {
+    var id  = HABIT_IDS[i];
+    var ok  = !!data[id];
+    var str = habitStreak(id);
     if (ok) done++;
-    var streak = habitStreak(h.id);
-    var streakTxt = streak > 0 ? ('🔥' + streak) : '—';
-    html += '<div class="habit' + (ok ? ' done' : '') + '" onclick="toggleHabit(\'' + h.id + '\')">' +
-      '<div class="hcheck">' + (ok ? '✓' : '') + '</div>' +
-      '<span style="font-size:16px;flex-shrink:0">' + h.icon + '</span>' +
-      '<span class="hname">' + h.label + '</span>' +
-      '<span class="hstreak">' + streakTxt + '</span>' +
-      '</div>';
+    var row = el('h-' + id);
+    var chk = el('hc-' + id);
+    var stEl = el('hs-' + id);
+    if (row)  { if (ok) row.classList.add('done'); else row.classList.remove('done'); }
+    if (chk)  { chk.textContent = ok ? '✓' : ''; }
+    if (stEl) { stEl.textContent = str > 0 ? ('🔥' + str) : '—'; }
   }
-  el('habitList').innerHTML = html;
-  el('hBadge').textContent = done + '/' + HABITS.length;
-  el('hProg').style.width = Math.round(done / HABITS.length * 100) + '%';
+  el('hBadge').textContent = done + ' / ' + HABIT_IDS.length;
+  el('hProg').style.width  = Math.round(done / HABIT_IDS.length * 100) + '%';
 }
 function toggleHabit(id) {
   var data = lsGet(HABIT_KEY, {});
   data[id] = !data[id];
   lsSet(HABIT_KEY, data);
-  renderHabits();
+  refreshHabits();
 }
-renderHabits();
+refreshHabits();
 
 // ── Water ────────────────────────────────────────────────────────────────────
-function renderWater() {
+function refreshWater() {
   var ml  = lsGet(WATER_KEY, 0);
   var pct = Math.min(1, ml / WATER_TARGET);
-  el('wAmt').textContent  = ml;
-  el('wPct').textContent  = Math.round(pct * 100) + '%';
-  el('wTgt').textContent  = 'Target: ' + (WATER_TARGET / 1000).toFixed(1) + 'L';
+  el('wAmt').textContent   = ml;
+  el('wPct').textContent   = Math.round(pct * 100) + '%';
+  el('wTgt').textContent   = 'Target: ' + (WATER_TARGET / 1000).toFixed(1) + 'L';
   el('wBadge').textContent = (ml / 1000).toFixed(2) + 'L / ' + (WATER_TARGET / 1000).toFixed(1) + 'L';
   el('wRing').style.strokeDashoffset = 207.3 * (1 - pct);
   if (ml >= WATER_TARGET) {
-    var habits = lsGet(HABIT_KEY, {});
-    if (!habits.water) { habits.water = true; lsSet(HABIT_KEY, habits); renderHabits(); }
+    var h = lsGet(HABIT_KEY, {});
+    if (!h.water) { h.water = true; lsSet(HABIT_KEY, h); refreshHabits(); }
   }
 }
-function addWater(ml) { lsSet(WATER_KEY, lsGet(WATER_KEY, 0) + ml); renderWater(); }
-function resetWater() { if (confirm('Reset water to 0?')) { lsSet(WATER_KEY, 0); renderWater(); } }
-renderWater();
+function addWater(ml)  { lsSet(WATER_KEY, lsGet(WATER_KEY, 0) + ml); refreshWater(); }
+function resetWater()  { if (confirm('Reset water to 0?')) { lsSet(WATER_KEY, 0); refreshWater(); } }
+refreshWater();
 
 // ── Todos ────────────────────────────────────────────────────────────────────
 var TODO_KEY = 'jm_todos';
-function renderTodos() {
+function refreshTodos() {
   var todos = lsGet(TODO_KEY, []);
-  var doneCount = 0;
-  for (var i = 0; i < todos.length; i++) { if (todos[i].done) doneCount++; }
-  el('tBadge').textContent = '✓ ' + doneCount + '/' + todos.length;
+  var done  = todos.filter(function(t){ return t.done; }).length;
+  el('tBadge').textContent = done + ' / ' + todos.length;
   if (!todos.length) {
-    el('tList').innerHTML = '<div style="color:var(--t3);font-size:13px;text-align:center;padding:16px">No tasks · add one above</div>';
+    el('tList').innerHTML = '<div style="color:var(--t3);font-size:13px;text-align:center;padding:14px">No tasks — add one above</div>';
     return;
   }
   var html = '';
-  for (var j = 0; j < todos.length; j++) {
-    var t = todos[j];
-    html += '<div class="todo' + (t.done ? ' done' : '') + '">' +
-      '<div class="tcheck" onclick="toggleTodo(' + j + ')">' + (t.done ? '✓' : '') + '</div>' +
-      '<span class="ttxt" onclick="toggleTodo(' + j + ')">' + t.text + '</span>' +
-      '<button class="tdel" onclick="delTodo(' + j + ')">×</button>' +
-      '</div>';
+  for (var i = 0; i < todos.length; i++) {
+    var t = todos[i];
+    html += '<div class="todo-row' + (t.done ? ' done' : '') + '">' +
+      '<div class="tchk" onclick="toggleTodo(' + i + ')">' + (t.done ? '✓' : '') + '</div>' +
+      '<span class="ttxt" onclick="toggleTodo(' + i + ')">' + t.text + '</span>' +
+      '<button class="tdel" onclick="delTodo(' + i + ')">×</button></div>';
   }
   el('tList').innerHTML = html;
 }
 function addTodo() {
   var inp = el('tIn'), tx = inp.value.trim();
   if (!tx) return;
-  var todos = lsGet(TODO_KEY, []);
-  todos.unshift({ text: tx, done: false });
-  lsSet(TODO_KEY, todos);
-  inp.value = '';
-  renderTodos();
+  var t = lsGet(TODO_KEY, []);
+  t.unshift({ text: tx, done: false });
+  lsSet(TODO_KEY, t); inp.value = ''; refreshTodos();
 }
-function toggleTodo(i) {
-  var todos = lsGet(TODO_KEY, []);
-  todos[i].done = !todos[i].done;
-  lsSet(TODO_KEY, todos);
-  renderTodos();
-}
-function delTodo(i) {
-  var todos = lsGet(TODO_KEY, []);
-  todos.splice(i, 1);
-  lsSet(TODO_KEY, todos);
-  renderTodos();
-}
-renderTodos();
+function toggleTodo(i) { var t = lsGet(TODO_KEY, []); t[i].done = !t[i].done; lsSet(TODO_KEY, t); refreshTodos(); }
+function delTodo(i)    { var t = lsGet(TODO_KEY, []); t.splice(i, 1);          lsSet(TODO_KEY, t); refreshTodos(); }
+refreshTodos();
 </script>
 </body>
 </html>

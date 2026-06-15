@@ -174,11 +174,17 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
       <span class="card-title">🏷️ Vinted Income</span>
       <span class="badge badge-green" id="vintedBadge">€0</span>
     </div>
+    <div style="margin-bottom:12px">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:5px">Current Vinted balance (from app)</div>
+      <input class="input" id="vtBalance" type="number" step="0.01" min="0" placeholder="€0.00" oninput="saveVintedBalance()" style="font-size:18px;font-weight:700;font-family:var(--mono)">
+      <div style="font-size:11px;color:var(--t3);margin-top:4px">This feeds into your net worth — update from Vinted app</div>
+    </div>
     <div class="vinted-stats">
-      <div class="vstat"><div class="vstat-num" id="vtTotal">€0</div><div class="vstat-label">Total</div></div>
+      <div class="vstat"><div class="vstat-num" id="vtTotal">€0</div><div class="vstat-label">Total logged</div></div>
       <div class="vstat"><div class="vstat-num" id="vtMonth">€0</div><div class="vstat-label">This month</div></div>
       <div class="vstat"><div class="vstat-num" id="vtSales">0</div><div class="vstat-label">Sales</div></div>
     </div>
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:6px">Log a sale</div>
     <div class="row" style="margin-bottom:8px">
       <input class="input" id="vtDesc" placeholder="Item sold" type="text">
       <input class="input" id="vtAmt" placeholder="€0" type="number" step="0.01" min="0" style="flex:0 0 80px">
@@ -300,6 +306,11 @@ function renderWish(){
 renderWish();
 
 // ── Vinted ────────────────────────────────────────────────────────────────────
+function saveVintedBalance(){
+  const bal=parseFloat($('vtBalance').value)||0;
+  lss('jm_vinted_balance',bal);
+  renderNetWorth();
+}
 function addVinted(){
   const desc=$('vtDesc').value.trim();
   const amt=parseFloat($('vtAmt').value)||0;
@@ -315,10 +326,12 @@ function renderVinted(){
   const list=ls('jm_vinted',[]);
   const total=list.reduce((a,v)=>a+v.amt,0);
   const monthTotal=list.filter(v=>v.date.startsWith(thisMonth)).reduce((a,v)=>a+v.amt,0);
+  const bal=ls('jm_vinted_balance',null);
   $('vtTotal').textContent=fmt(total);
   $('vtMonth').textContent=fmt(monthTotal);
   $('vtSales').textContent=list.length;
-  $('vintedBadge').textContent=fmt(total)+' earned';
+  $('vintedBadge').textContent=(bal!==null?fmt(bal)+' balance':fmt(total)+' logged');
+  if(bal!==null)$('vtBalance').value=bal;
   $('vtList').innerHTML=list.slice().reverse().slice(0,10).map((v,ri)=>{
     const i=list.length-1-ri;
     return`<div class="vsale-item">
@@ -334,12 +347,14 @@ renderVinted();
 function renderNetWorth(){
   const sav=ls('jm_savings',{cur:0}).cur||0;
   const spend=ls('jm_spending',[]).reduce((a,s)=>a+s.amt,0);
-  const vinted=ls('jm_vinted',[]).reduce((a,v)=>a+v.amt,0);
+  // Use manual balance if set, otherwise fall back to logged sales sum
+  const vintedBalance=ls('jm_vinted_balance',null);
+  const vinted=vintedBalance!==null?vintedBalance:ls('jm_vinted',[]).reduce((a,v)=>a+v.amt,0);
   const net=sav+vinted-spend;
   $('nwAmount').textContent=fmt(net);
   $('nwAmount').style.color=net>=0?'var(--green)':'var(--red)';
   $('nwBadge').textContent=fmt(net);
-  $('nwBreakdown').textContent='Savings '+fmt(sav)+' · Vinted +'+fmt(vinted)+' · Spending -'+fmt(spend);
+  $('nwBreakdown').textContent='Savings '+fmt(sav)+' · Vinted '+(vintedBalance!==null?'balance ':'+')+fmt(vinted)+' · Spending -'+fmt(spend);
 }
 renderNetWorth();
 

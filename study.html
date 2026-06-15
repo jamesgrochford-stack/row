@@ -193,10 +193,13 @@ select.fi{cursor:pointer}
       <span class="card-title">🎯 Points Estimator</span>
       <span class="badge badge-yellow">Target: 625</span>
     </div>
+    <div style="background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);border-radius:var(--rs);padding:8px 12px;margin-bottom:12px;font-size:11px;color:rgba(251,191,36,.85)">
+      ⚡ Only your top 6 subjects count. Maths HL gets +25 bonus at H1. Greyed subjects don't count toward total.
+    </div>
     <div class="pts-display">
-      <div class="pts-current" id="ptsTotal">577</div>
-      <div class="pts-target">Current estimate · Target: 625</div>
-      <div class="pts-gap" id="ptsGap">Gap: 48 points</div>
+      <div class="pts-current" id="ptsTotal">—</div>
+      <div class="pts-target">Top 6 subjects · Target: 625</div>
+      <div class="pts-gap" id="ptsGap"></div>
     </div>
     <div class="prog-bar-lg" style="height:8px;margin-bottom:14px">
       <div class="prog-fill-lg" id="ptsProg" style="background:linear-gradient(90deg,var(--yellow),var(--green))"></div>
@@ -304,50 +307,57 @@ function ls(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(
 function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
 function dk(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 
-// Points estimator
+// Points estimator — top 6 of 9 subjects count; Maths HL gets +25 bonus at H1 (100pts)
 const SUBJECTS=[
-  {name:'Maths HL',pts:100},{name:'Irish HL',pts:100},{name:'Physics HL',pts:100},
-  {name:'Chemistry HL',pts:88},{name:'PE HL',pts:100},{name:'Accounting HL',pts:77},
-  {name:'Applied Maths',pts:70},{name:'English HL',pts:40},{name:'French HL',pts:40},
+  {name:'Maths HL',    pts:100, mathsBonus:true},
+  {name:'Irish HL',    pts:88},
+  {name:'Physics HL',  pts:100},
+  {name:'Chemistry HL',pts:88},
+  {name:'PE HL',       pts:100},
+  {name:'Accounting HL',pts:77},
+  {name:'Applied Maths',pts:70},
+  {name:'English HL',  pts:37},
+  {name:'French HL',   pts:37},
 ];
 const TARGET=625;
-(function renderPoints(){
+function calcTop6(pts){
+  // Calculate effective score per subject (Maths bonus applies if base=100)
+  const effective=pts.map((s,i)=>{
+    const base=s.pts;
+    const bonus=(SUBJECTS[i].mathsBonus&&base===100)?25:0;
+    return{...s,eff:base+bonus,bonus,idx:i};
+  });
+  const sorted=[...effective].sort((a,b)=>b.eff-a.eff);
+  const top6=new Set(sorted.slice(0,6).map(s=>s.idx));
+  return{effective,top6,total:sorted.slice(0,6).reduce((a,s)=>a+s.eff,0)};
+}
+function renderPoints(){
   const pts=ls('jm_pts',SUBJECTS.map(s=>({...s})));
-  const total=pts.reduce((a,s)=>a+s.pts,0);
+  const {effective,top6,total}=calcTop6(pts);
   $('ptsTotal').textContent=total;
   const gap=TARGET-total;
-  $('ptsGap').textContent=gap>0?`Gap: ${gap} points to target`:'🎉 Target reached!';
+  $('ptsGap').textContent=gap>0?`Gap: ${gap} points to 625`:'🎉 625 reached!';
   $('ptsGap').style.color=gap<=0?'var(--green)':'var(--red)';
   $('ptsProg').style.width=Math.min(100,total/TARGET*100)+'%';
-  $('ptsList').innerHTML=pts.map((s,i)=>`
-    <div class="pts-row">
-      <span class="pts-subj">${s.name}</span>
+  $('ptsList').innerHTML=effective.map((s,i)=>{
+    const counted=top6.has(i);
+    const valStr=s.bonus?`${s.pts}<span style="color:var(--green);font-size:10px"> +${s.bonus}</span>`:`${s.pts}`;
+    return`<div class="pts-row" style="${counted?'':'opacity:.45'}">
+      <span class="pts-subj">${s.name}${counted?'<span style="color:var(--green);font-size:9px;margin-left:4px">✓</span>':''}</span>
       <div style="display:flex;align-items:center;gap:8px">
         <button onclick="adjPts(${i},-5)" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;padding:0 4px">−</button>
-        <span class="pts-val">${s.pts}</span>
+        <span class="pts-val">${valStr}</span>
         <button onclick="adjPts(${i},5)" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;padding:0 4px">+</button>
       </div>
-    </div>`).join('');
-})();
+    </div>`;
+  }).join('');
+}
+renderPoints();
 function adjPts(i,delta){
   const pts=ls('jm_pts',SUBJECTS.map(s=>({...s})));
   pts[i].pts=Math.max(0,Math.min(100,pts[i].pts+delta));
   lss('jm_pts',pts);
-  const total=pts.reduce((a,s)=>a+s.pts,0);
-  $('ptsTotal').textContent=total;
-  const gap=TARGET-total;
-  $('ptsGap').textContent=gap>0?`Gap: ${gap} points to target`:'🎉 Target reached!';
-  $('ptsGap').style.color=gap<=0?'var(--green)':'var(--red)';
-  $('ptsProg').style.width=Math.min(100,total/TARGET*100)+'%';
-  $('ptsList').innerHTML=pts.map((s,i2)=>`
-    <div class="pts-row">
-      <span class="pts-subj">${s.name}</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button onclick="adjPts(${i2},-5)" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;padding:0 4px">−</button>
-        <span class="pts-val">${s.pts}</span>
-        <button onclick="adjPts(${i2},5)" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;padding:0 4px">+</button>
-      </div>
-    </div>`).join('');
+  renderPoints();
 }
 
 // Streaks

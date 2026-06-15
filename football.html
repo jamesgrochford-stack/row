@@ -224,15 +224,19 @@ function addSession(){
   lss(SKEY,sessions);$('sDur').value='';$('sNotes').value='';
   renderSessions();
 }
+function delSession(i){if(!confirm('Delete this session?'))return;const sessions=ls(SKEY,[]);sessions.splice(i,1);lss(SKEY,sessions);renderSessions();}
 function renderSessions(){
   const sessions=ls(SKEY,[]);
   $('sessionCount').textContent=sessions.length+' sessions';
   if(!sessions.length){$('sessionLog').innerHTML='<div style="color:var(--t3);font-size:13px;text-align:center;padding:12px">No sessions logged yet</div>';return;}
-  $('sessionLog').innerHTML=sessions.slice(0,8).map(s=>`
+  $('sessionLog').innerHTML=sessions.slice(0,8).map((s,i)=>`
     <div class="log-item">
       <div class="log-header">
         <span class="log-type ${s.type}">${s.type}</span>
-        <span class="log-dur">${s.dur} min</span>
+        <span style="display:flex;align-items:center;gap:8px">
+          <span class="log-dur">${s.dur} min</span>
+          <button onclick="delSession(${i})" style="background:none;border:none;color:var(--t4);cursor:pointer;font-size:16px;padding:0;line-height:1;-webkit-tap-highlight-color:transparent" title="Delete">×</button>
+        </span>
       </div>
       ${s.notes?`<div class="log-notes">${s.notes}</div>`:''}
       <div class="log-date">${s.date}</div>
@@ -263,8 +267,13 @@ function renderFilm(){
       <div class="film-count">${logs.filter(l=>l.player===p.name).length} total</div>
     </div>`).join('');
   const recent=logs.slice(0,5);
-  $('filmHistory').innerHTML=recent.length?recent.map(l=>`
-    <div style="font-size:12px;color:var(--t3);padding:4px 0;border-bottom:1px solid var(--b)">${l.date} · ${l.player}${l.notes?' · '+l.notes:''}</div>`).join(''):'';
+  $('filmHistory').innerHTML=recent.length?recent.map((l,ri)=>{
+    const i=ri; // slice is from front, so index matches original
+    return`<div style="font-size:12px;color:var(--t3);padding:5px 0;border-bottom:1px solid var(--b);display:flex;align-items:center;gap:6px">
+      <span style="flex:1">${l.date} · ${l.player}${l.notes?' · '+l.notes:''}</span>
+      <button onclick="delFilm(${i})" style="background:none;border:none;color:var(--t4);cursor:pointer;font-size:15px;padding:0;line-height:1;-webkit-tap-highlight-color:transparent;flex-shrink:0">×</button>
+    </div>`;
+  }).join(''):'';
 }
 function logPlayerFilm(player){
   const logs=ls(FKEY,[]);
@@ -279,6 +288,7 @@ function logFilm(){
   logs.unshift({player,date:dk(),ts:Date.now(),notes});
   lss(FKEY,logs);renderFilm();
 }
+function delFilm(i){if(!confirm('Delete this film session?'))return;const logs=ls(FKEY,[]);logs.splice(i,1);lss(FKEY,logs);renderFilm();}
 renderFilm();
 </script>
 </body>
