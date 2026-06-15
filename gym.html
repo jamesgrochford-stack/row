@@ -1264,19 +1264,29 @@ img, video, canvas, svg { max-width: 100%; }
 .hidden { display: none !important; }
 
 /* Programme section */
-.prog-section { margin-bottom: 20px; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; overflow: hidden; }
-.prog-header { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.prog-title { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); }
-.prog-day-tabs { display: flex; gap: 6px; }
-.prog-tab { padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: rgba(255,255,255,.55); font-size: 12px; font-weight: 600; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: all .15s; }
-.prog-tab.active { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.22); color: #fafafa; }
-.prog-body { padding: 0 16px 14px; display: none; }
-.prog-body.open { display: block; }
-.prog-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.prog-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 12px; background: rgba(255,255,255,.04); border-radius: 10px; font-size: 13px; }
+.prog-warn { margin-bottom: 14px; padding: 14px 16px; background: rgba(255,138,138,.08); border: 2px solid rgba(255,138,138,.4); border-radius: 14px; display: flex; align-items: flex-start; gap: 12px; }
+.prog-warn-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.prog-warn-body {}
+.prog-warn-title { font-size: 13px; font-weight: 800; color: #ff8a8a; text-transform: uppercase; letter-spacing: .04em; }
+.prog-warn-sub { font-size: 12px; color: rgba(255,138,138,.8); margin-top: 3px; }
+.prog-card { margin-bottom: 14px; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.08); border-radius: 16px; overflow: hidden; }
+.prog-card-hd { padding: 12px 16px 10px; display: flex; align-items: center; justify-content: space-between; }
+.prog-card-title { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); }
+.prog-tabs { display: flex; gap: 6px; }
+.prog-tab { padding: 5px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: rgba(255,255,255,.45); font-size: 12px; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: all .15s; }
+.prog-tab.active { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.25); color: #fafafa; }
+.prog-panel { padding: 0 12px 12px; }
+.prog-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.prog-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: rgba(255,255,255,.04); border-radius: 10px; font-size: 13px; }
 .prog-item-name { flex: 1; color: #fafafa; font-weight: 500; }
-.prog-item-sets { font-size: 12px; color: rgba(255,255,255,.45); white-space: nowrap; }
-.prog-imbalance { margin: 10px 0 0; padding: 10px 12px; background: rgba(255,138,138,.08); border: 1px solid rgba(255,138,138,.3); border-radius: 10px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: #ff8a8a; font-weight: 600; }
+.prog-item-sets { font-size: 11px; font-weight: 600; color: rgba(255,255,255,.4); white-space: nowrap; font-family: ui-monospace,SF Mono,Menlo,Consolas,monospace; }
+.prog-key { margin-bottom: 14px; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 12px 16px; }
+.prog-key-title { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 10px; }
+.prog-key-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.prog-key-item { background: rgba(255,255,255,.04); border-radius: 10px; padding: 10px 12px; }
+.prog-key-lift { font-size: 12px; color: rgba(255,255,255,.5); margin-bottom: 3px; }
+.prog-key-val { font-size: 18px; font-weight: 700; color: #fafafa; font-family: ui-monospace,SF Mono,Menlo,Consolas,monospace; }
+.prog-key-item.untested .prog-key-val { font-size: 13px; color: rgba(255,255,255,.35); }
 
 /* Bottom nav */
 .bnav { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: rgba(10,10,11,.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,.08); padding: 6px max(0px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(0px,env(safe-area-inset-left)); z-index: 200; }
@@ -1290,42 +1300,60 @@ img, video, canvas, svg { max-width: 100%; }
 
 <div class="po-shell">
 
-  <!-- Programme reference -->
-  <div class="prog-section" id="progSection">
-    <div class="prog-header" onclick="toggleProg()">
-      <span class="prog-title">📋 Programme</span>
-      <div class="prog-day-tabs">
-        <button class="prog-tab active" id="ptWed" onclick="event.stopPropagation();showProg('wed')">Wed</button>
-        <button class="prog-tab" id="ptSun" onclick="event.stopPropagation();showProg('sun')">Sun</button>
+  <!-- Hamstring warning — always visible -->
+  <div class="prog-warn">
+    <div class="prog-warn-icon">🔴</div>
+    <div class="prog-warn-body">
+      <div class="prog-warn-title">Left Hamstring Imbalance</div>
+      <div class="prog-warn-sub">10% deficit — prioritise unilateral work every session</div>
+    </div>
+  </div>
+
+  <!-- Programme cards — always visible -->
+  <div class="prog-card">
+    <div class="prog-card-hd">
+      <span class="prog-card-title">📋 Programme</span>
+      <div class="prog-tabs">
+        <button class="prog-tab active" id="ptWed" onclick="showProg('wed')">Wednesday</button>
+        <button class="prog-tab" id="ptSun" onclick="showProg('sun')">Sunday</button>
       </div>
     </div>
-    <div class="prog-body" id="progBody">
-      <div class="prog-imbalance">⚠️ Left hamstring imbalance — priority focus every session</div>
-      <ul class="prog-list" id="progWed">
-        <li class="prog-item"><span class="prog-item-name">Squat / Trap bar deadlift</span><span class="prog-item-sets">3–4 × 3</span></li>
-        <li class="prog-item"><span class="prog-item-name">Bulgarian split squat</span><span class="prog-item-sets">2–3 × 5</span></li>
-        <li class="prog-item"><span class="prog-item-name">RDL / Nordics</span><span class="prog-item-sets">2–3 × 4–6</span></li>
-        <li class="prog-item"><span class="prog-item-name">Bench press</span><span class="prog-item-sets">3 × 5</span></li>
-        <li class="prog-item"><span class="prog-item-name">Pull-ups</span><span class="prog-item-sets">3 × 5</span></li>
-        <li class="prog-item"><span class="prog-item-name">Copenhagen plank</span><span class="prog-item-sets">3 × 20–30s</span></li>
-        <li class="prog-item"><span class="prog-item-name">Pallof press</span><span class="prog-item-sets">3 × 10</span></li>
-        <li class="prog-item"><span class="prog-item-name">Box jumps</span><span class="prog-item-sets">3 × 3</span></li>
-        <li class="prog-item"><span class="prog-item-name">Pogos</span><span class="prog-item-sets">3 × 3</span></li>
-        <li class="prog-item"><span class="prog-item-name">Accelerations</span><span class="prog-item-sets">3–5 reps</span></li>
+    <div class="prog-panel" id="progWed">
+      <ul class="prog-list">
+        <li class="prog-item"><span class="prog-item-name">Squat or trap bar deadlift</span><span class="prog-item-sets">3–4×3</span></li>
+        <li class="prog-item"><span class="prog-item-name">Bulgarian split squat</span><span class="prog-item-sets">2–3×5</span></li>
+        <li class="prog-item"><span class="prog-item-name">RDL or Nordics</span><span class="prog-item-sets">2–3×4–6</span></li>
+        <li class="prog-item"><span class="prog-item-name">Bench press</span><span class="prog-item-sets">3×5</span></li>
+        <li class="prog-item"><span class="prog-item-name">Pull-ups</span><span class="prog-item-sets">3×5</span></li>
+        <li class="prog-item"><span class="prog-item-name">Copenhagen plank</span><span class="prog-item-sets">3×20–30s</span></li>
+        <li class="prog-item"><span class="prog-item-name">Pallof press</span><span class="prog-item-sets">3×10</span></li>
+        <li class="prog-item"><span class="prog-item-name">Box jumps</span><span class="prog-item-sets">3×3</span></li>
+        <li class="prog-item"><span class="prog-item-name">Pogos</span><span class="prog-item-sets">3×3</span></li>
+        <li class="prog-item"><span class="prog-item-name">Accelerations</span><span class="prog-item-sets">3×10m · 3×20m · 2×30m</span></li>
       </ul>
-      <ul class="prog-list" id="progSun" style="display:none">
-        <li class="prog-item"><span class="prog-item-name">Speed trap bar deadlift</span><span class="prog-item-sets">5 × 2</span></li>
-        <li class="prog-item"><span class="prog-item-name">Single-leg hip thrust</span><span class="prog-item-sets">3 × 5</span></li>
-        <li class="prog-item"><span class="prog-item-name">Copenhagen plank</span><span class="prog-item-sets">3 × 20–30s</span></li>
-        <li class="prog-item"><span class="prog-item-name">Single-arm landmine press</span><span class="prog-item-sets">3 × 5</span></li>
-        <li class="prog-item"><span class="prog-item-name">Bent-over row</span><span class="prog-item-sets">3 × 5</span></li>
-        <li class="prog-item"><span class="prog-item-name">Hip flexor KB hold</span><span class="prog-item-sets">3 × 20–30s</span></li>
-        <li class="prog-item"><span class="prog-item-name">Isometric calf raise</span><span class="prog-item-sets">3 × 30–45s</span></li>
-        <li class="prog-item"><span class="prog-item-name">Tibialis raises</span><span class="prog-item-sets">3 × 12–15</span></li>
+    </div>
+    <div class="prog-panel" id="progSun" style="display:none">
+      <ul class="prog-list">
+        <li class="prog-item"><span class="prog-item-name">Speed trap bar deadlift</span><span class="prog-item-sets">5×2</span></li>
+        <li class="prog-item"><span class="prog-item-name">Single-leg hip thrust</span><span class="prog-item-sets">3×5</span></li>
+        <li class="prog-item"><span class="prog-item-name">Copenhagen plank</span><span class="prog-item-sets">3×20–30s</span></li>
+        <li class="prog-item"><span class="prog-item-name">Single-arm landmine press</span><span class="prog-item-sets">3×5</span></li>
+        <li class="prog-item"><span class="prog-item-name">Bent-over row</span><span class="prog-item-sets">3×5</span></li>
+        <li class="prog-item"><span class="prog-item-name">Hip flexor KB hold</span><span class="prog-item-sets">3×20–30s</span></li>
+        <li class="prog-item"><span class="prog-item-name">Isometric calf raise</span><span class="prog-item-sets">3×30–45s</span></li>
+        <li class="prog-item"><span class="prog-item-name">Tibialis raises</span><span class="prog-item-sets">3×12–15</span></li>
       </ul>
-      <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.04);border-radius:10px;font-size:12px;color:rgba(255,255,255,.5)">
-        Key lifts: Squat <strong style="color:#fafafa">97.5kg</strong> · Bench <strong style="color:#fafafa">72.5kg</strong> · Pull-ups <strong style="color:#fafafa">+5kg</strong> · Trap bar untested
-      </div>
+    </div>
+  </div>
+
+  <!-- Key lifts card -->
+  <div class="prog-key">
+    <div class="prog-key-title">🏋️ Key Lifts</div>
+    <div class="prog-key-grid">
+      <div class="prog-key-item"><div class="prog-key-lift">Squat</div><div class="prog-key-val">97.5kg</div></div>
+      <div class="prog-key-item"><div class="prog-key-lift">Bench press</div><div class="prog-key-val">72.5kg</div></div>
+      <div class="prog-key-item"><div class="prog-key-lift">Pull-ups</div><div class="prog-key-val">+5kg</div></div>
+      <div class="prog-key-item untested"><div class="prog-key-lift">Trap bar</div><div class="prog-key-val">not yet tested</div></div>
     </div>
   </div>
 
@@ -3570,22 +3598,16 @@ img, video, canvas, svg { max-width: 100%; }
   });
 })();
 
-// Programme toggle
-(function(){
-  var open = false;
-  var cur = 'wed';
-  // Auto-open on Wed/Sun
+// Programme tab switcher — auto-select today's session
+window.showProg = function(d) {
+  document.getElementById('progWed').style.display = d === 'wed' ? '' : 'none';
+  document.getElementById('progSun').style.display = d === 'sun' ? '' : 'none';
+  document.getElementById('ptWed').classList.toggle('active', d === 'wed');
+  document.getElementById('ptSun').classList.toggle('active', d === 'sun');
+};
+(function() {
   var day = new Date().getDay();
-  if (day === 3 || day === 0) { open = true; cur = day === 3 ? 'wed' : 'sun'; showProg(cur); document.getElementById('progBody').classList.add('open'); }
-  window.toggleProg = function(){ open = !open; document.getElementById('progBody').classList.toggle('open', open); };
-  window.showProg = function(d){
-    cur = d;
-    document.getElementById('progWed').style.display = d==='wed' ? '' : 'none';
-    document.getElementById('progSun').style.display = d==='sun' ? '' : 'none';
-    document.getElementById('ptWed').classList.toggle('active', d==='wed');
-    document.getElementById('ptSun').classList.toggle('active', d==='sun');
-    if (!open) { open = true; document.getElementById('progBody').classList.add('open'); }
-  };
+  showProg(day === 0 ? 'sun' : 'wed'); // Sunday → Sun tab, everything else → Wed tab
 })();
 </script>
 
