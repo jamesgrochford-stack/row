@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050506">
+<title>Study — James</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050506;--bg2:#0d0d0f;--s:rgba(255,255,255,.04);--s2:rgba(255,255,255,.07);
+  --b:rgba(255,255,255,.08);--b2:rgba(255,255,255,.14);
+  --t1:#FAFAFA;--t2:rgba(255,255,255,.65);--t3:rgba(255,255,255,.4);--t4:rgba(255,255,255,.2);
+  --green:#6ee7b7;--blue:#7DD3FC;--red:#ff8a8a;--yellow:#fbbf24;--orange:#fb923c;--purple:#a78bfa;
+  --r:16px;--rs:10px;
+  --font:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+html,body{background:var(--bg);color:var(--t1);font-family:var(--font);font-size:15px;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+.bento{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:16px}
+.card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.card-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
+.badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:var(--s2);color:var(--t2)}
+.badge-red{background:rgba(255,138,138,.15);color:var(--red)}
+.badge-green{background:rgba(110,231,183,.15);color:var(--green)}
+.badge-yellow{background:rgba(251,191,36,.15);color:var(--yellow)}
+.badge-blue{background:rgba(125,211,252,.15);color:var(--blue)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t1);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
+.btn:hover{background:var(--s2)}
+.btn-green{background:rgba(110,231,183,.1);border-color:rgba(110,231,183,.22);color:var(--green)}
+.btn-full{width:100%;margin-top:10px}
+.fi{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:9px 12px;color:var(--t1);font-family:var(--font);font-size:14px;width:100%;-webkit-appearance:none}
+.fi:focus{outline:none;border-color:var(--b2)}
+select.fi{cursor:pointer}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* Subject cards */
+.subjects-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.subj-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:12px}
+.subj-card.critical{border-color:rgba(255,138,138,.3);background:rgba(255,138,138,.04)}
+.subj-card.target{border-color:rgba(251,191,36,.2)}
+.subj-name{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:4px}
+.subj-grade{font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;display:inline-block;margin-bottom:6px}
+.grade-h1{background:rgba(110,231,183,.15);color:var(--green)}
+.grade-h2{background:rgba(251,191,36,.15);color:var(--yellow)}
+.grade-h7{background:rgba(167,139,250,.15);color:var(--purple)}
+.grade-ext{background:rgba(125,211,252,.15);color:var(--blue)}
+.grade-target{background:rgba(255,138,138,.15);color:var(--red)}
+.subj-score{font-size:11px;color:var(--t3);font-family:var(--mono)}
+.subj-crit{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--red);margin-top:4px}
+.prog-bar{height:4px;background:var(--b);border-radius:999px;overflow:hidden;margin-top:6px}
+.prog-fill{height:100%;border-radius:999px;transition:width .4s ease}
+
+/* Streak counters */
+.streak-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.streak-tile{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:14px 10px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
+.streak-tile:hover{background:var(--s2)}
+.streak-num{font-size:28px;font-weight:700;font-family:var(--mono);line-height:1}
+.streak-lbl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-weight:600}
+.streak-emoji{font-size:18px;margin-bottom:4px}
+
+/* AM counter */
+.am-big{text-align:center;padding:16px 0 8px}
+.am-num{font-size:52px;font-weight:700;font-family:var(--mono);color:var(--blue);line-height:1}
+.am-label{font-size:13px;color:var(--t3);margin-top:4px}
+.am-btns{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.prog-bar-lg{height:8px;background:var(--b);border-radius:999px;overflow:hidden;margin-top:12px}
+.prog-fill-lg{height:100%;border-radius:999px;background:var(--blue);transition:width .4s ease}
+
+/* Points estimator */
+.pts-display{text-align:center;padding:12px 0 16px}
+.pts-current{font-size:52px;font-weight:700;font-family:var(--mono);color:var(--yellow);line-height:1}
+.pts-target{font-size:14px;color:var(--t3);margin-top:6px}
+.pts-gap{font-size:13px;font-weight:600;color:var(--red);margin-top:4px}
+.pts-subjects{display:flex;flex-direction:column;gap:5px;margin-top:12px}
+.pts-row{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--b);font-size:13px}
+.pts-subj{color:var(--t2)}
+.pts-val{font-family:var(--mono);font-weight:700;color:var(--t1)}
+
+/* Session log */
+.log-item{padding:10px 12px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);margin-bottom:6px}
+.log-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.log-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:2px 7px;border-radius:999px}
+.log-type.video{background:rgba(125,211,252,.15);color:var(--blue)}
+.log-type.anki{background:rgba(167,139,250,.15);color:var(--purple)}
+.log-type.paper{background:rgba(110,231,183,.15);color:var(--green)}
+.log-type.notes{background:rgba(255,255,255,.1);color:var(--t2)}
+.log-type.exam-q{background:rgba(251,191,36,.15);color:var(--yellow)}
+.log-dur{font-size:11px;color:var(--t3);font-family:var(--mono)}
+.log-subj{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:2px}
+.log-date{font-size:10px;color:var(--t4);margin-top:4px;font-family:var(--mono)}
+
+.bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(5,5,6,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--b);padding:6px max(0px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(0px,env(safe-area-inset-left));z-index:100}
+.ntab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;text-decoration:none;color:var(--t4);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;-webkit-tap-highlight-color:transparent;transition:color .15s}
+.ntab .ni{font-size:20px;line-height:1}
+.ntab.active{color:var(--t1)}
+</style>
+</head>
+<body>
+<div class="bento">
+
+  <!-- CRITICAL warning -->
+  <div class="card" style="border-color:rgba(255,138,138,.3);background:rgba(255,138,138,.05)">
+    <div class="card-hd" style="margin-bottom:10px">
+      <span class="card-title" style="color:var(--red)">🚨 Critical — AAC Projects</span>
+      <span class="badge badge-red">40% of LC Grade</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="padding:10px;background:rgba(255,138,138,.08);border:1px solid rgba(255,138,138,.2);border-radius:var(--rs)">
+        <div style="font-size:13px;font-weight:700;color:var(--red)">⚠️ Physics AAC — Not Started</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:3px">Assessed coursework component · 40% of Physics HL grade · Summer priority</div>
+      </div>
+      <div style="padding:10px;background:rgba(255,138,138,.08);border:1px solid rgba(255,138,138,.2);border-radius:var(--rs)">
+        <div style="font-size:13px;font-weight:700;color:var(--red)">⚠️ Chemistry AAC — Not Started</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:3px">Assessed coursework component · 40% of Chemistry HL grade · Summer priority</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subjects -->
+  <div class="card">
+    <div class="card-hd">
+      <span class="card-title">📚 Subjects — LC 2027</span>
+      <span class="badge badge-yellow">9 subjects</span>
+    </div>
+    <div class="subjects-grid">
+      <div class="subj-card">
+        <div class="subj-name">Maths HL</div>
+        <span class="subj-grade grade-h1">H1</span>
+        <div class="subj-score">97% · 100 pts</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:97%;background:var(--green)"></div></div>
+      </div>
+      <div class="subj-card">
+        <div class="subj-name">Irish HL</div>
+        <span class="subj-grade grade-h1">H1</span>
+        <div class="subj-score">H1 · 100 pts</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:88%;background:var(--green)"></div></div>
+      </div>
+      <div class="subj-card critical">
+        <div class="subj-name">Physics HL</div>
+        <span class="subj-grade grade-h1">H1</span>
+        <div class="subj-score">95% · 100 pts</div>
+        <div class="subj-crit">AAC Critical</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:95%;background:var(--green)"></div></div>
+      </div>
+      <div class="subj-card critical target">
+        <div class="subj-name">Chemistry HL</div>
+        <span class="subj-grade grade-target">H2→H1</span>
+        <div class="subj-score">H2 now · 88 pts</div>
+        <div class="subj-crit">AAC Critical</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:72%;background:var(--yellow)"></div></div>
+      </div>
+      <div class="subj-card">
+        <div class="subj-name">PE HL</div>
+        <span class="subj-grade grade-h1">H1</span>
+        <div class="subj-score">90% · 100 pts</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:90%;background:var(--green)"></div></div>
+      </div>
+      <div class="subj-card target">
+        <div class="subj-name">Accounting HL</div>
+        <span class="subj-grade grade-target">75%→H1</span>
+        <div class="subj-score">75% · ~77 pts</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:75%;background:var(--yellow)"></div></div>
+      </div>
+      <div class="subj-card">
+        <div class="subj-name">Applied Maths</div>
+        <span class="subj-grade grade-ext">External</span>
+        <div class="subj-score">Target: H1 · 100 pts</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:60%;background:var(--orange)"></div></div>
+      </div>
+      <div class="subj-card">
+        <div class="subj-name">English HL</div>
+        <span class="subj-grade grade-h7">H7 target</span>
+        <div class="subj-score">Target: ≥40 pts</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:45%;background:var(--purple)"></div></div>
+      </div>
+      <div class="subj-card" style="grid-column:span 2">
+        <div class="subj-name">French HL</div>
+        <span class="subj-grade grade-ext">External H7</span>
+        <div class="subj-score">Target: ≥40 pts · Duolingo streak ongoing</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:40%;background:var(--purple)"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Points Estimator -->
+  <div class="card">
+    <div class="card-hd">
+      <span class="card-title">🎯 Points Estimator</span>
+      <span class="badge badge-yellow">Target: 625</span>
+    </div>
+    <div class="pts-display">
+      <div class="pts-current" id="ptsTotal">577</div>
+      <div class="pts-target">Current estimate · Target: 625</div>
+      <div class="pts-gap" id="ptsGap">Gap: 48 points</div>
+    </div>
+    <div class="prog-bar-lg" style="height:8px;margin-bottom:14px">
+      <div class="prog-fill-lg" id="ptsProg" style="background:linear-gradient(90deg,var(--yellow),var(--green))"></div>
+    </div>
+    <div class="pts-subjects" id="ptsList"></div>
+  </div>
+
+  <!-- Streaks -->
+  <div class="card">
+    <div class="card-hd">
+      <span class="card-title">🔥 Daily Streaks</span>
+    </div>
+    <div class="streak-grid">
+      <div class="streak-tile" onclick="bumpStreak('duolingo')">
+        <div class="streak-emoji">🇫🇷</div>
+        <div class="streak-num" id="sDuolingo" style="color:var(--orange)">0</div>
+        <div class="streak-lbl">Duolingo</div>
+      </div>
+      <div class="streak-tile" onclick="bumpStreak('anki')">
+        <div class="streak-emoji">🃏</div>
+        <div class="streak-num" id="sAnki" style="color:var(--purple)">0</div>
+        <div class="streak-lbl">Anki</div>
+      </div>
+      <div class="streak-tile" onclick="editStreak()">
+        <div class="streak-emoji">📅</div>
+        <div class="streak-num" id="sStudy" style="color:var(--blue)">0</div>
+        <div class="streak-lbl">Study Days</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--t3);text-align:center;margin-top:10px">Tap to log today · streaks reset if you miss a day</p>
+  </div>
+
+  <!-- Applied Maths Counter -->
+  <div class="card">
+    <div class="card-hd">
+      <span class="card-title">📐 Applied Maths</span>
+      <span class="badge badge-blue" id="amBadge">0 / 35</span>
+    </div>
+    <div class="am-big">
+      <div class="am-num" id="amCount">0</div>
+      <div class="am-label">lessons completed · target 35 total · 3/week</div>
+    </div>
+    <div class="prog-bar-lg"><div class="prog-fill-lg" id="amProg" style="width:0%"></div></div>
+    <div class="am-btns">
+      <button class="btn" onclick="adjAM(-1)">− 1</button>
+      <button class="btn btn-green" onclick="adjAM(1)">+ 1 Lesson</button>
+    </div>
+    <p style="font-size:11px;color:var(--t3);text-align:center;margin-top:10px">3 lessons/week needed · external tutor programme</p>
+  </div>
+
+  <!-- Study Session Logger -->
+  <div class="card">
+    <div class="card-hd">
+      <span class="card-title">📝 Study Sessions</span>
+      <span class="badge" id="studyCount">0 sessions</span>
+    </div>
+    <div class="form-grid" style="margin-bottom:8px">
+      <div class="fg">
+        <label class="fl">Subject</label>
+        <select class="fi" id="ssSubj">
+          <option>Maths HL</option>
+          <option>Irish HL</option>
+          <option>Physics HL</option>
+          <option>Chemistry HL</option>
+          <option>PE HL</option>
+          <option>Accounting HL</option>
+          <option>Applied Maths</option>
+          <option>English HL</option>
+          <option>French HL</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl">Type</label>
+        <select class="fi" id="ssType">
+          <option value="video">Video</option>
+          <option value="anki">Anki</option>
+          <option value="paper">Past Paper</option>
+          <option value="notes">Notes</option>
+          <option value="exam-q">Exam Qs</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg" style="margin-bottom:10px">
+      <label class="fl">Duration (min)</label>
+      <input class="fi" id="ssDur" type="number" placeholder="45">
+    </div>
+    <button class="btn btn-green btn-full" style="margin-top:0" onclick="addStudySession()">Log Session</button>
+    <div id="studyLog" style="margin-top:12px"></div>
+  </div>
+
+</div>
+
+<nav class="bnav">
+  <a href="index.html" class="ntab"><span class="ni">🏠</span><span>Today</span></a>
+  <a href="football.html" class="ntab"><span class="ni">⚽</span><span>Football</span></a>
+  <a href="study.html" class="ntab active"><span class="ni">📚</span><span>Study</span></a>
+  <a href="gym.html" class="ntab"><span class="ni">🏋️</span><span>Gym</span></a>
+  <a href="goals.html" class="ntab"><span class="ni">🎯</span><span>Goals</span></a>
+  <a href="finance.html" class="ntab"><span class="ni">💰</span><span>Finance</span></a>
+</nav>
+
+<script>
+const $ = id => document.getElementById(id);
+function ls(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d}catch{return d}}
+function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
+function dk(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+
+// Points estimator
+const SUBJECTS=[
+  {name:'Maths HL',pts:100},{name:'Irish HL',pts:100},{name:'Physics HL',pts:100},
+  {name:'Chemistry HL',pts:88},{name:'PE HL',pts:100},{name:'Accounting HL',pts:77},
+  {name:'Applied Maths',pts:70},{name:'English HL',pts:40},{name:'French HL',pts:40},
+];
+const TARGET=625;
+(function renderPoints(){
+  const pts=ls('jm_pts',SUBJECTS.map(s=>({...s})));
+  const total=pts.reduce((a,s)=>a+s.pts,0);
+  $('ptsTotal').textContent=total;
+  const gap=TARGET-total;
+  $('ptsGap').textContent=gap>0?`Gap: ${gap} points to target`:'🎉 Target reached!';
+  $('ptsGap').style.color=gap<=0?'var(--green)':'var(--red)';
+  $('ptsProg').style.width=Math.min(100,total/TARGET*100)+'%';
+  $('ptsList').innerHTML=pts.map((s,i)=>`
+    <div class="pts-row">
+      <span class="pts-subj">${s.name}</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button onclick="adjPts(${i},-5)" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;padding:0 4px">−</button>
+        <span class="pts-val">${s.pts}</span>
+        <button onclick="adjPts(${i},5)" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;padding:0 4px">+</button>
+      </div>
+    </div>`).join('');
+})();
+function adjPts(i,delta){
+  const pts=ls('jm_pts',SUBJECTS.map(s=>({...s})));
+  pts[i].pts=Math.max(0,Math.min(100,pts[i].pts+delta));
+  lss('jm_pts',pts);
+  const total=pts.reduce((a,s)=>a+s.pts,0);
+  $('ptsTotal').textContent=total;
+  const gap=TARGET-total;
+  $('ptsGap').textContent=gap>0?`Gap: ${gap} points to target`:'🎉 Target reached!';
+  $('ptsGap').style.color=gap<=0?'var(--green)':'var(--red)';
+  $('ptsProg').style.width=Math.min(100,total/TARGET*100)+'%';
+  $('ptsList').innerHTML=pts.map((s,i2)=>`
+    <div class="pts-row">
+      <span class="pts-subj">${s.name}</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button onclick="adjPts(${i2},-5)" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;padding:0 4px">−</button>
+        <span class="pts-val">${s.pts}</span>
+        <button onclick="adjPts(${i2},5)" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;padding:0 4px">+</button>
+      </div>
+    </div>`).join('');
+}
+
+// Streaks
+const SK='jm_study_streaks';
+function getStreak(id){
+  const data=ls(SK,{});
+  const s=data[id]||{count:0,last:null};
+  if(!s.last)return s.count;
+  const today=dk();if(s.last===today)return s.count;
+  const d=new Date(s.last);d.setDate(d.getDate()+1);
+  if(dk(d)===today)return s.count;
+  return 0;
+}
+function bumpStreak(id){
+  const data=ls(SK,{});const today=dk();
+  const s=data[id]||{count:0,last:null};
+  if(s.last===today){alert('Already logged today!');return;}
+  const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);
+  s.count=s.last===dk(yesterday)?s.count+1:1;
+  s.last=today;data[id]=s;lss(SK,data);
+  renderStreaks();
+}
+function editStreak(){
+  const n=prompt('Study day streak count:');
+  if(n===null)return;
+  const data=ls(SK,{});
+  data.study={count:+n||0,last:dk()};
+  lss(SK,data);renderStreaks();
+}
+function renderStreaks(){
+  $('sDuolingo').textContent=getStreak('duolingo');
+  $('sAnki').textContent=getStreak('anki');
+  $('sStudy').textContent=getStreak('study');
+}
+renderStreaks();
+
+// Applied Maths counter
+const AMK='jm_am_count';
+function renderAM(){
+  const n=ls(AMK,0);
+  $('amCount').textContent=n;$('amBadge').textContent=n+' / 35';
+  $('amProg').style.width=Math.min(100,n/35*100)+'%';
+}
+function adjAM(delta){const n=Math.max(0,ls(AMK,0)+delta);lss(AMK,n);renderAM();}
+renderAM();
+
+// Study sessions
+const SSKEY='jm_study_sessions';
+function addStudySession(){
+  const subj=$('ssSubj').value,type=$('ssType').value,dur=$('ssDur').value;
+  if(!dur){alert('Enter duration');return;}
+  const sessions=ls(SSKEY,[]);
+  sessions.unshift({subj,type,dur:+dur,date:dk(),ts:Date.now()});
+  lss(SSKEY,sessions);$('ssDur').value='';
+  // bump study streak
+  bumpStreak('study');
+  renderStudySessions();
+}
+function renderStudySessions(){
+  const sessions=ls(SSKEY,[]);
+  $('studyCount').textContent=sessions.length+' sessions';
+  if(!sessions.length){$('studyLog').innerHTML='<div style="color:var(--t3);font-size:13px;text-align:center;padding:12px">No sessions yet</div>';return;}
+  $('studyLog').innerHTML=sessions.slice(0,8).map(s=>`
+    <div class="log-item">
+      <div class="log-hd">
+        <span class="log-type ${s.type}">${s.type}</span>
+        <span class="log-dur">${s.dur} min</span>
+      </div>
+      <div class="log-subj">${s.subj}</div>
+      <div class="log-date">${s.date}</div>
+    </div>`).join('');
+}
+renderStudySessions();
+</script>
+</body>
+</html>

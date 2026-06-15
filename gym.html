@@ -124,7 +124,7 @@ html, body {
 .po-shell {
   width: 100%; max-width: min(720px, 100vw);
   margin: 0 auto;
-  padding: 24px max(16px, env(safe-area-inset-right)) calc(40px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  padding: 24px max(16px, env(safe-area-inset-right)) calc(90px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
   box-sizing: border-box;
 }
 /* Defeat the default `min-width: auto` on flex/grid items — without
@@ -677,7 +677,7 @@ img, video, canvas, svg { max-width: 100%; }
 
 @media (max-width: 480px) {
   /* === Mobile / iPhone polish === */
-  .po-shell { padding: 14px 10px calc(32px + env(safe-area-inset-bottom)); }
+  .po-shell { padding: 14px 10px calc(90px + env(safe-area-inset-bottom)); }
 
   /* Header — smaller title so the gear button never gets clipped */
   .po-title { font-size: 18px; letter-spacing: -0.01em; }
@@ -1262,12 +1262,73 @@ img, video, canvas, svg { max-width: 100%; }
 }
 
 .hidden { display: none !important; }
+
+/* Programme section */
+.prog-section { margin-bottom: 20px; border: 1px solid rgba(255,255,255,.08); border-radius: 16px; overflow: hidden; }
+.prog-header { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.prog-title { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); }
+.prog-day-tabs { display: flex; gap: 6px; }
+.prog-tab { padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: rgba(255,255,255,.55); font-size: 12px; font-weight: 600; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: all .15s; }
+.prog-tab.active { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.22); color: #fafafa; }
+.prog-body { padding: 0 16px 14px; display: none; }
+.prog-body.open { display: block; }
+.prog-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.prog-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 12px; background: rgba(255,255,255,.04); border-radius: 10px; font-size: 13px; }
+.prog-item-name { flex: 1; color: #fafafa; font-weight: 500; }
+.prog-item-sets { font-size: 12px; color: rgba(255,255,255,.45); white-space: nowrap; }
+.prog-imbalance { margin: 10px 0 0; padding: 10px 12px; background: rgba(255,138,138,.08); border: 1px solid rgba(255,138,138,.3); border-radius: 10px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: #ff8a8a; font-weight: 600; }
+
+/* Bottom nav */
+.bnav { position: fixed; bottom: 0; left: 0; right: 0; display: flex; background: rgba(10,10,11,.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid rgba(255,255,255,.08); padding: 6px max(0px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(0px,env(safe-area-inset-left)); z-index: 200; }
+.ntab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 5px 2px; text-decoration: none; color: rgba(255,255,255,.25); font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; -webkit-tap-highlight-color: transparent; transition: color .15s; }
+.ntab .ni { font-size: 20px; line-height: 1; }
+.ntab.active { color: #FAFAFA; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
 <div class="po-shell">
+
+  <!-- Programme reference -->
+  <div class="prog-section" id="progSection">
+    <div class="prog-header" onclick="toggleProg()">
+      <span class="prog-title">📋 Programme</span>
+      <div class="prog-day-tabs">
+        <button class="prog-tab active" id="ptWed" onclick="event.stopPropagation();showProg('wed')">Wed</button>
+        <button class="prog-tab" id="ptSun" onclick="event.stopPropagation();showProg('sun')">Sun</button>
+      </div>
+    </div>
+    <div class="prog-body" id="progBody">
+      <div class="prog-imbalance">⚠️ Left hamstring imbalance — priority focus every session</div>
+      <ul class="prog-list" id="progWed">
+        <li class="prog-item"><span class="prog-item-name">Squat / Trap bar deadlift</span><span class="prog-item-sets">3–4 × 3</span></li>
+        <li class="prog-item"><span class="prog-item-name">Bulgarian split squat</span><span class="prog-item-sets">2–3 × 5</span></li>
+        <li class="prog-item"><span class="prog-item-name">RDL / Nordics</span><span class="prog-item-sets">2–3 × 4–6</span></li>
+        <li class="prog-item"><span class="prog-item-name">Bench press</span><span class="prog-item-sets">3 × 5</span></li>
+        <li class="prog-item"><span class="prog-item-name">Pull-ups</span><span class="prog-item-sets">3 × 5</span></li>
+        <li class="prog-item"><span class="prog-item-name">Copenhagen plank</span><span class="prog-item-sets">3 × 20–30s</span></li>
+        <li class="prog-item"><span class="prog-item-name">Pallof press</span><span class="prog-item-sets">3 × 10</span></li>
+        <li class="prog-item"><span class="prog-item-name">Box jumps</span><span class="prog-item-sets">3 × 3</span></li>
+        <li class="prog-item"><span class="prog-item-name">Pogos</span><span class="prog-item-sets">3 × 3</span></li>
+        <li class="prog-item"><span class="prog-item-name">Accelerations</span><span class="prog-item-sets">3–5 reps</span></li>
+      </ul>
+      <ul class="prog-list" id="progSun" style="display:none">
+        <li class="prog-item"><span class="prog-item-name">Speed trap bar deadlift</span><span class="prog-item-sets">5 × 2</span></li>
+        <li class="prog-item"><span class="prog-item-name">Single-leg hip thrust</span><span class="prog-item-sets">3 × 5</span></li>
+        <li class="prog-item"><span class="prog-item-name">Copenhagen plank</span><span class="prog-item-sets">3 × 20–30s</span></li>
+        <li class="prog-item"><span class="prog-item-name">Single-arm landmine press</span><span class="prog-item-sets">3 × 5</span></li>
+        <li class="prog-item"><span class="prog-item-name">Bent-over row</span><span class="prog-item-sets">3 × 5</span></li>
+        <li class="prog-item"><span class="prog-item-name">Hip flexor KB hold</span><span class="prog-item-sets">3 × 20–30s</span></li>
+        <li class="prog-item"><span class="prog-item-name">Isometric calf raise</span><span class="prog-item-sets">3 × 30–45s</span></li>
+        <li class="prog-item"><span class="prog-item-name">Tibialis raises</span><span class="prog-item-sets">3 × 12–15</span></li>
+      </ul>
+      <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.04);border-radius:10px;font-size:12px;color:rgba(255,255,255,.5)">
+        Key lifts: Squat <strong style="color:#fafafa">97.5kg</strong> · Bench <strong style="color:#fafafa">72.5kg</strong> · Pull-ups <strong style="color:#fafafa">+5kg</strong> · Trap bar untested
+      </div>
+    </div>
+  </div>
+
   <button class="po-day-pill" type="button" id="dayPill" title="Tap to switch the day filter to today's split">
     <span class="po-day-date" id="dayPillDate">—</span>
     <span class="po-day-sep">·</span>
@@ -3508,7 +3569,34 @@ img, video, canvas, svg { max-width: 100%; }
     if (document.hidden) pcFlushPushOnUnload();
   });
 })();
+
+// Programme toggle
+(function(){
+  var open = false;
+  var cur = 'wed';
+  // Auto-open on Wed/Sun
+  var day = new Date().getDay();
+  if (day === 3 || day === 0) { open = true; cur = day === 3 ? 'wed' : 'sun'; showProg(cur); document.getElementById('progBody').classList.add('open'); }
+  window.toggleProg = function(){ open = !open; document.getElementById('progBody').classList.toggle('open', open); };
+  window.showProg = function(d){
+    cur = d;
+    document.getElementById('progWed').style.display = d==='wed' ? '' : 'none';
+    document.getElementById('progSun').style.display = d==='sun' ? '' : 'none';
+    document.getElementById('ptWed').classList.toggle('active', d==='wed');
+    document.getElementById('ptSun').classList.toggle('active', d==='sun');
+    if (!open) { open = true; document.getElementById('progBody').classList.add('open'); }
+  };
+})();
 </script>
+
+<nav class="bnav">
+  <a href="index.html" class="ntab"><span class="ni">🏠</span><span>Today</span></a>
+  <a href="football.html" class="ntab"><span class="ni">⚽</span><span>Football</span></a>
+  <a href="study.html" class="ntab"><span class="ni">📚</span><span>Study</span></a>
+  <a href="gym.html" class="ntab active"><span class="ni">🏋️</span><span>Gym</span></a>
+  <a href="goals.html" class="ntab"><span class="ni">🎯</span><span>Goals</span></a>
+  <a href="finance.html" class="ntab"><span class="ni">💰</span><span>Finance</span></a>
+</nav>
 
 </body>
 </html>
