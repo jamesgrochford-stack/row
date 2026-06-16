@@ -130,6 +130,11 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
     </div>
   </div>
 
+  <div id="strengthChartWrap" class="card" style="display:none">
+    <div class="card-hd"><span class="card-title">📈 Strength Progress</span></div>
+    <canvas id="strengthChart" height="140"></canvas>
+  </div>
+
   <div class="card">
     <div class="card-hd">
       <span class="card-title">📝 Workout Log <span class="sync-dot" id="syncDot"></span></span>
@@ -161,6 +166,11 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
     <div id="logList"></div>
   </div>
 
+  <div class="card">
+    <div class="card-hd"><span class="card-title">📊 Weekly Volume</span></div>
+    <div id="weekVol"></div>
+  </div>
+
 </div>
 
 <nav class="bnav">
@@ -172,6 +182,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
   <a href="finance.html" class="ntab"><span class="ni">💰</span><span>Finance</span></a>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ── Key Lifts / PBs ──────────────────────────────────────────────────────────
@@ -201,6 +212,7 @@ function confirmPB(id){
   savePBs(pbs);
   inp.value='';
   renderLifts();
+  renderStrengthChart();
 }
 function renderLifts(){
   var pbs=getPBs();
@@ -229,6 +241,74 @@ function renderLifts(){
   }).join('');
 }
 renderLifts();
+
+// ── Strength chart ───────────────────────────────────────────────────────────
+var strengthChartInst=null;
+function renderStrengthChart(){
+  var wrap=document.getElementById('strengthChartWrap');
+  var canvas=document.getElementById('strengthChart');
+  if(!wrap||!canvas||!window.Chart)return;
+  var pbs=getPBs();
+  var liftsToShow=['squat','bench','pullups'];
+  var liftNames=['Squat','Bench','Pull-ups'];
+  var liftColors=['rgba(125,211,252,.9)','rgba(110,231,183,.9)','rgba(251,191,36,.9)'];
+  var allDates={};
+  liftsToShow.forEach(function(id){(pbs[id]||[]).forEach(function(e){allDates[e.date]=1;});});
+  var sortedDates=Object.keys(allDates).sort();
+  if(sortedDates.length<2){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  var datasets=liftsToShow.map(function(id,i){
+    var history=(pbs[id]||[]).slice().reverse();
+    var dataMap={};history.forEach(function(e){dataMap[e.date]=parseFloat(e.val)||null;});
+    var data=sortedDates.map(function(d){return dataMap[d]!==undefined?dataMap[d]:null;});
+    return{label:liftNames[i],data:data,borderColor:liftColors[i],backgroundColor:'transparent',borderWidth:2,pointBackgroundColor:liftColors[i],pointRadius:4,spanGaps:true,tension:.3};
+  });
+  if(strengthChartInst)strengthChartInst.destroy();
+  strengthChartInst=new Chart(canvas.getContext('2d'),{
+    type:'line',
+    data:{labels:sortedDates,datasets:datasets},
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{display:true,labels:{color:'rgba(255,255,255,.6)',font:{size:10},boxWidth:12}},
+        tooltip:{callbacks:{label:function(ctx){return ctx.dataset.label+': '+(ctx.raw!==null?ctx.raw+'kg':'–');}}}
+      },
+      scales:{
+        x:{ticks:{color:'rgba(255,255,255,.3)',font:{size:9},maxRotation:30},grid:{display:false}},
+        y:{ticks:{color:'rgba(255,255,255,.3)',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}}
+      }
+    }
+  });
+}
+
+// ── Weekly volume ─────────────────────────────────────────────────────────────
+function renderWeeklyVolume(){
+  var el=document.getElementById('weekVol');
+  if(!el)return;
+  var logs=lsGet(LOG_KEY,[]);
+  var now=new Date();
+  var ws=new Date(now);ws.setDate(now.getDate()-now.getDay());ws.setHours(0,0,0,0);
+  var wedSets=0,sunSets=0;
+  logs.forEach(function(l){
+    var d=new Date(l.date);
+    if(d<ws)return;
+    var sets=l.sets||1;
+    if(d.getDay()===3)wedSets+=sets;
+    else if(d.getDay()===0)sunSets+=sets;
+  });
+  el.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+
+    '<div style="background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:14px;text-align:center">'+
+      '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px">Wednesday</div>'+
+      '<div style="font-size:38px;font-weight:800;font-family:var(--mono);color:var(--blue)">'+wedSets+'</div>'+
+      '<div style="font-size:10px;color:var(--t3);margin-top:3px">sets logged</div>'+
+    '</div>'+
+    '<div style="background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:14px;text-align:center">'+
+      '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px">Sunday</div>'+
+      '<div style="font-size:38px;font-weight:800;font-family:var(--mono);color:var(--purple)">'+sunSets+'</div>'+
+      '<div style="font-size:10px;color:var(--t3);margin-top:3px">sets logged</div>'+
+    '</div>'+
+  '</div>';
+}
 
 var SB_URL = 'https://ymksoxojvrbrmpdzfjxf.supabase.co';
 var SB_KEY = 'sb_publishable_sozYCEAdWzVt1Tni_EbPCA_gdw6JdvN';
@@ -268,6 +348,7 @@ function addLog(){
   gel('logSets').value='';
   gel('logNotes').value='';
   renderLog();
+  renderWeeklyVolume();
 }
 
 function delLog(id){
@@ -338,6 +419,8 @@ function renderLog(){
 })();
 
 renderLog();
+renderStrengthChart();
+renderWeeklyVolume();
 </script>
 </body>
 </html>

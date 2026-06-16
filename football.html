@@ -186,8 +186,9 @@ select.fi{cursor:pointer}
 
     <!-- Confidence graph -->
     <div class="conf-graph" id="confGraphWrap" style="display:none">
-      <div class="conf-graph-title">Confidence — last 10 sessions</div>
-      <div class="conf-graph-wrap"><canvas id="confCanvas" height="48" style="max-width:100%"></canvas></div>
+      <div class="conf-graph-title">Activation Trend — last 10 sessions</div>
+      <div class="conf-graph-wrap"><canvas id="confCanvas" height="90" style="max-width:100%"></canvas></div>
+      <div id="confTrendNote" style="display:none;font-size:11px;color:var(--orange);margin-top:6px;padding:6px 8px;background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.2);border-radius:var(--rs)">⚠️ Confidence flat — review 3-Action Rule pre-match protocol</div>
     </div>
 
     <div id="sessionLog" style="margin-top:12px"></div>
@@ -252,6 +253,9 @@ select.fi{cursor:pointer}
 
     <!-- This week breakdown -->
     <div id="filmBreakdown" style="margin-top:12px"></div>
+    <div id="filmChartWrap" style="display:none;margin-top:10px">
+      <canvas id="filmChart" height="100"></canvas>
+    </div>
 
     <!-- History -->
     <div id="filmHistory" style="margin-top:8px"></div>
@@ -268,6 +272,7 @@ select.fi{cursor:pointer}
   <a href="finance.html" class="ntab"><span class="ni">💰</span><span>Finance</span></a>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 function ls(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d}catch{return d}}
@@ -338,39 +343,80 @@ function renderSessions() {
   }).join('');
 }
 
+let confChartInst = null;
 function renderConfGraph(sessions) {
   const pts = sessions.filter(s => s.confidence > 0).slice(0, 10).reverse();
   const wrap = $('confGraphWrap');
   if (pts.length < 2) { wrap.style.display = 'none'; return; }
   wrap.style.display = 'block';
+
+  // Trend detection
+  const trendNote = $('confTrendNote');
+  if (trendNote) {
+    if (pts.length >= 3) {
+      const recent = pts.slice(-Math.min(5, pts.length));
+      const maxC = Math.max(...recent.map(s => s.confidence));
+      const minC = Math.min(...recent.map(s => s.confidence));
+      const flat = (maxC - minC) <= 1;
+      const dropping = pts[pts.length-1].confidence < pts[Math.max(0,pts.length-4)].confidence;
+      trendNote.style.display = (flat || dropping) ? 'block' : 'none';
+    } else { trendNote.style.display = 'none'; }
+  }
+
+  if (!window.Chart) return;
   const canvas = $('confCanvas');
-  const W = Math.min(canvas.parentElement.offsetWidth || 300, 500);
-  canvas.width = W; canvas.height = 48;
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, W, 48);
-  const pad = 6;
-  const xStep = (W - pad * 2) / (pts.length - 1);
-  const yScale = (48 - pad * 2) / 4; // 1-5 → 0-4
-  const coords = pts.map((s, i) => ({
-    x: pad + i * xStep,
-    y: 48 - pad - (s.confidence - 1) * yScale
-  }));
-  // Draw y gridlines at 1,3,5
-  ctx.strokeStyle = 'rgba(255,255,255,.06)';
-  ctx.lineWidth = 1;
-  [1, 3, 5].forEach(v => {
-    const y = 48 - pad - (v - 1) * yScale;
-    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  const labels = pts.map(s => s.date || '');
+  const data = pts.map(s => s.confidence);
+  const ptColors = data.map(v => v >= 4 ? '#6ee7b7' : v >= 3 ? '#fbbf24' : '#ff8a8a');
+  if (confChartInst) confChartInst.destroy();
+  confChartInst = new Chart(canvas.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        borderColor: 'rgba(125,211,252,.8)',
+        backgroundColor: 'rgba(125,211,252,.06)',
+        borderWidth: 2,
+        pointBackgroundColor: ptColors,
+        pointRadius: 5,
+        fill: true,
+        tension: .35
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => 'Confidence: '+ctx.raw+'/5' } } },
+      scales: {
+        x: { ticks: { color: 'rgba(255,255,255,.3)', font: { size: 9 }, maxRotation: 30 }, grid: { display: false } },
+        y: { min: 1, max: 5, ticks: { color: 'rgba(255,255,255,.3)', font: { size: 9 }, stepSize: 1 }, grid: { color: 'rgba(255,255,255,.05)' } }
+      }
+    }
   });
-  // Draw line
-  ctx.strokeStyle = 'rgba(125,211,252,.7)'; ctx.lineWidth = 2;
-  ctx.beginPath();
-  coords.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
-  ctx.stroke();
-  // Draw dots
-  coords.forEach(p => {
-    ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
-    ctx.fillStyle = '#7DD3FC'; ctx.fill();
+}
+
+let filmChartInst = null;
+function renderFilmChart(thisWeekLogs) {
+  const wrap = $('filmChartWrap');
+  const canvas = $('filmChart');
+  if (!wrap || !canvas || !window.Chart) return;
+  const allPlayers = [...PLAYERS, 'Other'];
+  const counts = allPlayers.map(p => thisWeekLogs.filter(l => l.player === p).length);
+  if (thisWeekLogs.length === 0) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  const colors = ['rgba(125,211,252,.8)','rgba(110,231,183,.8)','rgba(251,191,36,.8)','rgba(251,146,60,.8)','rgba(167,139,250,.8)'];
+  if (filmChartInst) filmChartInst.destroy();
+  filmChartInst = new Chart(canvas.getContext('2d'), {
+    type: 'bar',
+    data: { labels: allPlayers, datasets: [{ data: counts, backgroundColor: colors, borderRadius: 4, borderSkipped: false }] },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.raw + ' sessions' } } },
+      scales: {
+        x: { ticks: { color: 'rgba(255,255,255,.3)', font: { size: 9 }, maxRotation: 30 }, grid: { display: false } },
+        y: { min: 0, ticks: { color: 'rgba(255,255,255,.3)', font: { size: 9 }, stepSize: 1 }, grid: { color: 'rgba(255,255,255,.05)' } }
+      }
+    }
   });
 }
 
@@ -507,7 +553,8 @@ function renderFilm() {
     </div>`;
   }).join('');
 
-  // This week breakdown
+  // This week breakdown + chart
+  renderFilmChart(thisWeekLogs);
   if (thisWeekLogs.length > 0) {
     const byPlayer = {};
     thisWeekLogs.forEach(l => { byPlayer[l.player] = (byPlayer[l.player]||0) + 1; });

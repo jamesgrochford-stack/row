@@ -175,25 +175,6 @@ select.fi{cursor:pointer}
     </div>
   </div>
 
-  <!-- Subjects overview -->
-  <div class="card">
-    <div class="card-hd">
-      <span class="card-title">📚 Subjects — LC 2027</span>
-      <span class="badge badge-yellow">9 subjects</span>
-    </div>
-    <div class="subjects-grid">
-      <div class="subj-card"><div class="subj-name">Maths HL</div><span class="subj-grade grade-h1">H1</span><div class="subj-score">97% · 100 pts</div><div class="prog-bar"><div class="prog-fill" style="width:97%;background:var(--green)"></div></div></div>
-      <div class="subj-card"><div class="subj-name">Irish HL</div><span class="subj-grade grade-h1">H1</span><div class="subj-score">H1 · 100 pts</div><div class="prog-bar"><div class="prog-fill" style="width:88%;background:var(--green)"></div></div></div>
-      <div class="subj-card critical"><div class="subj-name">Physics HL</div><span class="subj-grade grade-h1">H1</span><div class="subj-score">95% · 100 pts</div><div class="subj-crit">AAC Critical</div><div class="prog-bar"><div class="prog-fill" style="width:95%;background:var(--green)"></div></div></div>
-      <div class="subj-card critical target"><div class="subj-name">Chemistry HL</div><span class="subj-grade grade-target">H2→H1</span><div class="subj-score">H2 now · 88 pts</div><div class="subj-crit">AAC Critical</div><div class="prog-bar"><div class="prog-fill" style="width:72%;background:var(--yellow)"></div></div></div>
-      <div class="subj-card"><div class="subj-name">PE HL</div><span class="subj-grade grade-h1">H1</span><div class="subj-score">90% · 100 pts</div><div class="prog-bar"><div class="prog-fill" style="width:90%;background:var(--green)"></div></div></div>
-      <div class="subj-card target"><div class="subj-name">Accounting HL</div><span class="subj-grade grade-target">75%→H1</span><div class="subj-score">75% · ~77 pts</div><div class="prog-bar"><div class="prog-fill" style="width:75%;background:var(--yellow)"></div></div></div>
-      <div class="subj-card"><div class="subj-name">Applied Maths</div><span class="subj-grade grade-ext">External</span><div class="subj-score">Target: H1 · 100 pts</div><div class="prog-bar"><div class="prog-fill" style="width:60%;background:var(--orange)"></div></div></div>
-      <div class="subj-card"><div class="subj-name">English HL</div><span class="subj-grade grade-h7">H7 target</span><div class="subj-score">Target: ≥37 pts</div><div class="prog-bar"><div class="prog-fill" style="width:45%;background:var(--purple)"></div></div></div>
-      <div class="subj-card" style="grid-column:span 2"><div class="subj-name">French HL</div><span class="subj-grade grade-ext">External H7</span><div class="subj-score">Target: ≥37 pts · Duolingo streak ongoing</div><div class="prog-bar"><div class="prog-fill" style="width:40%;background:var(--purple)"></div></div></div>
-    </div>
-  </div>
-
   <!-- Points Estimator -->
   <div class="card">
     <div class="card-hd">
@@ -256,6 +237,7 @@ select.fi{cursor:pointer}
       <span class="card-title">📝 Study Sessions</span>
       <span class="badge" id="studyCount">0 sessions</span>
     </div>
+
     <div class="form-grid" style="margin-bottom:8px">
       <div class="fg">
         <label class="fl">Subject</label>
@@ -282,6 +264,15 @@ select.fi{cursor:pointer}
     <div id="studyLog" style="margin-top:12px"></div>
   </div>
 
+  <!-- Study time chart -->
+  <div class="card">
+    <div class="card-hd">
+      <span class="card-title">📊 Study Time — This Week</span>
+      <span class="badge" id="weekTotalBadge">0 min</span>
+    </div>
+    <canvas id="studyChart" height="120"></canvas>
+  </div>
+
 </div>
 
 <nav class="bnav">
@@ -293,6 +284,7 @@ select.fi{cursor:pointer}
   <a href="finance.html" class="ntab"><span class="ni">💰</span><span>Finance</span></a>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 function ls(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d}catch{return d}}
@@ -350,7 +342,19 @@ function renderPoints(){
   }).join('');
 }
 renderPoints();
-function setGrade(i,grade){const grades=getGrades();grades[i]=grade;saveGrades(grades);renderPoints();}
+const OS_TO_SUBJ_IDX={chem:3,phys:2,acc:5,am:6,maths:0,irish:1,pe:4,eng:7,french:8};
+function setGrade(i,grade){
+  const grades=getGrades();grades[i]=grade;saveGrades(grades);renderPoints();
+  for(const[sid,sidx] of Object.entries(OS_TO_SUBJ_IDX)){
+    if(sidx!==i)continue;
+    const el=document.getElementById('osbadge-'+sid);
+    if(!el)continue;
+    const pts=GRADE_PTS[grade]||0;
+    const bonus=(SUBJECTS[i]&&SUBJECTS[i].mathsBonus&&pts===100)?25:0;
+    el.textContent=grade+'·'+(pts+bonus)+'p';
+    break;
+  }
+}
 
 // ── Subject OS ────────────────────────────────────────────────────────────────
 const SR_INTERVALS=[1,3,7,14,30];
@@ -601,12 +605,18 @@ function updateSOSBadge(){
 function initSOS(){
   let html='';
   const conf=ls('jm_conf',{});
+  const grades=getGrades();
   SUBJECTS_OS.forEach(subj=>{
     const topicData=getTopicData(subj.id);
     const allTopics=getAllTopics(subj.id);
     const covered=allTopics.filter(t=>topicData[t]&&topicData[t].covered).length;
     const due=allTopics.filter(t=>topicData[t]&&topicData[t].covered&&topicData[t].nextReview&&daysUntil(topicData[t].nextReview)<=0).length;
     const c=conf[subj.id]||'';
+    const sidx=OS_TO_SUBJ_IDX[subj.id];
+    const grade=sidx!==undefined?grades[sidx]:null;
+    const pts=grade?(GRADE_PTS[grade]||0):0;
+    const bonus=(sidx!==undefined&&SUBJECTS[sidx]&&SUBJECTS[sidx].mathsBonus&&pts===100)?25:0;
+    const gradeBadge=grade?`<span id="osbadge-${subj.id}" style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;background:rgba(251,191,36,.1);color:var(--yellow);flex-shrink:0;margin-right:4px">${grade}·${pts+bonus}p</span>`:'';
     html+=`<div class="sos-card">
       <div class="sos-hd" onclick="toggleOS('${subj.id}')">
         <div class="sos-dot${c?' '+c:''}" id="sos-dot-${subj.id}"></div>
@@ -614,6 +624,7 @@ function initSOS(){
           <div class="sos-hd-name">${subj.name}</div>
           <div class="sos-hd-stats" id="sos-stats-${subj.id}">${covered}/${allTopics.length} covered · ${due} due</div>
         </div>
+        ${gradeBadge}
         <div class="sos-chev" id="sos-chev-${subj.id}">›</div>
       </div>
       <div class="sos-body" id="sos-body-${subj.id}" data-sid="${subj.id}"></div>
@@ -671,7 +682,7 @@ function addStudySession(){
   const sessions=ls(SSKEY,[]);
   sessions.unshift({subj,type,dur:+dur,date:dk(),ts:Date.now()});
   lss(SSKEY,sessions);$('ssDur').value='';
-  bumpStreak('study');renderStudySessions();
+  bumpStreak('study');renderStudySessions();renderStudyChart();
 }
 function renderStudySessions(){
   const sessions=ls(SSKEY,[]);
@@ -685,6 +696,39 @@ function renderStudySessions(){
     </div>`).join('');
 }
 renderStudySessions();
+
+// ── Study time chart ──────────────────────────────────────────────────────────
+let studyChartInst=null;
+function renderStudyChart(){
+  const canvas=$('studyChart');
+  if(!canvas||!window.Chart)return;
+  const sessions=ls(SSKEY,[]);
+  const now=new Date();
+  const ws=new Date(now);ws.setDate(ws.getDate()-ws.getDay());ws.setHours(0,0,0,0);
+  const thisWeek=sessions.filter(s=>s.ts>=ws.getTime());
+  const subjectNames=SUBJECTS.map(s=>s.name);
+  const minBySubj={};subjectNames.forEach(n=>minBySubj[n]=0);
+  let total=0;
+  thisWeek.forEach(s=>{if(minBySubj[s.subj]!==undefined){minBySubj[s.subj]+=s.dur;total+=s.dur;}});
+  $('weekTotalBadge').textContent=total+' min';
+  const shortNames=subjectNames.map(n=>n.replace(' HL','').replace('Applied ','AM '));
+  const data=subjectNames.map(n=>minBySubj[n]);
+  const palette=['rgba(125,211,252,.8)','rgba(167,139,250,.8)','rgba(110,231,183,.8)','rgba(255,138,138,.8)','rgba(251,191,36,.8)','rgba(251,146,60,.8)','rgba(125,211,252,.55)','rgba(167,139,250,.55)','rgba(110,231,183,.55)'];
+  if(studyChartInst)studyChartInst.destroy();
+  studyChartInst=new Chart(canvas.getContext('2d'),{
+    type:'bar',
+    data:{labels:shortNames,datasets:[{data,backgroundColor:palette,borderRadius:4,borderSkipped:false}]},
+    options:{
+      responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.raw+' min'}}},
+      scales:{
+        x:{ticks:{color:'rgba(255,255,255,.3)',font:{size:9},maxRotation:30},grid:{display:false}},
+        y:{min:0,ticks:{color:'rgba(255,255,255,.3)',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}}
+      }
+    }
+  });
+}
+renderStudyChart();
 </script>
 </body>
 </html>

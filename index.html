@@ -132,6 +132,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
   <div class="day-banner" id="dayBanner">
     <div class="banner-bar" id="bannerBar"></div>
     <div class="banner-body">
+      <div id="bannerIllus" style="font-size:60px;line-height:1;margin-bottom:10px;text-align:center;user-select:none"></div>
       <div class="banner-daytype" id="dayType"></div>
       <div class="banner-name" id="dayName"></div>
       <div class="banner-sub" id="daySub"></div>
@@ -200,6 +201,10 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
       </div>
     </div>
     <div class="garmin-ts" id="garminTs"></div>
+    <div id="batteryChartWrap" style="display:none;margin-top:12px">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px">Recovery Trend — last 7 days</div>
+      <canvas id="batteryChart" height="70"></canvas>
+    </div>
   </div>
 
   <!-- Schedule card -->
@@ -312,22 +317,21 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
       <span style="font-size:11px;color:var(--t3)" id="waterTargetLabel">Target: 2.5L</span>
     </div>
     <div class="water-hero">
-      <div style="font-size:42px;font-weight:900;font-family:var(--mono);color:var(--blue);line-height:1">
-        <span id="waterMl">0</span><span style="font-size:20px;font-weight:700;color:rgba(125,211,252,.6)"> ml</span>
+      <div style="font-size:48px;font-weight:900;font-family:var(--mono);color:var(--blue);line-height:1">
+        <span id="waterL">0.0</span><span style="font-size:22px;font-weight:700;color:rgba(125,211,252,.6)">L</span>
         <span style="font-size:20px;font-weight:600;color:var(--t4)"> of </span>
-        <span id="waterTgtMl" style="font-size:32px;color:rgba(125,211,252,.5)">2500</span><span style="font-size:20px;font-weight:700;color:rgba(125,211,252,.35)"> ml</span>
+        <span id="waterTgtL" style="font-size:30px;color:rgba(125,211,252,.5)">2.0</span><span style="font-size:20px;font-weight:700;color:rgba(125,211,252,.35)">L today</span>
       </div>
-      <div class="water-of" id="waterOf" style="margin-top:4px"></div>
     </div>
     <div class="water-bar-row">
       <div class="water-bar"><div class="water-bar-fill" id="waterBarFill" style="width:0%"></div></div>
       <span class="water-pct" id="waterPct">0%</span>
     </div>
     <div class="water-btns">
-      <button class="wbtn" onclick="addWater(0.25)">+250ml</button>
-      <button class="wbtn" onclick="addWater(0.5)">+500ml</button>
-      <button class="wbtn" onclick="addWater(0.75)">+750ml</button>
-      <button class="wbtn" onclick="addWater(-0.25)" style="color:var(--t4)">−250ml</button>
+      <button class="wbtn" onclick="addWater(0.25)">+0.25L</button>
+      <button class="wbtn" onclick="addWater(0.5)">+0.5L</button>
+      <button class="wbtn" onclick="addWater(0.75)">+0.75L</button>
+      <button class="wbtn" onclick="addWater(-0.25)" style="color:var(--t4)">−0.25L</button>
     </div>
   </div>
 
@@ -349,6 +353,10 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
       <div class="habit" id="h-phone" onclick="toggleHabit('phone')"><div class="hcheck" id="hc-phone"></div><div class="hinfo"><div class="hname">📵 Phone down by 21:30</div><div class="hstreak" id="hs-phone"></div></div></div>
       <div class="habit" id="h-water" onclick="toggleHabit('water')"><div class="hcheck" id="hc-water"></div><div class="hinfo"><div class="hname">💧 Water target hit</div><div class="hstreak" id="hs-water"></div></div></div>
       <div class="habit" id="h-nutrition" onclick="toggleHabit('nutrition')"><div class="hcheck" id="hc-nutrition"></div><div class="hinfo"><div class="hname">🥗 Post-training nutrition</div><div class="hstreak" id="hs-nutrition"></div></div></div>
+    </div>
+    <div style="margin-top:14px">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:7px">14-day completion</div>
+      <canvas id="habitChart" height="80"></canvas>
     </div>
   </div>
 
@@ -377,6 +385,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
   <a href="finance.html" class="ntab"><span class="ni">💰</span><span>Finance</span></a>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 var SB_URL = 'https://ymksoxojvrbrmpdzfjxf.supabase.co';
@@ -389,6 +398,7 @@ var HABIT_LABELS = {'am-skin':'🌅 Morning skincare','pm-skin':'🌙 Evening sk
 var DAY_NAMES    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 var DAY_TYPES    = ['Recovery Day','Evening Training Day','Morning Training Day','Free Day','Morning Training Day','Free Day','Match Day'];
 var BANNER_COLORS= {0:'#a78bfa',1:'#7DD3FC',2:'#7DD3FC',3:'#6ee7b7',4:'#7DD3FC',5:'#6ee7b7',6:'#fb923c'};
+var BANNER_ILLUS = {0:'🌊',1:'🌙',2:'🌅',3:'🏔️',4:'🌅',5:'🌄',6:'⚽'};
 var WAKE_TIMES   = {0:'07:30',1:'07:30',2:'06:15',3:'07:30',4:'06:15',5:'07:30',6:'08:00'};
 var KEY_EVENTS   = {
   0:'Gym 09:00 · Pool & recovery 11:00',
@@ -419,6 +429,7 @@ function initDayBanner(){
   gel('dayType').style.color=color;
   gel('dayName').textContent=DAY_NAMES[dow];
   gel('daySub').textContent='Wake '+WAKE_TIMES[dow]+' · '+KEY_EVENTS[dow];
+  var ilEl=gel('bannerIllus'); if(ilEl) ilEl.textContent=BANNER_ILLUS[dow]||'📅';
   // show schedule
   for(var k in SCHED_IDS){ var el=gel(SCHED_IDS[k]); if(el) el.style.display='none'; }
   var sel=gel(SCHED_IDS[dow]); if(sel) sel.style.display='flex';
@@ -450,10 +461,15 @@ function renderGarmin(){
   // Timestamp
   if(data.savedAt){
     var t=new Date(data.savedAt);
-    gel('garminTs').textContent='Updated today at '+('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2);
+    var sk=t.getFullYear()+'-'+('0'+(t.getMonth()+1)).slice(-2)+'-'+('0'+t.getDate()).slice(-2);
+    var yd=new Date(); yd.setDate(yd.getDate()-1);
+    var yk=dateKey(yd);
+    var when=sk===dateKey()?'today':(sk===yk?'yesterday':sk);
+    gel('garminTs').textContent='Last updated: '+when;
   } else {
-    gel('garminTs').textContent='No data entered today';
+    gel('garminTs').textContent='No data entered yet';
   }
+  renderBatteryChart();
 }
 
 function saveGarmin(){
@@ -484,9 +500,8 @@ function renderWater(){
   var target=getWaterTarget();
   var targetMl=target*1000;
   var pct=Math.min(100,Math.round(ml/targetMl*100));
-  gel('waterMl').textContent=ml;
-  var tgtEl=gel('waterTgtMl'); if(tgtEl) tgtEl.textContent=targetMl;
-  gel('waterOf').textContent=(ml/1000).toFixed(2)+'L drunk today';
+  var lEl=gel('waterL'); if(lEl) lEl.textContent=(ml/1000).toFixed(1);
+  var tEl=gel('waterTgtL'); if(tEl) tEl.textContent=target.toFixed(1);
   gel('waterBarFill').style.width=pct+'%';
   gel('waterPct').textContent=pct+'%';
   gel('waterTargetLabel').textContent='Target: '+target+'L';
@@ -532,7 +547,7 @@ function toggleHabit(id){
   var k=habitsKey();
   var data=lsGet(k,{});
   data[id]=!data[id];
-  lsSet(k,data); sbPush(k,data,'habitsDot'); renderHabits();
+  lsSet(k,data); sbPush(k,data,'habitsDot'); renderHabits(); renderHabitChart();
 }
 
 /* ── Yesterday modal ── */
@@ -568,6 +583,83 @@ function toggleYdayHabit(id){
 }
 function closeYdayModal(e){ if(e.target===gel('ydayModal')) gel('ydayModal').classList.remove('open'); }
 function closeYdayModalBtn(){ gel('ydayModal').classList.remove('open'); }
+
+/* ── Habit chart ── */
+var habitChartInst=null;
+function renderHabitChart(){
+  var canvas=gel('habitChart');
+  if(!canvas||!window.Chart)return;
+  var labels=[],counts=[],colors=[];
+  var now=new Date();
+  var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for(var i=13;i>=0;i--){
+    var d=new Date(now);d.setDate(d.getDate()-i);
+    var data=lsGet(habitsKey(d),{});
+    var done=0;
+    for(var j=0;j<HABIT_IDS.length;j++){if(data[HABIT_IDS[j]])done++;}
+    labels.push(d.getDate()+' '+mo[d.getMonth()]);
+    counts.push(done);
+    if(done===8)colors.push('rgba(110,231,183,.85)');
+    else if(done>=5)colors.push('rgba(251,191,36,.85)');
+    else colors.push('rgba(255,138,138,.75)');
+  }
+  if(habitChartInst)habitChartInst.destroy();
+  habitChartInst=new Chart(canvas.getContext('2d'),{
+    type:'bar',
+    data:{labels:labels,datasets:[{data:counts,backgroundColor:colors,borderRadius:3,borderSkipped:false}]},
+    options:{
+      responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.raw+'/8 habits';}}}},
+      scales:{
+        x:{ticks:{color:'rgba(255,255,255,.3)',font:{size:8},maxRotation:45},grid:{display:false}},
+        y:{min:0,max:8,ticks:{color:'rgba(255,255,255,.3)',font:{size:9},stepSize:2},grid:{color:'rgba(255,255,255,.05)'}}
+      }
+    }
+  });
+}
+
+/* ── Battery trend chart ── */
+var batteryChartInst=null;
+function renderBatteryChart(){
+  var wrap=gel('batteryChartWrap');
+  var canvas=gel('batteryChart');
+  if(!wrap||!canvas||!window.Chart)return;
+  var labels=[],vals=[],hasData=0;
+  var now=new Date();
+  var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for(var i=6;i>=0;i--){
+    var d=new Date(now);d.setDate(d.getDate()-i);
+    var data=lsGet('jm_garmin_'+dateKey(d),{});
+    labels.push(d.getDate()+' '+mo[d.getMonth()]);
+    if(data.battery!==undefined){vals.push(data.battery);hasData++;}
+    else vals.push(null);
+  }
+  if(hasData<2){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  if(batteryChartInst)batteryChartInst.destroy();
+  batteryChartInst=new Chart(canvas.getContext('2d'),{
+    type:'line',
+    data:{labels:labels,datasets:[{
+      data:vals,
+      borderColor:'rgba(110,231,183,.8)',
+      backgroundColor:'rgba(110,231,183,.07)',
+      borderWidth:2,
+      pointBackgroundColor:'#6ee7b7',
+      pointRadius:4,
+      spanGaps:true,
+      fill:true,
+      tension:.35
+    }]},
+    options:{
+      responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return 'Battery: '+(ctx.raw!==null?ctx.raw:'–')+'/100';}}}},
+      scales:{
+        x:{ticks:{color:'rgba(255,255,255,.3)',font:{size:9}},grid:{display:false}},
+        y:{min:0,max:100,ticks:{color:'rgba(255,255,255,.3)',font:{size:9},stepSize:25},grid:{color:'rgba(255,255,255,.05)'}}
+      }
+    }
+  });
+}
 
 /* ── Supabase ── */
 function sbPush(key,val,dotId){
@@ -615,6 +707,7 @@ initDayBanner();
 renderGarmin();
 renderHabits();
 renderWater();
+renderHabitChart();
 </script>
 </body>
 </html>
