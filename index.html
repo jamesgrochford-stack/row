@@ -23,10 +23,17 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 /* ── Day banner ── */
 .day-banner{border-radius:var(--r);background:var(--s);border:1px solid var(--b);display:flex;overflow:hidden}
 .banner-bar{width:5px;flex-shrink:0}
-.banner-body{padding:14px 16px;flex:1}
+.banner-body{padding:0 0 14px;flex:1;overflow:hidden}
+.banner-illus-bg{text-align:center;padding:20px 16px 16px;margin-bottom:10px;transition:background .4s}
+.banner-illus-bg .ni-emoji{font-size:68px;line-height:1;user-select:none;display:block;filter:drop-shadow(0 4px 24px rgba(255,255,255,.12))}
+.banner-text{padding:0 16px}
 .banner-daytype{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;margin-bottom:5px}
 .banner-name{font-size:28px;font-weight:900;color:var(--t1);line-height:1;margin-bottom:6px}
 .banner-sub{font-size:12px;color:var(--t3);line-height:1.4}
+
+/* ── Journal ── */
+.journal-ta{width:100%;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:10px 12px;color:var(--t1);font-family:var(--font);font-size:14px;line-height:1.5;resize:none;outline:none;min-height:42px;overflow:hidden;transition:border-color .15s;display:block}
+.journal-ta:focus{border-color:var(--b2)}
 
 /* ── Card ── */
 .card{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:16px}
@@ -132,10 +139,14 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
   <div class="day-banner" id="dayBanner">
     <div class="banner-bar" id="bannerBar"></div>
     <div class="banner-body">
-      <div id="bannerIllus" style="font-size:60px;line-height:1;margin-bottom:10px;text-align:center;user-select:none"></div>
-      <div class="banner-daytype" id="dayType"></div>
-      <div class="banner-name" id="dayName"></div>
-      <div class="banner-sub" id="daySub"></div>
+      <div class="banner-illus-bg" id="bannerIllusBg">
+        <span id="bannerIllus" class="ni-emoji"></span>
+      </div>
+      <div class="banner-text">
+        <div class="banner-daytype" id="dayType"></div>
+        <div class="banner-name" id="dayName"></div>
+        <div class="banner-sub" id="daySub"></div>
+      </div>
     </div>
   </div>
 
@@ -360,6 +371,24 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
     </div>
   </div>
 
+  <!-- Journal card -->
+  <div class="card">
+    <div class="card-hd">
+      <span class="card-title">📝 Today's Note <span class="sync-dot" id="journalDot"></span></span>
+    </div>
+    <textarea id="journalText" class="journal-ta" placeholder="How's the day going…" oninput="autoResizeJournal(this)" onblur="saveJournal()"></textarea>
+    <div id="ydayJournal" style="display:none;margin-top:10px;padding:8px 10px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--b)">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t4);margin-bottom:4px">Yesterday</div>
+      <div id="ydayJournalText" style="font-size:12px;color:var(--t4);line-height:1.5"></div>
+    </div>
+  </div>
+
+  <!-- Goals link -->
+  <a href="goals.html" style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--s);border:1px solid var(--b);border-radius:var(--rs);text-decoration:none">
+    <span style="font-size:12px;font-weight:600;color:var(--t2)">🎯 Goals &amp; Milestones</span>
+    <span style="font-size:13px;color:var(--t3)">›</span>
+  </a>
+
 </div>
 
 <!-- Yesterday habits modal -->
@@ -381,7 +410,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
   <a href="football.html" class="ntab"><span class="ni">⚽</span><span>Football</span></a>
   <a href="study.html" class="ntab"><span class="ni">📚</span><span>Study</span></a>
   <a href="gym.html" class="ntab"><span class="ni">🏋️</span><span>Gym</span></a>
-  <a href="goals.html" class="ntab"><span class="ni">🎯</span><span>Goals</span></a>
+  <a href="nutrition.html" class="ntab"><span class="ni">🥗</span><span>Nutrition</span></a>
   <a href="finance.html" class="ntab"><span class="ni">💰</span><span>Finance</span></a>
 </nav>
 
@@ -399,6 +428,15 @@ var DAY_NAMES    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday',
 var DAY_TYPES    = ['Recovery Day','Evening Training Day','Morning Training Day','Free Day','Morning Training Day','Free Day','Match Day'];
 var BANNER_COLORS= {0:'#a78bfa',1:'#7DD3FC',2:'#7DD3FC',3:'#6ee7b7',4:'#7DD3FC',5:'#6ee7b7',6:'#fb923c'};
 var BANNER_ILLUS = {0:'🌊',1:'🌙',2:'🌅',3:'🏔️',4:'🌅',5:'🌄',6:'⚽'};
+var BANNER_GRADS = {
+  0:'linear-gradient(160deg,rgba(60,10,100,.55),rgba(40,5,80,.2))',
+  1:'linear-gradient(160deg,rgba(10,15,60,.65),rgba(15,20,80,.3))',
+  2:'linear-gradient(160deg,rgba(7,30,75,.6),rgba(7,28,64,.2))',
+  3:'linear-gradient(160deg,rgba(5,60,40,.55),rgba(3,40,25,.2))',
+  4:'linear-gradient(160deg,rgba(7,30,75,.6),rgba(7,28,64,.2))',
+  5:'linear-gradient(160deg,rgba(5,60,40,.55),rgba(3,40,25,.2))',
+  6:'linear-gradient(160deg,rgba(110,45,5,.6),rgba(80,30,3,.25))',
+};
 var WAKE_TIMES   = {0:'07:30',1:'07:30',2:'06:15',3:'07:30',4:'06:15',5:'07:30',6:'08:00'};
 var KEY_EVENTS   = {
   0:'Gym 09:00 · Pool & recovery 11:00',
@@ -430,6 +468,7 @@ function initDayBanner(){
   gel('dayName').textContent=DAY_NAMES[dow];
   gel('daySub').textContent='Wake '+WAKE_TIMES[dow]+' · '+KEY_EVENTS[dow];
   var ilEl=gel('bannerIllus'); if(ilEl) ilEl.textContent=BANNER_ILLUS[dow]||'📅';
+  var bgEl=gel('bannerIllusBg'); if(bgEl) bgEl.style.background=BANNER_GRADS[dow]||'';
   // show schedule
   for(var k in SCHED_IDS){ var el=gel(SCHED_IDS[k]); if(el) el.style.display='none'; }
   var sel=gel(SCHED_IDS[dow]); if(sel) sel.style.display='flex';
@@ -584,6 +623,25 @@ function toggleYdayHabit(id){
 function closeYdayModal(e){ if(e.target===gel('ydayModal')) gel('ydayModal').classList.remove('open'); }
 function closeYdayModalBtn(){ gel('ydayModal').classList.remove('open'); }
 
+/* ── Journal ── */
+function journalKey(d){ return 'jm_journal_'+dateKey(d); }
+function autoResizeJournal(el){ el.style.height='auto'; el.style.height=el.scrollHeight+'px'; }
+function saveJournal(){
+  var text=gel('journalText').value;
+  var k=journalKey();
+  var data={text:text,savedAt:new Date().toISOString()};
+  lsSet(k,data); sbPush(k,data,'journalDot');
+}
+function renderJournal(){
+  var data=lsGet(journalKey(),{});
+  var ta=gel('journalText');
+  if(ta&&data.text){ta.value=data.text;autoResizeJournal(ta);}
+  var yd=new Date();yd.setDate(yd.getDate()-1);
+  var ydData=lsGet(journalKey(yd),{});
+  var ydSec=gel('ydayJournal'),ydTxt=gel('ydayJournalText');
+  if(ydData.text&&ydSec&&ydTxt){ydSec.style.display='block';ydTxt.textContent=ydData.text;}
+}
+
 /* ── Habit chart ── */
 var habitChartInst=null;
 function renderHabitChart(){
@@ -675,7 +733,9 @@ function sbPush(key,val,dotId){
   if(!window.supabase) return;
   sb=window.supabase.createClient(SB_URL,SB_KEY);
   var today=dateKey();
-  var syncKeys=[garminKey(),'jm_habits_'+today,'jm_water_'+today];
+  var syncKeys=[garminKey(),'jm_habits_'+today,'jm_water_'+today,journalKey()];
+  var ydJObj=new Date();ydJObj.setDate(ydJObj.getDate()-1);syncKeys.push(journalKey(ydJObj));
+  for(var ih=1;ih<=13;ih++){var hd=new Date();hd.setDate(hd.getDate()-ih);syncKeys.push('jm_habits_'+dateKey(hd));}
   sb.from('app_state').select('key,data').in('key',syncKeys)
     .then(function(res){
       if(res&&res.data){
@@ -683,7 +743,7 @@ function sbPush(key,val,dotId){
           localStorage.setItem(row.key,JSON.stringify(row.data));
           lastSync[row.key]=JSON.stringify(row.data);
         });
-        renderGarmin(); renderHabits(); renderWater();
+        renderGarmin(); renderHabits(); renderWater(); renderHabitChart(); renderJournal();
       }
       setSyncDot('garminDot','synced'); setSyncDot('habitsDot','synced'); setSyncDot('waterDot','synced');
       setTimeout(function(){ setSyncDot('garminDot',''); setSyncDot('habitsDot',''); setSyncDot('waterDot',''); },2000);
@@ -708,6 +768,7 @@ renderGarmin();
 renderHabits();
 renderWater();
 renderHabitChart();
+renderJournal();
 </script>
 </body>
 </html>

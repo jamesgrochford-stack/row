@@ -280,12 +280,17 @@ select.fi{cursor:pointer}
   <a href="football.html" class="ntab"><span class="ni">⚽</span><span>Football</span></a>
   <a href="study.html" class="ntab active"><span class="ni">📚</span><span>Study</span></a>
   <a href="gym.html" class="ntab"><span class="ni">🏋️</span><span>Gym</span></a>
-  <a href="goals.html" class="ntab"><span class="ni">🎯</span><span>Goals</span></a>
+  <a href="nutrition.html" class="ntab"><span class="ni">🥗</span><span>Nutrition</span></a>
   <a href="finance.html" class="ntab"><span class="ni">💰</span><span>Finance</span></a>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
+const SB_URL_S='https://ymksoxojvrbrmpdzfjxf.supabase.co';
+const SB_KEY_S='sb_publishable_sozYCEAdWzVt1Tni_EbPCA_gdw6JdvN';
+let sbS=null;
+function sbPushS(key,val){if(!sbS)return;sbS.from('app_state').upsert({key,data:val,updated_at:new Date().toISOString()},{onConflict:'key'}).catch(()=>{});}
 const $ = id => document.getElementById(id);
 function ls(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d}catch{return d}}
 function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
@@ -310,7 +315,7 @@ const SUBJECTS=[
 ];
 const TARGET=625;
 function getGrades(){const s=ls('jm_pts_grades',null);return(s&&s.length===SUBJECTS.length)?s:SUBJECTS.map(s=>s.defaultGrade);}
-function saveGrades(grades){lss('jm_pts_grades',grades);lss('jm_pts',SUBJECTS.map((s,i)=>({name:s.name,pts:GRADE_PTS[grades[i]],mathsBonus:s.mathsBonus||false})));}
+function saveGrades(grades){lss('jm_pts_grades',grades);lss('jm_pts',SUBJECTS.map((s,i)=>({name:s.name,pts:GRADE_PTS[grades[i]],mathsBonus:s.mathsBonus||false})));sbPushS('jm_pts_grades',grades);}
 function calcTop6(grades){
   const eff=grades.map((g,i)=>{const pts=GRADE_PTS[g]||0;const bonus=(SUBJECTS[i].mathsBonus&&pts===100)?25:0;return{name:SUBJECTS[i].name,pts,bonus,eff:pts+bonus,idx:i};});
   const sorted=[...eff].sort((a,b)=>b.eff-a.eff);
@@ -387,9 +392,9 @@ const SUBJECTS_OS=[
 ];
 
 function getTopicData(sid){return ls('jm_topics_'+sid,{});}
-function saveTopicData(sid,data){lss('jm_topics_'+sid,data);}
+function saveTopicData(sid,data){lss('jm_topics_'+sid,data);sbPushS('jm_topics_'+sid,data);}
 function getCustomTopics(sid){return ls('jm_ctopics_'+sid,[]);}
-function saveCustomTopics(sid,arr){lss('jm_ctopics_'+sid,arr);}
+function saveCustomTopics(sid,arr){lss('jm_ctopics_'+sid,arr);sbPushS('jm_ctopics_'+sid,arr);}
 function getAllTopics(sid){
   const subj=SUBJECTS_OS.find(s=>s.id===sid);
   return [...subj.topics,...getCustomTopics(sid)];
@@ -457,6 +462,7 @@ function setConf(sid,level){
   const conf=ls('jm_conf',{});
   conf[sid]=level;
   lss('jm_conf',conf);
+  sbPushS('jm_conf',conf);
   refreshOSCard(sid);
 }
 
@@ -470,6 +476,7 @@ function addResult(sid){
   const results=ls('jm_results_'+sid,[]);
   results.unshift({date:dateEl.value||dk(),score,notes:notesEl.value.trim()});
   lss('jm_results_'+sid,results);
+  sbPushS('jm_results_'+sid,results);
   scoreEl.value='';notesEl.value='';
   refreshOSResultsOnly(sid);
 }
@@ -478,6 +485,7 @@ function delResult(sid,i){
   const results=ls('jm_results_'+sid,[]);
   results.splice(i,1);
   lss('jm_results_'+sid,results);
+  sbPushS('jm_results_'+sid,results);
   refreshOSResultsOnly(sid);
 }
 
@@ -651,11 +659,11 @@ function bumpStreak(id){
   if(s.last===today){alert('Already logged today!');return;}
   const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);
   s.count=s.last===dk(yesterday)?s.count+1:1;
-  s.last=today;data[id]=s;lss(SK,data);renderStreaks();
+  s.last=today;data[id]=s;lss(SK,data);sbPushS(SK,data);renderStreaks();
 }
 function editStreak(){
   const n=prompt('Study day streak count:');if(n===null)return;
-  const data=ls(SK,{});data.study={count:+n||0,last:dk()};lss(SK,data);renderStreaks();
+  const data=ls(SK,{});data.study={count:+n||0,last:dk()};lss(SK,data);sbPushS(SK,data);renderStreaks();
 }
 function renderStreaks(){
   $('sDuolingo').textContent=getStreak('duolingo');
@@ -671,7 +679,7 @@ function renderAM(){
   $('amCount').textContent=n;$('amBadge').textContent=n+' / 35';
   $('amProg').style.width=Math.min(100,n/35*100)+'%';
 }
-function adjAM(delta){const n=Math.max(0,ls(AMK,0)+delta);lss(AMK,n);renderAM();}
+function adjAM(delta){const n=Math.max(0,ls(AMK,0)+delta);lss(AMK,n);sbPushS(AMK,n);renderAM();}
 renderAM();
 
 // ── Study sessions ────────────────────────────────────────────────────────────
@@ -681,7 +689,7 @@ function addStudySession(){
   if(!dur){alert('Enter duration');return;}
   const sessions=ls(SSKEY,[]);
   sessions.unshift({subj,type,dur:+dur,date:dk(),ts:Date.now()});
-  lss(SSKEY,sessions);$('ssDur').value='';
+  lss(SSKEY,sessions);sbPushS(SSKEY,sessions);$('ssDur').value='';
   bumpStreak('study');renderStudySessions();renderStudyChart();
 }
 function renderStudySessions(){
@@ -729,6 +737,20 @@ function renderStudyChart(){
   });
 }
 renderStudyChart();
+
+(function sbStudyInit(){
+  if(!window.supabase)return;
+  sbS=window.supabase.createClient(SB_URL_S,SB_KEY_S);
+  const keys=['jm_conf','jm_pts_grades',AMK,SK,SSKEY];
+  SUBJECTS_OS.forEach(s=>{keys.push('jm_topics_'+s.id);keys.push('jm_ctopics_'+s.id);keys.push('jm_results_'+s.id);});
+  sbS.from('app_state').select('key,data').in('key',keys)
+    .then(res=>{
+      if(res&&res.data){
+        res.data.forEach(row=>localStorage.setItem(row.key,JSON.stringify(row.data)));
+        renderPoints();initSOS();renderStreaks();renderAM();renderStudyChart();renderStudySessions();
+      }
+    }).catch(()=>{});
+})();
 </script>
 </body>
 </html>
