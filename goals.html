@@ -133,7 +133,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
       <div class="goal-num">Goal 05</div>
       <span class="goal-emoji">💆</span>
       <div class="goal-title">Physical & Personal Image</div>
-      <div class="goal-desc">Consistent skincare, SPF, retainer, grooming and physique. Daily habits compounding over time.</div>
+      <div class="goal-desc">Consistent skincare, SPF, retainer, grooming and physique. Daily habits compounding over time. Discipline is the output.</div>
       <span class="goal-horizon" style="background:rgba(167,139,250,.1);color:var(--purple)">Daily · ongoing</span>
       <div class="goal-milestones" style="margin-top:10px" id="gm5"></div>
     </div>
@@ -208,12 +208,12 @@ renderMilestones('gm1');renderMilestones('gm5');
 
 // Summer projects
 const PROJECTS=[
-  {name:'Chemistry AAC Research',tag:'crit',critical:true},
-  {name:'Physics AAC Research',tag:'crit',critical:true},
-  {name:'PE Project 1',tag:'school',critical:false},
-  {name:'PE Project 2',tag:'school',critical:false},
-  {name:'Applied Maths completion (35 lessons)',tag:'school',critical:false},
-  {name:'Vinted — list 20+ items',tag:'summer',critical:false},
+  {name:'Chemistry AAC topic selected',tag:'crit',critical:true},
+  {name:'Physics AAC topic selected',tag:'crit',critical:true},
+  {name:'PE project 1 started',tag:'school',critical:false},
+  {name:'PE project 2 started',tag:'school',critical:false},
+  {name:'Applied Maths summer lessons complete',tag:'school',critical:false},
+  {name:'Vinted listings live',tag:'summer',critical:false},
 ];
 const PK='jm_projects';
 function renderProjects(){
@@ -232,15 +232,19 @@ function renderProjects(){
 function toggleProj(i){const d=ls(PK,{});d[i]=!d[i];lss(PK,d);renderProjects();}
 renderProjects();
 
-// Points sync with study page
-(function(){
-  const SUBJECTS=[
-    {name:'Maths HL',pts:100},{name:'Irish HL',pts:100},{name:'Physics HL',pts:100},
-    {name:'Chemistry HL',pts:88},{name:'PE HL',pts:100},{name:'Accounting HL',pts:77},
-    {name:'Applied Maths',pts:70},{name:'English HL',pts:40},{name:'French HL',pts:40},
-  ];
-  const pts=ls('jm_pts',SUBJECTS);
-  const total=pts.reduce((a,s)=>a+s.pts,0);
+// Points tracker — same top-6 + Maths bonus calc as study page
+(function renderGoalPts(){
+  const GRADE_PTS={H1:100,H2:88,H3:77,H4:66,H5:56,H6:46,H7:37,H8:0};
+  const DEFAULT_GRADES=['H1','H1','H1','H2','H1','H3','H1','H7','H7'];
+  const MATHS_BONUS_IDX=0;
+  const grades=ls('jm_pts_grades',DEFAULT_GRADES);
+  const effective=grades.map((g,i)=>{
+    const pts=GRADE_PTS[g]||0;
+    const bonus=(i===MATHS_BONUS_IDX&&pts===100)?25:0;
+    return pts+bonus;
+  });
+  const sorted=[...effective].sort((a,b)=>b-a);
+  const total=sorted.slice(0,6).reduce((a,v)=>a+v,0);
   const gap=625-total;
   $('gptsNow').textContent=total;
   $('gptsGap').textContent=gap>0?gap+' points to target':'🎉 Target reached!';

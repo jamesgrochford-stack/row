@@ -193,18 +193,18 @@ select.fi{cursor:pointer}
       <span class="card-title">🎯 Points Estimator</span>
       <span class="badge badge-yellow">Target: 625</span>
     </div>
-    <div style="background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);border-radius:var(--rs);padding:8px 12px;margin-bottom:12px;font-size:11px;color:rgba(251,191,36,.85)">
-      ⚡ Only your top 6 subjects count. Maths HL gets +25 bonus at H1. Greyed subjects don't count toward total.
+    <div style="background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);border-radius:var(--rs);padding:8px 12px;margin-bottom:14px;font-size:11px;color:rgba(251,191,36,.85)">
+      ⚡ Top 6 of 9 subjects count · Maths HL H1 = +25 bonus · Dimmed subjects not counting
     </div>
     <div class="pts-display">
       <div class="pts-current" id="ptsTotal">—</div>
       <div class="pts-target">Top 6 subjects · Target: 625</div>
       <div class="pts-gap" id="ptsGap"></div>
     </div>
-    <div class="prog-bar-lg" style="height:8px;margin-bottom:14px">
+    <div class="prog-bar-lg" style="height:8px;margin-bottom:16px">
       <div class="prog-fill-lg" id="ptsProg" style="background:linear-gradient(90deg,var(--yellow),var(--green))"></div>
     </div>
-    <div class="pts-subjects" id="ptsList"></div>
+    <div id="ptsList"></div>
   </div>
 
   <!-- Streaks -->
@@ -307,56 +307,69 @@ function ls(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(
 function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
 function dk(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 
-// Points estimator — top 6 of 9 subjects count; Maths HL gets +25 bonus at H1 (100pts)
+// Points estimator — dropdown grades, top 6 of 9, Maths H1 = +25 bonus
+const GRADE_PTS={H1:100,H2:88,H3:77,H4:66,H5:56,H6:46,H7:37,H8:0};
+const GRADE_OPTS=['H1','H2','H3','H4','H5','H6','H7','H8'];
 const SUBJECTS=[
-  {name:'Maths HL',    pts:100, mathsBonus:true},
-  {name:'Irish HL',    pts:88},
-  {name:'Physics HL',  pts:100},
-  {name:'Chemistry HL',pts:88},
-  {name:'PE HL',       pts:100},
-  {name:'Accounting HL',pts:77},
-  {name:'Applied Maths',pts:70},
-  {name:'English HL',  pts:37},
-  {name:'French HL',   pts:37},
+  {name:'Maths HL',    defaultGrade:'H1', mathsBonus:true},
+  {name:'Irish HL',    defaultGrade:'H1'},
+  {name:'Physics HL',  defaultGrade:'H1'},
+  {name:'Chemistry HL',defaultGrade:'H2'},
+  {name:'PE HL',       defaultGrade:'H1'},
+  {name:'Accounting HL',defaultGrade:'H3'},
+  {name:'Applied Maths',defaultGrade:'H1'},
+  {name:'English HL',  defaultGrade:'H7'},
+  {name:'French HL',   defaultGrade:'H7'},
 ];
 const TARGET=625;
-function calcTop6(pts){
-  // Calculate effective score per subject (Maths bonus applies if base=100)
-  const effective=pts.map((s,i)=>{
-    const base=s.pts;
-    const bonus=(SUBJECTS[i].mathsBonus&&base===100)?25:0;
-    return{...s,eff:base+bonus,bonus,idx:i};
+function getGrades(){
+  const stored=ls('jm_pts_grades',null);
+  if(stored&&stored.length===SUBJECTS.length)return stored;
+  return SUBJECTS.map(s=>s.defaultGrade);
+}
+function saveGrades(grades){
+  lss('jm_pts_grades',grades);
+  lss('jm_pts',SUBJECTS.map((s,i)=>({name:s.name,pts:GRADE_PTS[grades[i]],mathsBonus:s.mathsBonus||false})));
+}
+function calcTop6(grades){
+  const effective=grades.map((g,i)=>{
+    const pts=GRADE_PTS[g]||0;
+    const bonus=(SUBJECTS[i].mathsBonus&&pts===100)?25:0;
+    return{name:SUBJECTS[i].name,pts,bonus,eff:pts+bonus,idx:i};
   });
   const sorted=[...effective].sort((a,b)=>b.eff-a.eff);
   const top6=new Set(sorted.slice(0,6).map(s=>s.idx));
   return{effective,top6,total:sorted.slice(0,6).reduce((a,s)=>a+s.eff,0)};
 }
 function renderPoints(){
-  const pts=ls('jm_pts',SUBJECTS.map(s=>({...s})));
-  const {effective,top6,total}=calcTop6(pts);
+  const grades=getGrades();
+  const {effective,top6,total}=calcTop6(grades);
   $('ptsTotal').textContent=total;
   const gap=TARGET-total;
-  $('ptsGap').textContent=gap>0?`Gap: ${gap} points to 625`:'🎉 625 reached!';
+  $('ptsGap').textContent=gap>0?`Gap: ${gap} pts to 625`:'🎉 625 reached!';
   $('ptsGap').style.color=gap<=0?'var(--green)':'var(--red)';
   $('ptsProg').style.width=Math.min(100,total/TARGET*100)+'%';
   $('ptsList').innerHTML=effective.map((s,i)=>{
     const counted=top6.has(i);
-    const valStr=s.bonus?`${s.pts}<span style="color:var(--green);font-size:10px"> +${s.bonus}</span>`:`${s.pts}`;
-    return`<div class="pts-row" style="${counted?'':'opacity:.45'}">
-      <span class="pts-subj">${s.name}${counted?'<span style="color:var(--green);font-size:9px;margin-left:4px">✓</span>':''}</span>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button onclick="adjPts(${i},-5)" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;padding:0 4px">−</button>
-        <span class="pts-val">${valStr}</span>
-        <button onclick="adjPts(${i},5)" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:16px;padding:0 4px">+</button>
+    const bonusHtml=s.bonus?` <span style="color:var(--green);font-size:10px">+${s.bonus}</span>`:'';
+    const opts=GRADE_OPTS.map(g=>`<option value="${g}"${grades[i]===g?' selected':''}>${g} · ${GRADE_PTS[g]}pts</option>`).join('');
+    return`<div class="pts-row" style="${counted?'':'opacity:.38'}">
+      <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0">
+        <span style="color:${counted?'var(--green)':'transparent'};font-size:11px;flex-shrink:0">✓</span>
+        <span class="pts-subj" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.name}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+        <select onchange="setGrade(${i},this.value)" style="background:var(--bg2);border:1px solid var(--b);border-radius:6px;color:var(--t1);font-size:12px;padding:4px 6px;font-family:var(--mono);cursor:pointer;-webkit-appearance:none">${opts}</select>
+        <span class="pts-val" style="min-width:40px;text-align:right">${s.pts}${bonusHtml}</span>
       </div>
     </div>`;
   }).join('');
 }
 renderPoints();
-function adjPts(i,delta){
-  const pts=ls('jm_pts',SUBJECTS.map(s=>({...s})));
-  pts[i].pts=Math.max(0,Math.min(100,pts[i].pts+delta));
-  lss('jm_pts',pts);
+function setGrade(i,grade){
+  const grades=getGrades();
+  grades[i]=grade;
+  saveGrades(grades);
   renderPoints();
 }
 

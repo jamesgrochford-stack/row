@@ -20,20 +20,29 @@ html,body{background:var(--bg);color:var(--t1);font-family:var(--font);font-size
 body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
 .wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
 
-/* day banner */
-.day-banner{border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;background:var(--s);border:1px solid var(--b)}
-.day-lhs{display:flex;flex-direction:column;gap:2px}
-.day-name{font-size:22px;font-weight:900;color:var(--t1);line-height:1}
-.day-type{font-size:12px;font-weight:600;color:var(--t3)}
-.day-badge{font-size:11px;font-weight:700;padding:5px 10px;border-radius:999px;letter-spacing:.04em}
+/* ── Day banner ── */
+.day-banner{border-radius:var(--r);background:var(--s);border:1px solid var(--b);display:flex;overflow:hidden}
+.banner-bar{width:5px;flex-shrink:0}
+.banner-body{padding:14px 16px;flex:1}
+.banner-daytype{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;margin-bottom:5px}
+.banner-name{font-size:28px;font-weight:900;color:var(--t1);line-height:1;margin-bottom:6px}
+.banner-sub{font-size:12px;color:var(--t3);line-height:1.4}
 
-/* card */
+/* ── Card ── */
 .card{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:16px}
 .card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .card-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
+.badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:var(--s2);color:var(--t2)}
 
-/* garmin grid */
+/* ── Garmin ── */
+.gm-hero{background:var(--bg2);border:1px solid rgba(110,231,183,.2);border-radius:var(--rs);padding:14px 16px;margin-bottom:8px}
+.gm-hero-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--green);margin-bottom:6px}
+.gm-hero-val{font-size:42px;font-weight:900;font-family:var(--mono);color:var(--green);line-height:1}
+.gm-hero-unit{font-size:18px;font-weight:600;color:rgba(110,231,183,.5)}
+.gm-hero-bar{height:5px;background:rgba(255,255,255,.07);border-radius:999px;margin-top:10px;overflow:hidden}
+.gm-hero-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .5s ease}
 .garmin-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.garmin-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
 .gm{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:11px 12px}
 .gm-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:4px}
 .gm-val{font-size:20px;font-weight:800;font-family:var(--mono);line-height:1}
@@ -42,8 +51,9 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 .gi{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:6px 8px;color:var(--t1);font-size:13px;font-family:var(--mono);width:100%;text-align:center;-webkit-appearance:none}
 .gi:focus{outline:none;border-color:var(--b2)}
 .gi-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);text-align:center;margin-top:4px}
+.garmin-ts{font-size:10px;color:var(--t4);margin-top:8px;text-align:right}
 
-/* schedule */
+/* ── Schedule ── */
 .sched-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .week-btn{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);border:1px solid rgba(125,211,252,.25);background:rgba(125,211,252,.06);border-radius:999px;padding:4px 10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .week-panel{display:none;margin-bottom:12px;border-radius:var(--rs);overflow:hidden;border:1px solid var(--b)}
@@ -55,9 +65,8 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 .week-items{display:flex;flex-direction:column;gap:3px;flex:1}
 .week-item{font-size:11px;color:var(--t2);display:flex;gap:6px}
 .week-time{color:var(--t4);font-family:var(--mono);font-size:10px;flex-shrink:0;width:36px}
-
 .timeline{display:flex;flex-direction:column;gap:4px}
-.ti{display:flex;flex-direction:column;border-radius:var(--rs);overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .1s}
+.ti{display:flex;flex-direction:column;border-radius:var(--rs);overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .ti-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs)}
 .ti.open .ti-row{border-radius:var(--rs) var(--rs) 0 0;border-bottom-color:transparent}
 .ti-time{font-size:11px;font-family:var(--mono);color:var(--t4);width:38px;flex-shrink:0}
@@ -68,18 +77,21 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 .ti-detail{display:none;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--b);border-top:none;border-radius:0 0 var(--rs) var(--rs);font-size:12px;color:var(--t3);line-height:1.6}
 .ti.open .ti-detail{display:block}
 
-/* water */
-.water-row{display:flex;align-items:center;gap:14px}
-.water-ring-wrap{position:relative;width:72px;height:72px;flex-shrink:0}
-.water-ring-wrap svg{position:absolute;top:0;left:0;transform:rotate(-90deg)}
-.water-ring-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.water-val{font-size:16px;font-weight:800;font-family:var(--mono);color:var(--blue);line-height:1}
-.water-sub{font-size:9px;color:var(--t4);font-weight:600;letter-spacing:.05em}
-.water-btns{display:flex;gap:6px;flex-wrap:wrap;flex:1}
-.wbtn{padding:7px 12px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .1s}
+/* ── Water ── */
+.water-hero{text-align:center;padding:10px 0 6px}
+.water-ml{font-size:52px;font-weight:900;font-family:var(--mono);color:var(--blue);line-height:1}
+.water-ml-unit{font-size:22px;font-weight:700;color:rgba(125,211,252,.6)}
+.water-of{font-size:12px;color:var(--t3);margin-top:5px}
+.water-bar-row{display:flex;align-items:center;gap:10px;margin:12px 0}
+.water-bar{flex:1;height:8px;background:var(--b);border-radius:999px;overflow:hidden}
+.water-bar-fill{height:100%;border-radius:999px;background:var(--blue);transition:width .5s ease}
+.water-pct{font-size:12px;font-weight:700;font-family:var(--mono);color:var(--blue);width:38px;text-align:right;flex-shrink:0}
+.water-btns{display:flex;gap:6px;flex-wrap:wrap}
+.wbtn{flex:1;min-width:0;padding:8px 6px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .1s;text-align:center}
 .wbtn:hover{background:var(--s2)}
 
-/* habits */
+/* ── Habits ── */
+.yday-btn{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);border:1px solid var(--b);background:var(--s);border-radius:999px;padding:4px 9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .habits-list{display:flex;flex-direction:column;gap:4px}
 .habit{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .1s;user-select:none;-webkit-user-select:none}
 .habit:hover{background:rgba(255,255,255,.06)}
@@ -91,10 +103,22 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 .hstreak{font-size:10px;color:var(--t4);margin-top:1px}
 .habit.done .hstreak{color:var(--green)}
 
+/* ── Modal ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-sheet{background:#0f0f11;border:1px solid var(--b2);border-radius:20px 20px 0 0;width:100%;max-width:600px;padding:0 0 max(24px,env(safe-area-inset-bottom));max-height:85vh;overflow-y:auto}
+.modal-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 12px;border-bottom:1px solid var(--b);position:sticky;top:0;background:#0f0f11;z-index:1}
+.modal-title{font-size:13px;font-weight:700;color:var(--t1)}
+.modal-close{background:none;border:none;color:var(--t3);font-size:24px;cursor:pointer;padding:0;line-height:1;-webkit-tap-highlight-color:transparent}
+.modal-body{padding:12px 16px}
+.modal-date{font-size:11px;color:var(--t4);margin-bottom:10px}
+
+/* ── Sync dot ── */
 .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--t4);display:inline-block;margin-left:6px;vertical-align:middle;transition:background .3s}
 .sync-dot.synced{background:var(--green)}
 .sync-dot.syncing{background:var(--yellow)}
 
+/* ── Nav ── */
 .bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(5,5,6,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--b);padding:6px max(0px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(0px,env(safe-area-inset-left));z-index:100}
 .ntab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;text-decoration:none;color:var(--t4);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;-webkit-tap-highlight-color:transparent;transition:color .15s}
 .ntab .ni{font-size:20px;line-height:1}
@@ -106,18 +130,24 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 
   <!-- Day banner -->
   <div class="day-banner" id="dayBanner">
-    <div class="day-lhs">
-      <div class="day-name" id="dayName">Tuesday</div>
-      <div class="day-type" id="dayType">Morning Training Day</div>
+    <div class="banner-bar" id="bannerBar"></div>
+    <div class="banner-body">
+      <div class="banner-daytype" id="dayType"></div>
+      <div class="banner-name" id="dayName"></div>
+      <div class="banner-sub" id="daySub"></div>
     </div>
-    <div class="day-badge" id="dayBadge"></div>
   </div>
 
   <!-- Garmin card -->
   <div class="card">
     <div class="card-hd">
       <span class="card-title">⌚ Garmin <span class="sync-dot" id="garminDot"></span></span>
-      <span style="font-size:10px;color:var(--t4)" id="garminDate"></span>
+      <span id="garminStatus" style="font-size:10px;color:var(--t4)"></span>
+    </div>
+    <div class="gm-hero">
+      <div class="gm-hero-lbl">Body Battery</div>
+      <div class="gm-hero-val" id="gvBattery">—<span class="gm-hero-unit">/100</span></div>
+      <div class="gm-hero-bar"><div class="gm-hero-fill" id="batteryFill" style="width:0%"></div></div>
     </div>
     <div class="garmin-grid">
       <div class="gm">
@@ -125,17 +155,15 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
         <div class="gm-val" style="color:var(--purple)" id="gvSleep">—</div>
       </div>
       <div class="gm">
-        <div class="gm-label">Body Battery</div>
-        <div class="gm-val" style="color:var(--green)" id="gvBattery">—<span class="gm-unit">/100</span></div>
-      </div>
-      <div class="gm">
         <div class="gm-label">RHR</div>
         <div class="gm-val" style="color:var(--blue)" id="gvRHR">—<span class="gm-unit"> bpm</span></div>
       </div>
       <div class="gm">
-        <div class="gm-label">Stress Score</div>
+        <div class="gm-label">Stress</div>
         <div class="gm-val" style="color:var(--orange)" id="gvStress">—</div>
       </div>
+    </div>
+    <div class="garmin-grid-2">
       <div class="gm">
         <div class="gm-label">Bedtime</div>
         <div class="gm-val" style="font-size:16px" id="gvBed">—</div>
@@ -147,12 +175,12 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
     </div>
     <div class="garmin-inputs">
       <div>
-        <input class="gi" id="giSleep" type="number" inputmode="numeric" min="0" max="100" placeholder="—" oninput="saveGarmin()">
-        <div class="gi-lbl">Sleep</div>
-      </div>
-      <div>
         <input class="gi" id="giBattery" type="number" inputmode="numeric" min="0" max="100" placeholder="—" oninput="saveGarmin()">
         <div class="gi-lbl">Battery</div>
+      </div>
+      <div>
+        <input class="gi" id="giSleep" type="number" inputmode="numeric" min="0" max="100" placeholder="—" oninput="saveGarmin()">
+        <div class="gi-lbl">Sleep</div>
       </div>
       <div>
         <input class="gi" id="giRHR" type="number" inputmode="numeric" min="30" max="120" placeholder="—" oninput="saveGarmin()">
@@ -171,6 +199,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
         <div class="gi-lbl">Wake</div>
       </div>
     </div>
+    <div class="garmin-ts" id="garminTs"></div>
   </div>
 
   <!-- Schedule card -->
@@ -179,384 +208,122 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
       <span class="card-title">📅 Today's Schedule</span>
       <button class="week-btn" onclick="toggleWeek()">Week View</button>
     </div>
-
-    <!-- Week overview panel -->
     <div class="week-panel" id="weekPanel">
-      <div class="week-row">
-        <div class="week-day" id="wdMon">MON</div>
-        <div class="week-items">
-          <div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div>
-          <div class="week-item"><span class="week-time">09:00</span><span>Study block 1</span></div>
-          <div class="week-item"><span class="week-time">11:30</span><span>Study block 2</span></div>
-          <div class="week-item"><span class="week-time">18:00</span><span>Club training (Limerick)</span></div>
-          <div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div>
-        </div>
-      </div>
-      <div class="week-row">
-        <div class="week-day" id="wdTue">TUE</div>
-        <div class="week-items">
-          <div class="week-item"><span class="week-time">06:15</span><span>Wake, leave for Limerick</span></div>
-          <div class="week-item"><span class="week-time">07:30</span><span>Club training</span></div>
-          <div class="week-item"><span class="week-time">09:30</span><span>Home, post-training nutrition</span></div>
-          <div class="week-item"><span class="week-time">10:00</span><span>Study blocks</span></div>
-          <div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div>
-        </div>
-      </div>
-      <div class="week-row">
-        <div class="week-day" id="wdWed">WED</div>
-        <div class="week-items">
-          <div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div>
-          <div class="week-item"><span class="week-time">08:30</span><span>Gym session</span></div>
-          <div class="week-item"><span class="week-time">10:30</span><span>Study blocks</span></div>
-          <div class="week-item"><span class="week-time">22:30</span><span>Bed</span></div>
-        </div>
-      </div>
-      <div class="week-row">
-        <div class="week-day" id="wdThu">THU</div>
-        <div class="week-items">
-          <div class="week-item"><span class="week-time">06:15</span><span>Wake, leave for Limerick</span></div>
-          <div class="week-item"><span class="week-time">07:30</span><span>Club training</span></div>
-          <div class="week-item"><span class="week-time">09:30</span><span>Home, post-training nutrition</span></div>
-          <div class="week-item"><span class="week-time">10:00</span><span>Study blocks</span></div>
-          <div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div>
-        </div>
-      </div>
-      <div class="week-row">
-        <div class="week-day" id="wdFri">FRI</div>
-        <div class="week-items">
-          <div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div>
-          <div class="week-item"><span class="week-time">09:00</span><span>Study block 1</span></div>
-          <div class="week-item"><span class="week-time">11:30</span><span>Study block 2</span></div>
-          <div class="week-item"><span class="week-time">22:30</span><span>Bed</span></div>
-        </div>
-      </div>
-      <div class="week-row">
-        <div class="week-day" id="wdSat">SAT</div>
-        <div class="week-items">
-          <div class="week-item"><span class="week-time">08:00</span><span>Wake, morning routine</span></div>
-          <div class="week-item"><span class="week-time"></span><span>Match preparation &amp; travel</span></div>
-          <div class="week-item"><span class="week-time"></span><span>Match</span></div>
-          <div class="week-item"><span class="week-time"></span><span>Post-match nutrition &amp; home</span></div>
-        </div>
-      </div>
-      <div class="week-row">
-        <div class="week-day" id="wdSun">SUN</div>
-        <div class="week-items">
-          <div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div>
-          <div class="week-item"><span class="week-time">09:00</span><span>Gym power session</span></div>
-          <div class="week-item"><span class="week-time">11:00</span><span>Pool, steam, sauna</span></div>
-          <div class="week-item"><span class="week-time">13:00</span><span>Home, lunch</span></div>
-          <div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div>
-        </div>
-      </div>
+      <div class="week-row"><div class="week-day" id="wdMon">MON</div><div class="week-items"><div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div><div class="week-item"><span class="week-time">09:00</span><span>Study block 1</span></div><div class="week-item"><span class="week-time">11:30</span><span>Study block 2</span></div><div class="week-item"><span class="week-time">18:00</span><span>Club training (Limerick)</span></div><div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdTue">TUE</div><div class="week-items"><div class="week-item"><span class="week-time">06:15</span><span>Wake, leave for Limerick</span></div><div class="week-item"><span class="week-time">07:30</span><span>Club training</span></div><div class="week-item"><span class="week-time">09:30</span><span>Home, post-training nutrition</span></div><div class="week-item"><span class="week-time">10:00</span><span>Study blocks</span></div><div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdWed">WED</div><div class="week-items"><div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div><div class="week-item"><span class="week-time">08:30</span><span>Gym session</span></div><div class="week-item"><span class="week-time">10:30</span><span>Study blocks</span></div><div class="week-item"><span class="week-time">22:30</span><span>Bed</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdThu">THU</div><div class="week-items"><div class="week-item"><span class="week-time">06:15</span><span>Wake, leave for Limerick</span></div><div class="week-item"><span class="week-time">07:30</span><span>Club training</span></div><div class="week-item"><span class="week-time">09:30</span><span>Home, post-training nutrition</span></div><div class="week-item"><span class="week-time">10:00</span><span>Study blocks</span></div><div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdFri">FRI</div><div class="week-items"><div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div><div class="week-item"><span class="week-time">09:00</span><span>Study block 1</span></div><div class="week-item"><span class="week-time">11:30</span><span>Study block 2</span></div><div class="week-item"><span class="week-time">22:30</span><span>Bed</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdSat">SAT</div><div class="week-items"><div class="week-item"><span class="week-time">08:00</span><span>Wake, morning routine</span></div><div class="week-item"><span class="week-time"></span><span>Match preparation &amp; travel</span></div><div class="week-item"><span class="week-time"></span><span>Match ⚽</span></div><div class="week-item"><span class="week-time"></span><span>Post-match nutrition</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdSun">SUN</div><div class="week-items"><div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div><div class="week-item"><span class="week-time">09:00</span><span>Gym power session</span></div><div class="week-item"><span class="week-time">11:00</span><span>Pool, steam, sauna</span></div><div class="week-item"><span class="week-time">13:00</span><span>Home, lunch</span></div><div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div></div></div>
     </div>
 
-    <!-- Daily timelines (one shown at a time) -->
     <div class="timeline" id="schedMon" style="display:none">
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Wake up, morning routine and skincare.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">09:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">09:00 – 11:00 · Focused study session.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">11:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Break</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Short rest break.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">11:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">11:30 – 13:00 · Continued study.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Lunch break.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">14:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Free time / individual session</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Free time or individual football session.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">17:30</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Leave for Limerick</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Drive to Limerick for evening training.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">18:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Club training</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">18:00 – 19:30 · Treaty United training session.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">20:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Home — post-training nutrition</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Protein milk + yoghurt. Refuel after training.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Phone off. Wind down for sleep.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Lights out.</div>
-      </div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake up, morning routine and skincare.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">09:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div><div class="ti-detail">09:00 – 11:00 · Focused study session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">11:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Break</span><span class="ti-arrow">›</span></div><div class="ti-detail">Short rest break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">11:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div><div class="ti-detail">11:30 – 13:00 · Continued study.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lunch break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">14:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Free time / individual session</span><span class="ti-arrow">›</span></div><div class="ti-detail">Free time or individual football session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">17:30</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Leave for Limerick</span><span class="ti-arrow">›</span></div><div class="ti-detail">Drive to Limerick for evening training.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">18:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Club training</span><span class="ti-arrow">›</span></div><div class="ti-detail">18:00 – 19:30 · Treaty United training session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">20:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Home — post-training nutrition</span><span class="ti-arrow">›</span></div><div class="ti-detail">Protein milk + yoghurt.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div><div class="ti-detail">Phone off. Wind down for sleep.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
 
     <div class="timeline" id="schedTue" style="display:none">
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">06:15</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; get ready</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Wake up, get ready quickly for early departure.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">06:45</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Leave for Limerick</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Drive to Limerick for morning training.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Club training</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">07:30 – 09:00 · Treaty United morning session.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">09:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Home — post-training nutrition</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Protein milk + yoghurt. Critical recovery window.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">10:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">10:00 – 12:00 · Focused study session.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">12:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Lunch break.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">13:00 – 14:30 · Continued study.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">14:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Individual session or rest</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Optional individual football work or rest.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">16:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Downtime. Relax and recharge.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">19:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Evening routine begins</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Evening skincare, journal, wind down.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Phone off.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Lights out.</div>
-      </div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">06:15</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; get ready</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake up, get ready quickly for early departure.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">06:45</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Leave for Limerick</span><span class="ti-arrow">›</span></div><div class="ti-detail">Drive to Limerick for morning training.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Club training</span><span class="ti-arrow">›</span></div><div class="ti-detail">07:30 – 09:00 · Treaty United morning session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">09:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Home — post-training nutrition</span><span class="ti-arrow">›</span></div><div class="ti-detail">Protein milk + yoghurt. Critical recovery window.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">10:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div><div class="ti-detail">10:00 – 12:00 · Focused study session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">12:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lunch break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div><div class="ti-detail">13:00 – 14:30 · Continued study.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">14:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Individual session or rest</span><span class="ti-arrow">›</span></div><div class="ti-detail">Optional individual football work or rest.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">16:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div><div class="ti-detail">Downtime. Relax and recharge.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">19:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Evening routine begins</span><span class="ti-arrow">›</span></div><div class="ti-detail">Evening skincare, journal, wind down.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div><div class="ti-detail">Phone off.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
 
     <div class="timeline" id="schedWed" style="display:none">
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Wake, skincare, morning routine.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">08:30</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Gym session</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">08:30 – 10:00 · Wednesday strength session.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">10:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">10:30 – 12:30 · Focused study session.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">12:30</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Lunch break.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">13:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">13:30 – 15:00 · Continued study.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">15:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Relax. No training commitments.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Phone off.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">22:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Lights out.</div>
-      </div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake, skincare, morning routine.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">08:30</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Gym session</span><span class="ti-arrow">›</span></div><div class="ti-detail">08:30 – 10:00 · Wednesday strength session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">10:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div><div class="ti-detail">10:30 – 12:30 · Focused study session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">12:30</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lunch break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div><div class="ti-detail">13:30 – 15:00 · Continued study.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">15:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div><div class="ti-detail">Relax. No training commitments.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div><div class="ti-detail">Phone off.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
 
     <div class="timeline" id="schedThu" style="display:none">
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">06:15</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; get ready</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Wake up, get ready for early departure.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">06:45</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Leave for Limerick</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Drive to Limerick for morning training.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Club training</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">07:30 – 09:00 · Treaty United morning session.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">09:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Home — post-training nutrition</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Protein milk + yoghurt.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">10:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">10:00 – 12:00 · Focused study session.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">12:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Lunch break.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">13:00 – 14:30 · Continued study.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">14:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Individual session or rest</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Optional individual football work or rest.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">16:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Downtime.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">19:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Evening routine begins</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Evening skincare, journal, wind down.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Phone off.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Lights out.</div>
-      </div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">06:15</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; get ready</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake up, get ready for early departure.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">06:45</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Leave for Limerick</span><span class="ti-arrow">›</span></div><div class="ti-detail">Drive to Limerick for morning training.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Club training</span><span class="ti-arrow">›</span></div><div class="ti-detail">07:30 – 09:00 · Treaty United morning session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">09:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Home — post-training nutrition</span><span class="ti-arrow">›</span></div><div class="ti-detail">Protein milk + yoghurt.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">10:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div><div class="ti-detail">10:00 – 12:00 · Focused study session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">12:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lunch break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div><div class="ti-detail">13:00 – 14:30 · Continued study.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">14:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Individual session or rest</span><span class="ti-arrow">›</span></div><div class="ti-detail">Optional individual football work or rest.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">16:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div><div class="ti-detail">Downtime.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">19:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Evening routine begins</span><span class="ti-arrow">›</span></div><div class="ti-detail">Evening skincare, journal, wind down.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div><div class="ti-detail">Phone off.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
 
     <div class="timeline" id="schedFri" style="display:none">
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Wake, skincare, morning routine.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">09:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">09:00 – 11:00 · Focused study session.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">11:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Break</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Short rest break.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">11:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">11:30 – 13:00 · Continued study.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Lunch break.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">14:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Free time / individual session</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Free time or optional individual football work.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Phone off.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">22:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Lights out.</div>
-      </div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake, skincare, morning routine.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">09:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div><div class="ti-detail">09:00 – 11:00 · Focused study session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">11:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Break</span><span class="ti-arrow">›</span></div><div class="ti-detail">Short rest break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">11:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div><div class="ti-detail">11:30 – 13:00 · Continued study.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lunch break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">14:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Free time / individual session</span><span class="ti-arrow">›</span></div><div class="ti-detail">Free time or optional individual football work.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div><div class="ti-detail">Phone off.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
 
     <div class="timeline" id="schedSat" style="display:none">
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">08:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Wake, morning routine.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Light study or rest</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Keep the mind active but don't overload before match.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Match preparation</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Kit, warm-up routine, pre-match meal, focus.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Travel to match</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Drive to venue.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Match ⚽</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Game day. Lock in.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Post-match nutrition</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Protein + carb refuel immediately after the match.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Home</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Travel home and rest.</div>
-      </div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">08:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake, morning routine.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Light study or rest</span><span class="ti-arrow">›</span></div><div class="ti-detail">Keep the mind active but don't overload before match.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Match preparation</span><span class="ti-arrow">›</span></div><div class="ti-detail">Kit, warm-up routine, pre-match meal, focus.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Travel to match</span><span class="ti-arrow">›</span></div><div class="ti-detail">Drive to venue.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Match ⚽</span><span class="ti-arrow">›</span></div><div class="ti-detail">Game day. Lock in.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Post-match nutrition</span><span class="ti-arrow">›</span></div><div class="ti-detail">Protein + carb refuel immediately after the match.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Home</span><span class="ti-arrow">›</span></div><div class="ti-detail">Travel home and rest.</div></div>
     </div>
 
     <div class="timeline" id="schedSun" style="display:none">
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Wake, morning routine.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">09:00</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Gym — power session</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Sunday power session. Speed trap bar DL, single-leg work, Copenhagen plank.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">11:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Pool, steam, sauna</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Recovery — swim, steam room, sauna.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Home — lunch</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Proper recovery meal.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">14:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Rest and recharge for the week ahead.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">19:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Evening routine</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Evening skincare, journal, prepare for the week.</div>
-      </div>
-      <div class="ti" onclick="toggleItem(this)">
-        <div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div>
-        <div class="ti-detail">Lights out.</div>
-      </div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake, morning routine.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">09:00</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Gym — power session</span><span class="ti-arrow">›</span></div><div class="ti-detail">Sunday power session. Speed trap bar DL, single-leg work, Copenhagen plank.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">11:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Pool, steam, sauna</span><span class="ti-arrow">›</span></div><div class="ti-detail">Recovery — swim, steam room, sauna.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Home — lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Proper recovery meal.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">14:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div><div class="ti-detail">Rest and recharge for the week ahead.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">19:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Evening routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Evening skincare, journal, prepare for the week.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
-
   </div>
 
   <!-- Water card -->
   <div class="card">
-    <div class="card-hd"><span class="card-title">💧 Water <span class="sync-dot" id="waterDot"></span></span><span style="font-size:11px;color:var(--t3)" id="waterTarget">Target: 2.5L</span></div>
-    <div class="water-row">
-      <div class="water-ring-wrap">
-        <svg width="72" height="72" viewBox="0 0 72 72">
-          <circle cx="36" cy="36" r="33" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="5"/>
-          <circle cx="36" cy="36" r="33" fill="none" stroke="var(--blue)" stroke-width="5"
-            stroke-dasharray="207.3" id="waterArc" stroke-dashoffset="207.3"
-            stroke-linecap="round" style="transition:stroke-dashoffset .5s ease"/>
-        </svg>
-        <div class="water-ring-text">
-          <div class="water-val" id="waterVal">0</div>
-          <div class="water-sub">/ <span id="waterTargetNum">2.5</span>L</div>
-        </div>
-      </div>
-      <div class="water-btns">
-        <button class="wbtn" onclick="addWater(0.25)">+250ml</button>
-        <button class="wbtn" onclick="addWater(0.5)">+500ml</button>
-        <button class="wbtn" onclick="addWater(0.75)">+750ml</button>
-        <button class="wbtn" onclick="addWater(-0.25)" style="color:var(--t4)">−250ml</button>
-      </div>
+    <div class="card-hd">
+      <span class="card-title">💧 Water <span class="sync-dot" id="waterDot"></span></span>
+      <span style="font-size:11px;color:var(--t3)" id="waterTargetLabel">Target: 2.5L</span>
+    </div>
+    <div class="water-hero">
+      <span class="water-ml" id="waterMl">0</span><span class="water-ml-unit">ml</span>
+      <div class="water-of" id="waterOf">of 2500ml · 0.0L drunk today</div>
+    </div>
+    <div class="water-bar-row">
+      <div class="water-bar"><div class="water-bar-fill" id="waterBarFill" style="width:0%"></div></div>
+      <span class="water-pct" id="waterPct">0%</span>
+    </div>
+    <div class="water-btns">
+      <button class="wbtn" onclick="addWater(0.25)">+250ml</button>
+      <button class="wbtn" onclick="addWater(0.5)">+500ml</button>
+      <button class="wbtn" onclick="addWater(0.75)">+750ml</button>
+      <button class="wbtn" onclick="addWater(-0.25)" style="color:var(--t4)">−250ml</button>
     </div>
   </div>
 
@@ -564,77 +331,37 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
   <div class="card">
     <div class="card-hd">
       <span class="card-title">✅ Habits <span class="sync-dot" id="habitsDot"></span></span>
-      <span class="badge" id="habitsBadge">0 / 8</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="yday-btn" onclick="openYdayModal()">Yesterday</button>
+        <span class="badge" id="habitsBadge">0 / 8</span>
+      </div>
     </div>
     <div class="habits-list">
-
-      <div class="habit" id="h-am-skin" onclick="toggleHabit('am-skin')">
-        <div class="hcheck" id="hc-am-skin"></div>
-        <div class="hinfo">
-          <div class="hname">🌅 Morning skincare</div>
-          <div class="hstreak" id="hs-am-skin"></div>
-        </div>
-      </div>
-
-      <div class="habit" id="h-pm-skin" onclick="toggleHabit('pm-skin')">
-        <div class="hcheck" id="hc-pm-skin"></div>
-        <div class="hinfo">
-          <div class="hname">🌙 Evening skincare</div>
-          <div class="hstreak" id="hs-pm-skin"></div>
-        </div>
-      </div>
-
-      <div class="habit" id="h-retainer" onclick="toggleHabit('retainer')">
-        <div class="hcheck" id="hc-retainer"></div>
-        <div class="hinfo">
-          <div class="hname">🦷 Retainer</div>
-          <div class="hstreak" id="hs-retainer"></div>
-        </div>
-      </div>
-
-      <div class="habit" id="h-spf" onclick="toggleHabit('spf')">
-        <div class="hcheck" id="hc-spf"></div>
-        <div class="hinfo">
-          <div class="hname">☀️ SPF applied</div>
-          <div class="hstreak" id="hs-spf"></div>
-        </div>
-      </div>
-
-      <div class="habit" id="h-journal" onclick="toggleHabit('journal')">
-        <div class="hcheck" id="hc-journal"></div>
-        <div class="hinfo">
-          <div class="hname">📓 Journal entry</div>
-          <div class="hstreak" id="hs-journal"></div>
-        </div>
-      </div>
-
-      <div class="habit" id="h-phone" onclick="toggleHabit('phone')">
-        <div class="hcheck" id="hc-phone"></div>
-        <div class="hinfo">
-          <div class="hname">📵 Phone down by 21:30</div>
-          <div class="hstreak" id="hs-phone"></div>
-        </div>
-      </div>
-
-      <div class="habit" id="h-water" onclick="toggleHabit('water')">
-        <div class="hcheck" id="hc-water"></div>
-        <div class="hinfo">
-          <div class="hname">💧 Water target hit</div>
-          <div class="hstreak" id="hs-water"></div>
-        </div>
-      </div>
-
-      <div class="habit" id="h-nutrition" onclick="toggleHabit('nutrition')">
-        <div class="hcheck" id="hc-nutrition"></div>
-        <div class="hinfo">
-          <div class="hname">🥗 Post-training nutrition</div>
-          <div class="hstreak" id="hs-nutrition"></div>
-        </div>
-      </div>
-
+      <div class="habit" id="h-am-skin" onclick="toggleHabit('am-skin')"><div class="hcheck" id="hc-am-skin"></div><div class="hinfo"><div class="hname">🌅 Morning skincare</div><div class="hstreak" id="hs-am-skin"></div></div></div>
+      <div class="habit" id="h-pm-skin" onclick="toggleHabit('pm-skin')"><div class="hcheck" id="hc-pm-skin"></div><div class="hinfo"><div class="hname">🌙 Evening skincare</div><div class="hstreak" id="hs-pm-skin"></div></div></div>
+      <div class="habit" id="h-retainer" onclick="toggleHabit('retainer')"><div class="hcheck" id="hc-retainer"></div><div class="hinfo"><div class="hname">🦷 Retainer</div><div class="hstreak" id="hs-retainer"></div></div></div>
+      <div class="habit" id="h-spf" onclick="toggleHabit('spf')"><div class="hcheck" id="hc-spf"></div><div class="hinfo"><div class="hname">☀️ SPF applied</div><div class="hstreak" id="hs-spf"></div></div></div>
+      <div class="habit" id="h-journal" onclick="toggleHabit('journal')"><div class="hcheck" id="hc-journal"></div><div class="hinfo"><div class="hname">📓 Journal entry</div><div class="hstreak" id="hs-journal"></div></div></div>
+      <div class="habit" id="h-phone" onclick="toggleHabit('phone')"><div class="hcheck" id="hc-phone"></div><div class="hinfo"><div class="hname">📵 Phone down by 21:30</div><div class="hstreak" id="hs-phone"></div></div></div>
+      <div class="habit" id="h-water" onclick="toggleHabit('water')"><div class="hcheck" id="hc-water"></div><div class="hinfo"><div class="hname">💧 Water target hit</div><div class="hstreak" id="hs-water"></div></div></div>
+      <div class="habit" id="h-nutrition" onclick="toggleHabit('nutrition')"><div class="hcheck" id="hc-nutrition"></div><div class="hinfo"><div class="hname">🥗 Post-training nutrition</div><div class="hstreak" id="hs-nutrition"></div></div></div>
     </div>
   </div>
 
+</div>
+
+<!-- Yesterday habits modal -->
+<div class="modal-overlay" id="ydayModal" onclick="closeYdayModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-hd">
+      <span class="modal-title">Yesterday's Habits</span>
+      <button class="modal-close" onclick="closeYdayModalBtn()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-date" id="ydayDateLabel"></div>
+      <div class="habits-list" id="ydayList"></div>
+    </div>
+  </div>
 </div>
 
 <nav class="bnav">
@@ -650,136 +377,133 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 <script>
 var SB_URL = 'https://ymksoxojvrbrmpdzfjxf.supabase.co';
 var SB_KEY = 'sb_publishable_sozYCEAdWzVt1Tni_EbPCA_gdw6JdvN';
-var sb = null;
-var lastSync = {};
+var sb = null, lastSync = {};
 
 var HABIT_IDS = ['am-skin','pm-skin','retainer','spf','journal','phone','water','nutrition'];
+var HABIT_LABELS = {'am-skin':'🌅 Morning skincare','pm-skin':'🌙 Evening skincare','retainer':'🦷 Retainer','spf':'☀️ SPF applied','journal':'📓 Journal entry','phone':'📵 Phone down by 21:30','water':'💧 Water target hit','nutrition':'🥗 Post-training nutrition'};
 
-// 0=Sun 1=Mon 2=Tue 3=Wed 4=Thu 5=Fri 6=Sat
-var DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-var DAY_TYPES = ['Recovery Day','Evening Training Day','Morning Training Day','Free Day','Morning Training Day','Free Day','Match Day'];
-var DAY_BADGE_TEXT = ['♻️ Recovery','🌙 Evening Training','☀️ Morning Training','💪 Free Day','☀️ Morning Training','🎈 Free Day','⚽ Match Day'];
-var DAY_BADGE_COLORS = {
-  0:'rgba(110,231,183,.1)',1:'rgba(251,191,36,.1)',2:'rgba(110,231,183,.1)',
-  3:'rgba(125,211,252,.1)',4:'rgba(110,231,183,.1)',5:'rgba(125,211,252,.1)',6:'rgba(255,138,138,.1)'
+var DAY_NAMES    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var DAY_TYPES    = ['Recovery Day','Evening Training Day','Morning Training Day','Free Day','Morning Training Day','Free Day','Match Day'];
+var BANNER_COLORS= {0:'#a78bfa',1:'#7DD3FC',2:'#7DD3FC',3:'#6ee7b7',4:'#7DD3FC',5:'#6ee7b7',6:'#fb923c'};
+var WAKE_TIMES   = {0:'07:30',1:'07:30',2:'06:15',3:'07:30',4:'06:15',5:'07:30',6:'08:00'};
+var KEY_EVENTS   = {
+  0:'Gym 09:00 · Pool & recovery 11:00',
+  1:'Club training 18:00–19:30 · Leave 17:30',
+  2:'Club training 07:30–09:00 · Leave 06:45',
+  3:'Gym session 08:30',
+  4:'Club training 07:30–09:00 · Leave 06:45',
+  5:'Free day · rest or individual session',
+  6:'Match day ⚽'
 };
-var DAY_BADGE_BORDER = {
-  0:'rgba(110,231,183,.25)',1:'rgba(251,191,36,.25)',2:'rgba(110,231,183,.25)',
-  3:'rgba(125,211,252,.25)',4:'rgba(110,231,183,.25)',5:'rgba(125,211,252,.25)',6:'rgba(255,138,138,.35)'
-};
-var WATER_TARGETS = {0:2,1:2.5,2:2.5,3:2,4:2.5,5:2,6:2.5};
-var SCHED_IDS = {0:'schedSun',1:'schedMon',2:'schedTue',3:'schedWed',4:'schedThu',5:'schedFri',6:'schedSat'};
+var WATER_TARGETS= {0:2,1:2.5,2:2.5,3:2,4:2.5,5:2,6:2.5};
+var SCHED_IDS    = {0:'schedSun',1:'schedMon',2:'schedTue',3:'schedWed',4:'schedThu',5:'schedFri',6:'schedSat'};
 var WEEK_DOW_IDS = {0:'wdSun',1:'wdMon',2:'wdTue',3:'wdWed',4:'wdThu',5:'wdFri',6:'wdSat'};
 
 function gel(id){ return document.getElementById(id); }
 function lsGet(k,d){ try{ var v=localStorage.getItem(k); return v!==null?JSON.parse(v):d; }catch(e){ return d; } }
 function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
-function dateKey(){ var d=new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+function dateKey(d){ d=d||new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+function todayDow(){ return new Date().getDay(); }
 function setSyncDot(id,state){ var dot=gel(id); if(!dot) return; dot.className='sync-dot'+(state?' '+state:''); }
 
-function todayDow(){ return new Date().getDay(); }
-
-// ---- day banner ----
+/* ── Day banner ── */
 function initDayBanner(){
   var dow=todayDow();
-  gel('dayName').textContent=DAY_NAMES[dow];
+  var color=BANNER_COLORS[dow];
+  gel('bannerBar').style.background=color;
   gel('dayType').textContent=DAY_TYPES[dow];
-  var b=gel('dayBadge');
-  b.textContent=DAY_BADGE_TEXT[dow];
-  b.style.background=DAY_BADGE_COLORS[dow];
-  b.style.border='1px solid '+DAY_BADGE_BORDER[dow];
-  b.style.color=dow===1?'var(--yellow)':dow===6?'var(--red)':'var(--green)';
-  // show correct schedule
-  var sid=SCHED_IDS[dow];
+  gel('dayType').style.color=color;
+  gel('dayName').textContent=DAY_NAMES[dow];
+  gel('daySub').textContent='Wake '+WAKE_TIMES[dow]+' · '+KEY_EVENTS[dow];
+  // show schedule
   for(var k in SCHED_IDS){ var el=gel(SCHED_IDS[k]); if(el) el.style.display='none'; }
-  var sel=gel(sid); if(sel) sel.style.display='flex';
-  // highlight today in week view
-  var wid=WEEK_DOW_IDS[dow]; var wel=gel(wid); if(wel) wel.classList.add('today');
+  var sel=gel(SCHED_IDS[dow]); if(sel) sel.style.display='flex';
+  var wel=gel(WEEK_DOW_IDS[dow]); if(wel) wel.classList.add('today');
 }
 
-// ---- garmin ----
+/* ── Garmin ── */
 function garminKey(){ return 'jm_garmin_'+dateKey(); }
 
 function renderGarmin(){
   var data=lsGet(garminKey(),{});
-  gel('gvSleep').innerHTML=data.sleep!==undefined?data.sleep:'—';
-  gel('gvBattery').innerHTML=(data.battery!==undefined?data.battery:'—')+'<span class="gm-unit">/100</span>';
+  // Battery hero
+  var bat=data.battery;
+  gel('gvBattery').innerHTML=(bat!==undefined?bat:'—')+'<span class="gm-hero-unit">/100</span>';
+  gel('batteryFill').style.width=(bat!==undefined?Math.min(100,bat):0)+'%';
+  // Grid
+  gel('gvSleep').textContent=data.sleep!==undefined?data.sleep:'—';
   gel('gvRHR').innerHTML=(data.rhr!==undefined?data.rhr:'—')+'<span class="gm-unit"> bpm</span>';
-  gel('gvStress').innerHTML=data.stress!==undefined?data.stress:'—';
+  gel('gvStress').textContent=data.stress!==undefined?data.stress:'—';
   gel('gvBed').textContent=data.bed||'—';
   gel('gvWake').textContent=data.wake||'—';
-  // fill inputs
+  // Inputs
+  if(bat!==undefined) gel('giBattery').value=bat;
   if(data.sleep!==undefined) gel('giSleep').value=data.sleep;
-  if(data.battery!==undefined) gel('giBattery').value=data.battery;
   if(data.rhr!==undefined) gel('giRHR').value=data.rhr;
   if(data.stress!==undefined) gel('giStress').value=data.stress;
   if(data.bed) gel('giBed').value=data.bed;
   if(data.wake) gel('giWake').value=data.wake;
-  // date label
-  var d=new Date(); gel('garminDate').textContent=DAY_NAMES[d.getDay()]+' '+d.getDate()+'/'+('0'+(d.getMonth()+1)).slice(-2);
+  // Timestamp
+  if(data.savedAt){
+    var t=new Date(data.savedAt);
+    gel('garminTs').textContent='Updated today at '+('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2);
+  } else {
+    gel('garminTs').textContent='No data entered today';
+  }
 }
 
 function saveGarmin(){
   var data={
-    sleep: gel('giSleep').value!==''?parseFloat(gel('giSleep').value):undefined,
     battery: gel('giBattery').value!==''?parseFloat(gel('giBattery').value):undefined,
-    rhr: gel('giRHR').value!==''?parseFloat(gel('giRHR').value):undefined,
-    stress: gel('giStress').value!==''?parseFloat(gel('giStress').value):undefined,
-    bed: gel('giBed').value||undefined,
-    wake: gel('giWake').value||undefined
+    sleep:   gel('giSleep').value!==''?parseFloat(gel('giSleep').value):undefined,
+    rhr:     gel('giRHR').value!==''?parseFloat(gel('giRHR').value):undefined,
+    stress:  gel('giStress').value!==''?parseFloat(gel('giStress').value):undefined,
+    bed:     gel('giBed').value||undefined,
+    wake:    gel('giWake').value||undefined,
+    savedAt: new Date().toISOString()
   };
   var k=garminKey();
-  lsSet(k,data);
-  sbPush(k,data,'garminDot');
-  renderGarmin();
+  lsSet(k,data); sbPush(k,data,'garminDot'); renderGarmin();
 }
 
-// ---- schedule ----
-function toggleItem(el){
-  el.classList.toggle('open');
-}
+/* ── Schedule ── */
+function toggleItem(el){ el.classList.toggle('open'); }
+function toggleWeek(){ gel('weekPanel').classList.toggle('open'); }
 
-function toggleWeek(){
-  var panel=gel('weekPanel');
-  panel.classList.toggle('open');
-}
-
-// ---- water ----
+/* ── Water ── */
 function waterKey(){ return 'jm_water_'+dateKey(); }
 function getWaterTarget(){ return WATER_TARGETS[todayDow()]||2; }
 
 function renderWater(){
   var data=lsGet(waterKey(),{ml:0});
-  var litres=data.ml/1000;
+  var ml=data.ml||0;
   var target=getWaterTarget();
-  var pct=Math.min(litres/target,1);
-  var circ=207.3;
-  gel('waterArc').style.strokeDashoffset=(circ-(circ*pct));
-  gel('waterVal').textContent=litres.toFixed(1);
-  gel('waterTargetNum').textContent=target;
-  gel('waterTarget').textContent='Target: '+target+'L';
+  var targetMl=target*1000;
+  var pct=Math.min(100,Math.round(ml/targetMl*100));
+  gel('waterMl').textContent=ml;
+  gel('waterOf').textContent='of '+targetMl+'ml · '+(ml/1000).toFixed(1)+'L drunk today';
+  gel('waterBarFill').style.width=pct+'%';
+  gel('waterPct').textContent=pct+'%';
+  gel('waterTargetLabel').textContent='Target: '+target+'L';
 }
 
 function addWater(litres){
   var k=waterKey();
   var data=lsGet(k,{ml:0});
-  data.ml=Math.max(0,data.ml+(litres*1000));
-  lsSet(k,data);
-  sbPush(k,data,'waterDot');
-  renderWater();
+  data.ml=Math.max(0,(data.ml||0)+(litres*1000));
+  lsSet(k,data); sbPush(k,data,'waterDot'); renderWater();
 }
 
-// ---- habits ----
-function habitsKey(){ return 'jm_habits_'+dateKey(); }
+/* ── Habits ── */
+function habitsKey(d){ return 'jm_habits_'+dateKey(d); }
 
 function hStreak(id){
   var streak=0;
   var d=new Date();
   for(var i=1;i<=365;i++){
     d.setDate(d.getDate()-1);
-    var dk=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
-    var prev=lsGet('jm_habits_'+dk,null);
-    if(prev && prev[id]) { streak++; } else { break; }
+    var prev=lsGet(habitsKey(new Date(d)),null);
+    if(prev&&prev[id]){ streak++; } else { break; }
   }
   return streak;
 }
@@ -791,15 +515,10 @@ function renderHabits(){
     var id=HABIT_IDS[i];
     var checked=!!data[id];
     if(checked) done++;
-    var hel=gel('h-'+id);
-    var cel=gel('hc-'+id);
-    var sel=gel('hs-'+id);
+    var hel=gel('h-'+id), cel=gel('hc-'+id), sel=gel('hs-'+id);
     if(hel){ if(checked) hel.classList.add('done'); else hel.classList.remove('done'); }
     if(cel){ cel.textContent=checked?'✓':''; }
-    if(sel){
-      var s=hStreak(id);
-      sel.textContent=s>0?'🔥 '+s+' day streak':'Start your streak today';
-    }
+    if(sel){ var s=hStreak(id); sel.textContent=s>0?'🔥 '+s+' day streak':'Start your streak today'; }
   }
   gel('habitsBadge').textContent=done+' / 8';
 }
@@ -808,16 +527,47 @@ function toggleHabit(id){
   var k=habitsKey();
   var data=lsGet(k,{});
   data[id]=!data[id];
-  lsSet(k,data);
-  sbPush(k,data,'habitsDot');
-  renderHabits();
+  lsSet(k,data); sbPush(k,data,'habitsDot'); renderHabits();
 }
 
-// ---- supabase ----
-function sbPush(key, val, dotId){
+/* ── Yesterday modal ── */
+function ydayDateObj(){ var d=new Date(); d.setDate(d.getDate()-1); return d; }
+function ydayHabitsKey(){ return habitsKey(ydayDateObj()); }
+
+function openYdayModal(){
+  var d=ydayDateObj();
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  gel('ydayDateLabel').textContent=DAY_NAMES[d.getDay()]+' '+d.getDate()+' '+months[d.getMonth()];
+  renderYdayModal();
+  gel('ydayModal').classList.add('open');
+}
+function renderYdayModal(){
+  var data=lsGet(ydayHabitsKey(),{});
+  var html='';
+  for(var i=0;i<HABIT_IDS.length;i++){
+    var id=HABIT_IDS[i];
+    var checked=!!data[id];
+    html+='<div class="habit'+(checked?' done':'')+'" onclick="toggleYdayHabit(\''+id+'\')">'+
+      '<div class="hcheck">'+(checked?'✓':'')+'</div>'+
+      '<div class="hinfo"><div class="hname">'+HABIT_LABELS[id]+'</div></div>'+
+    '</div>';
+  }
+  gel('ydayList').innerHTML=html;
+}
+function toggleYdayHabit(id){
+  var k=ydayHabitsKey();
+  var data=lsGet(k,{});
+  data[id]=!data[id];
+  lsSet(k,data); sbPush(k,data,'habitsDot');
+  renderYdayModal(); renderHabits();
+}
+function closeYdayModal(e){ if(e.target===gel('ydayModal')) gel('ydayModal').classList.remove('open'); }
+function closeYdayModalBtn(){ gel('ydayModal').classList.remove('open'); }
+
+/* ── Supabase ── */
+function sbPush(key,val,dotId){
   if(!sb) return;
-  var json=JSON.stringify(val);
-  lastSync[key]=json;
+  var json=JSON.stringify(val); lastSync[key]=json;
   setSyncDot(dotId,'syncing');
   sb.from('app_state').upsert({key:key,data:val,updated_at:new Date().toISOString()},{onConflict:'key'})
     .then(function(){ setSyncDot(dotId,'synced'); setTimeout(function(){ setSyncDot(dotId,''); },2000); })
