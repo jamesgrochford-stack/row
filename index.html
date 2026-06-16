@@ -312,8 +312,12 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
       <span style="font-size:11px;color:var(--t3)" id="waterTargetLabel">Target: 2.5L</span>
     </div>
     <div class="water-hero">
-      <span class="water-ml" id="waterMl">0</span><span class="water-ml-unit">ml</span>
-      <div class="water-of" id="waterOf">of 2500ml · 0.0L drunk today</div>
+      <div style="font-size:42px;font-weight:900;font-family:var(--mono);color:var(--blue);line-height:1">
+        <span id="waterMl">0</span><span style="font-size:20px;font-weight:700;color:rgba(125,211,252,.6)"> ml</span>
+        <span style="font-size:20px;font-weight:600;color:var(--t4)"> of </span>
+        <span id="waterTgtMl" style="font-size:32px;color:rgba(125,211,252,.5)">2500</span><span style="font-size:20px;font-weight:700;color:rgba(125,211,252,.35)"> ml</span>
+      </div>
+      <div class="water-of" id="waterOf" style="margin-top:4px"></div>
     </div>
     <div class="water-bar-row">
       <div class="water-bar"><div class="water-bar-fill" id="waterBarFill" style="width:0%"></div></div>
@@ -481,7 +485,8 @@ function renderWater(){
   var targetMl=target*1000;
   var pct=Math.min(100,Math.round(ml/targetMl*100));
   gel('waterMl').textContent=ml;
-  gel('waterOf').textContent='of '+targetMl+'ml · '+(ml/1000).toFixed(1)+'L drunk today';
+  var tgtEl=gel('waterTgtMl'); if(tgtEl) tgtEl.textContent=targetMl;
+  gel('waterOf').textContent=(ml/1000).toFixed(2)+'L drunk today';
   gel('waterBarFill').style.width=pct+'%';
   gel('waterPct').textContent=pct+'%';
   gel('waterTargetLabel').textContent='Target: '+target+'L';
