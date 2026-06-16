@@ -38,7 +38,7 @@ select.fi{cursor:pointer}
 .fl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 
-/* Subject cards */
+/* Subjects grid */
 .subjects-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .subj-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:12px}
 .subj-card.critical{border-color:rgba(255,138,138,.3);background:rgba(255,138,138,.04)}
@@ -55,7 +55,73 @@ select.fi{cursor:pointer}
 .prog-bar{height:4px;background:var(--b);border-radius:999px;overflow:hidden;margin-top:6px}
 .prog-fill{height:100%;border-radius:999px;transition:width .4s ease}
 
-/* Streak counters */
+/* Points estimator */
+.pts-display{text-align:center;padding:12px 0 16px}
+.pts-current{font-size:52px;font-weight:700;font-family:var(--mono);color:var(--yellow);line-height:1}
+.pts-target{font-size:14px;color:var(--t3);margin-top:6px}
+.pts-gap{font-size:13px;font-weight:600;color:var(--red);margin-top:4px}
+.pts-row{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--b);font-size:13px;margin-bottom:4px}
+.pts-subj{color:var(--t2)}
+.pts-val{font-family:var(--mono);font-weight:700;color:var(--t1)}
+.prog-bar-lg{height:8px;background:var(--b);border-radius:999px;overflow:hidden}
+.prog-fill-lg{height:100%;border-radius:999px;background:var(--blue);transition:width .4s ease}
+
+/* Subject OS */
+.sos-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);margin-bottom:6px;overflow:hidden}
+.sos-card:last-child{margin-bottom:0}
+.sos-hd{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.sos-dot{width:10px;height:10px;border-radius:50%;background:var(--t4);flex-shrink:0;transition:background .2s}
+.sos-dot.red{background:var(--red)}
+.sos-dot.amber{background:var(--orange)}
+.sos-dot.green{background:var(--green)}
+.sos-hd-info{flex:1;min-width:0}
+.sos-hd-name{font-size:14px;font-weight:700;color:var(--t1)}
+.sos-hd-stats{font-size:11px;color:var(--t3);margin-top:2px}
+.sos-chev{font-size:18px;color:var(--t4);transition:transform .2s;flex-shrink:0}
+.sos-chev.open{transform:rotate(90deg)}
+.sos-body{display:none;padding:0 14px 14px;border-top:1px solid var(--b)}
+.sos-body.open{display:block}
+.sos-sec{margin-top:14px}
+.sos-sec-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:8px}
+
+/* Confidence buttons */
+.conf-row{display:flex;gap:6px;flex-wrap:wrap}
+.conf-btn{flex:1;min-width:0;padding:7px 4px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t3);font-size:11px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;text-align:center;transition:all .15s}
+.conf-btn.act-red{border-color:rgba(255,138,138,.5);background:rgba(255,138,138,.1);color:var(--red)}
+.conf-btn.act-amber{border-color:rgba(251,146,60,.5);background:rgba(251,146,60,.1);color:var(--orange)}
+.conf-btn.act-green{border-color:rgba(110,231,183,.5);background:rgba(110,231,183,.1);color:var(--green)}
+
+/* Topic rows */
+.topic-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.topic-row:last-child{border-bottom:none}
+.topic-chk{width:18px;height:18px;border-radius:5px;border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s}
+.topic-chk.checked{background:var(--green);border-color:var(--green);color:#050506}
+.topic-lbl{flex:1;font-size:12px;color:var(--t2);line-height:1.3}
+.topic-sr{font-size:10px;font-family:var(--mono);flex-shrink:0;text-align:right}
+.topic-sr.ok{color:var(--t4)}
+.topic-sr.due{color:var(--yellow)}
+.topic-sr.overdue{color:var(--orange)}
+.sr-done-btn{margin-left:4px;font-size:10px;font-weight:700;padding:1px 6px;border-radius:999px;background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.3);color:var(--orange);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.topic-del-btn{background:none;border:none;color:var(--t4);font-size:14px;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;flex-shrink:0}
+.add-topic-row{display:flex;gap:6px;margin-top:8px}
+.os-input{background:var(--bg);border:1px solid var(--b);border-radius:var(--rs);padding:7px 10px;color:var(--t1);font-size:12px;font-family:var(--font);flex:1;-webkit-appearance:none;outline:none}
+.os-input:focus{border-color:var(--b2)}
+.os-btn{padding:7px 12px;border-radius:var(--rs);border:1px solid var(--b2);background:var(--s2);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;flex-shrink:0}
+
+/* Results */
+.result-row{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.result-row:last-child{border-bottom:none}
+.result-info{flex:1;font-size:12px}
+.result-date{font-family:var(--mono);color:var(--t3);margin-right:6px}
+.result-score{font-weight:700;color:var(--t1)}
+.result-notes{color:var(--t3);display:block;margin-top:2px}
+.result-del{background:none;border:none;color:var(--t4);font-size:16px;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;flex-shrink:0}
+.result-form{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px}
+.result-form-full{grid-column:1/-1}
+.os-empty{font-size:12px;color:var(--t4);padding:8px 0;text-align:center}
+.sos-link{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue);text-decoration:none;padding:8px 10px;background:rgba(125,211,252,.06);border:1px solid rgba(125,211,252,.15);border-radius:var(--rs)}
+
+/* Streaks */
 .streak-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .streak-tile{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:14px 10px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
 .streak-tile:hover{background:var(--s2)}
@@ -68,18 +134,6 @@ select.fi{cursor:pointer}
 .am-num{font-size:52px;font-weight:700;font-family:var(--mono);color:var(--blue);line-height:1}
 .am-label{font-size:13px;color:var(--t3);margin-top:4px}
 .am-btns{display:flex;gap:8px;justify-content:center;margin-top:12px}
-.prog-bar-lg{height:8px;background:var(--b);border-radius:999px;overflow:hidden;margin-top:12px}
-.prog-fill-lg{height:100%;border-radius:999px;background:var(--blue);transition:width .4s ease}
-
-/* Points estimator */
-.pts-display{text-align:center;padding:12px 0 16px}
-.pts-current{font-size:52px;font-weight:700;font-family:var(--mono);color:var(--yellow);line-height:1}
-.pts-target{font-size:14px;color:var(--t3);margin-top:6px}
-.pts-gap{font-size:13px;font-weight:600;color:var(--red);margin-top:4px}
-.pts-subjects{display:flex;flex-direction:column;gap:5px;margin-top:12px}
-.pts-row{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--b);font-size:13px}
-.pts-subj{color:var(--t2)}
-.pts-val{font-family:var(--mono);font-weight:700;color:var(--t1)}
 
 /* Session log */
 .log-item{padding:10px 12px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);margin-bottom:6px}
@@ -103,7 +157,7 @@ select.fi{cursor:pointer}
 <body>
 <div class="bento">
 
-  <!-- CRITICAL warning -->
+  <!-- AAC Critical -->
   <div class="card" style="border-color:rgba(255,138,138,.3);background:rgba(255,138,138,.05)">
     <div class="card-hd" style="margin-bottom:10px">
       <span class="card-title" style="color:var(--red)">🚨 Critical — AAC Projects</span>
@@ -121,69 +175,22 @@ select.fi{cursor:pointer}
     </div>
   </div>
 
-  <!-- Subjects -->
+  <!-- Subjects overview -->
   <div class="card">
     <div class="card-hd">
       <span class="card-title">📚 Subjects — LC 2027</span>
       <span class="badge badge-yellow">9 subjects</span>
     </div>
     <div class="subjects-grid">
-      <div class="subj-card">
-        <div class="subj-name">Maths HL</div>
-        <span class="subj-grade grade-h1">H1</span>
-        <div class="subj-score">97% · 100 pts</div>
-        <div class="prog-bar"><div class="prog-fill" style="width:97%;background:var(--green)"></div></div>
-      </div>
-      <div class="subj-card">
-        <div class="subj-name">Irish HL</div>
-        <span class="subj-grade grade-h1">H1</span>
-        <div class="subj-score">H1 · 100 pts</div>
-        <div class="prog-bar"><div class="prog-fill" style="width:88%;background:var(--green)"></div></div>
-      </div>
-      <div class="subj-card critical">
-        <div class="subj-name">Physics HL</div>
-        <span class="subj-grade grade-h1">H1</span>
-        <div class="subj-score">95% · 100 pts</div>
-        <div class="subj-crit">AAC Critical</div>
-        <div class="prog-bar"><div class="prog-fill" style="width:95%;background:var(--green)"></div></div>
-      </div>
-      <div class="subj-card critical target">
-        <div class="subj-name">Chemistry HL</div>
-        <span class="subj-grade grade-target">H2→H1</span>
-        <div class="subj-score">H2 now · 88 pts</div>
-        <div class="subj-crit">AAC Critical</div>
-        <div class="prog-bar"><div class="prog-fill" style="width:72%;background:var(--yellow)"></div></div>
-      </div>
-      <div class="subj-card">
-        <div class="subj-name">PE HL</div>
-        <span class="subj-grade grade-h1">H1</span>
-        <div class="subj-score">90% · 100 pts</div>
-        <div class="prog-bar"><div class="prog-fill" style="width:90%;background:var(--green)"></div></div>
-      </div>
-      <div class="subj-card target">
-        <div class="subj-name">Accounting HL</div>
-        <span class="subj-grade grade-target">75%→H1</span>
-        <div class="subj-score">75% · ~77 pts</div>
-        <div class="prog-bar"><div class="prog-fill" style="width:75%;background:var(--yellow)"></div></div>
-      </div>
-      <div class="subj-card">
-        <div class="subj-name">Applied Maths</div>
-        <span class="subj-grade grade-ext">External</span>
-        <div class="subj-score">Target: H1 · 100 pts</div>
-        <div class="prog-bar"><div class="prog-fill" style="width:60%;background:var(--orange)"></div></div>
-      </div>
-      <div class="subj-card">
-        <div class="subj-name">English HL</div>
-        <span class="subj-grade grade-h7">H7 target</span>
-        <div class="subj-score">Target: ≥40 pts</div>
-        <div class="prog-bar"><div class="prog-fill" style="width:45%;background:var(--purple)"></div></div>
-      </div>
-      <div class="subj-card" style="grid-column:span 2">
-        <div class="subj-name">French HL</div>
-        <span class="subj-grade grade-ext">External H7</span>
-        <div class="subj-score">Target: ≥40 pts · Duolingo streak ongoing</div>
-        <div class="prog-bar"><div class="prog-fill" style="width:40%;background:var(--purple)"></div></div>
-      </div>
+      <div class="subj-card"><div class="subj-name">Maths HL</div><span class="subj-grade grade-h1">H1</span><div class="subj-score">97% · 100 pts</div><div class="prog-bar"><div class="prog-fill" style="width:97%;background:var(--green)"></div></div></div>
+      <div class="subj-card"><div class="subj-name">Irish HL</div><span class="subj-grade grade-h1">H1</span><div class="subj-score">H1 · 100 pts</div><div class="prog-bar"><div class="prog-fill" style="width:88%;background:var(--green)"></div></div></div>
+      <div class="subj-card critical"><div class="subj-name">Physics HL</div><span class="subj-grade grade-h1">H1</span><div class="subj-score">95% · 100 pts</div><div class="subj-crit">AAC Critical</div><div class="prog-bar"><div class="prog-fill" style="width:95%;background:var(--green)"></div></div></div>
+      <div class="subj-card critical target"><div class="subj-name">Chemistry HL</div><span class="subj-grade grade-target">H2→H1</span><div class="subj-score">H2 now · 88 pts</div><div class="subj-crit">AAC Critical</div><div class="prog-bar"><div class="prog-fill" style="width:72%;background:var(--yellow)"></div></div></div>
+      <div class="subj-card"><div class="subj-name">PE HL</div><span class="subj-grade grade-h1">H1</span><div class="subj-score">90% · 100 pts</div><div class="prog-bar"><div class="prog-fill" style="width:90%;background:var(--green)"></div></div></div>
+      <div class="subj-card target"><div class="subj-name">Accounting HL</div><span class="subj-grade grade-target">75%→H1</span><div class="subj-score">75% · ~77 pts</div><div class="prog-bar"><div class="prog-fill" style="width:75%;background:var(--yellow)"></div></div></div>
+      <div class="subj-card"><div class="subj-name">Applied Maths</div><span class="subj-grade grade-ext">External</span><div class="subj-score">Target: H1 · 100 pts</div><div class="prog-bar"><div class="prog-fill" style="width:60%;background:var(--orange)"></div></div></div>
+      <div class="subj-card"><div class="subj-name">English HL</div><span class="subj-grade grade-h7">H7 target</span><div class="subj-score">Target: ≥37 pts</div><div class="prog-bar"><div class="prog-fill" style="width:45%;background:var(--purple)"></div></div></div>
+      <div class="subj-card" style="grid-column:span 2"><div class="subj-name">French HL</div><span class="subj-grade grade-ext">External H7</span><div class="subj-score">Target: ≥37 pts · Duolingo streak ongoing</div><div class="prog-bar"><div class="prog-fill" style="width:40%;background:var(--purple)"></div></div></div>
     </div>
   </div>
 
@@ -201,33 +208,26 @@ select.fi{cursor:pointer}
       <div class="pts-target">Top 6 subjects · Target: 625</div>
       <div class="pts-gap" id="ptsGap"></div>
     </div>
-    <div class="prog-bar-lg" style="height:8px;margin-bottom:16px">
-      <div class="prog-fill-lg" id="ptsProg" style="background:linear-gradient(90deg,var(--yellow),var(--green))"></div>
-    </div>
+    <div class="prog-bar-lg" style="margin-bottom:16px"><div class="prog-fill-lg" id="ptsProg" style="background:linear-gradient(90deg,var(--yellow),var(--green))"></div></div>
     <div id="ptsList"></div>
+  </div>
+
+  <!-- Subject OS -->
+  <div class="card">
+    <div class="card-hd">
+      <span class="card-title">📖 Subject OS</span>
+      <span class="badge" id="sosBadge">0 due</span>
+    </div>
+    <div id="sosCards"></div>
   </div>
 
   <!-- Streaks -->
   <div class="card">
-    <div class="card-hd">
-      <span class="card-title">🔥 Daily Streaks</span>
-    </div>
+    <div class="card-hd"><span class="card-title">🔥 Daily Streaks</span></div>
     <div class="streak-grid">
-      <div class="streak-tile" onclick="bumpStreak('duolingo')">
-        <div class="streak-emoji">🇫🇷</div>
-        <div class="streak-num" id="sDuolingo" style="color:var(--orange)">0</div>
-        <div class="streak-lbl">Duolingo</div>
-      </div>
-      <div class="streak-tile" onclick="bumpStreak('anki')">
-        <div class="streak-emoji">🃏</div>
-        <div class="streak-num" id="sAnki" style="color:var(--purple)">0</div>
-        <div class="streak-lbl">Anki</div>
-      </div>
-      <div class="streak-tile" onclick="editStreak()">
-        <div class="streak-emoji">📅</div>
-        <div class="streak-num" id="sStudy" style="color:var(--blue)">0</div>
-        <div class="streak-lbl">Study Days</div>
-      </div>
+      <div class="streak-tile" onclick="bumpStreak('duolingo')"><div class="streak-emoji">🇫🇷</div><div class="streak-num" id="sDuolingo" style="color:var(--orange)">0</div><div class="streak-lbl">Duolingo</div></div>
+      <div class="streak-tile" onclick="bumpStreak('anki')"><div class="streak-emoji">🃏</div><div class="streak-num" id="sAnki" style="color:var(--purple)">0</div><div class="streak-lbl">Anki</div></div>
+      <div class="streak-tile" onclick="editStreak()"><div class="streak-emoji">📅</div><div class="streak-num" id="sStudy" style="color:var(--blue)">0</div><div class="streak-lbl">Study Days</div></div>
     </div>
     <p style="font-size:11px;color:var(--t3);text-align:center;margin-top:10px">Tap to log today · streaks reset if you miss a day</p>
   </div>
@@ -242,7 +242,7 @@ select.fi{cursor:pointer}
       <div class="am-num" id="amCount">0</div>
       <div class="am-label">lessons completed · target 35 total · 3/week</div>
     </div>
-    <div class="prog-bar-lg"><div class="prog-fill-lg" id="amProg" style="width:0%"></div></div>
+    <div class="prog-bar-lg" style="margin-top:12px"><div class="prog-fill-lg" id="amProg" style="width:0%"></div></div>
     <div class="am-btns">
       <button class="btn" onclick="adjAM(-1)">− 1</button>
       <button class="btn btn-green" onclick="adjAM(1)">+ 1 Lesson</button>
@@ -260,24 +260,16 @@ select.fi{cursor:pointer}
       <div class="fg">
         <label class="fl">Subject</label>
         <select class="fi" id="ssSubj">
-          <option>Maths HL</option>
-          <option>Irish HL</option>
-          <option>Physics HL</option>
-          <option>Chemistry HL</option>
-          <option>PE HL</option>
-          <option>Accounting HL</option>
-          <option>Applied Maths</option>
-          <option>English HL</option>
-          <option>French HL</option>
+          <option>Maths HL</option><option>Irish HL</option><option>Physics HL</option>
+          <option>Chemistry HL</option><option>PE HL</option><option>Accounting HL</option>
+          <option>Applied Maths</option><option>English HL</option><option>French HL</option>
         </select>
       </div>
       <div class="fg">
         <label class="fl">Type</label>
         <select class="fi" id="ssType">
-          <option value="video">Video</option>
-          <option value="anki">Anki</option>
-          <option value="paper">Past Paper</option>
-          <option value="notes">Notes</option>
+          <option value="video">Video</option><option value="anki">Anki</option>
+          <option value="paper">Past Paper</option><option value="notes">Notes</option>
           <option value="exam-q">Exam Qs</option>
         </select>
       </div>
@@ -306,8 +298,11 @@ const $ = id => document.getElementById(id);
 function ls(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d}catch{return d}}
 function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
 function dk(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function addDays(dateStr,n){const d=new Date(dateStr);d.setDate(d.getDate()+n);return dk(d);}
+function daysUntil(dateStr){const today=new Date(dk());const tgt=new Date(dateStr);return Math.round((tgt-today)/86400000);}
 
-// Points estimator — dropdown grades, top 6 of 9, Maths H1 = +25 bonus
+// ── Points estimator ──────────────────────────────────────────────────────────
 const GRADE_PTS={H1:100,H2:88,H3:77,H4:66,H5:56,H6:46,H7:37,H8:0};
 const GRADE_OPTS=['H1','H2','H3','H4','H5','H6','H7','H8'];
 const SUBJECTS=[
@@ -322,24 +317,13 @@ const SUBJECTS=[
   {name:'French HL',   defaultGrade:'H7'},
 ];
 const TARGET=625;
-function getGrades(){
-  const stored=ls('jm_pts_grades',null);
-  if(stored&&stored.length===SUBJECTS.length)return stored;
-  return SUBJECTS.map(s=>s.defaultGrade);
-}
-function saveGrades(grades){
-  lss('jm_pts_grades',grades);
-  lss('jm_pts',SUBJECTS.map((s,i)=>({name:s.name,pts:GRADE_PTS[grades[i]],mathsBonus:s.mathsBonus||false})));
-}
+function getGrades(){const s=ls('jm_pts_grades',null);return(s&&s.length===SUBJECTS.length)?s:SUBJECTS.map(s=>s.defaultGrade);}
+function saveGrades(grades){lss('jm_pts_grades',grades);lss('jm_pts',SUBJECTS.map((s,i)=>({name:s.name,pts:GRADE_PTS[grades[i]],mathsBonus:s.mathsBonus||false})));}
 function calcTop6(grades){
-  const effective=grades.map((g,i)=>{
-    const pts=GRADE_PTS[g]||0;
-    const bonus=(SUBJECTS[i].mathsBonus&&pts===100)?25:0;
-    return{name:SUBJECTS[i].name,pts,bonus,eff:pts+bonus,idx:i};
-  });
-  const sorted=[...effective].sort((a,b)=>b.eff-a.eff);
+  const eff=grades.map((g,i)=>{const pts=GRADE_PTS[g]||0;const bonus=(SUBJECTS[i].mathsBonus&&pts===100)?25:0;return{name:SUBJECTS[i].name,pts,bonus,eff:pts+bonus,idx:i};});
+  const sorted=[...eff].sort((a,b)=>b.eff-a.eff);
   const top6=new Set(sorted.slice(0,6).map(s=>s.idx));
-  return{effective,top6,total:sorted.slice(0,6).reduce((a,s)=>a+s.eff,0)};
+  return{effective:eff,top6,total:sorted.slice(0,6).reduce((a,s)=>a+s.eff,0)};
 }
 function renderPoints(){
   const grades=getGrades();
@@ -366,18 +350,284 @@ function renderPoints(){
   }).join('');
 }
 renderPoints();
-function setGrade(i,grade){
-  const grades=getGrades();
-  grades[i]=grade;
-  saveGrades(grades);
-  renderPoints();
+function setGrade(i,grade){const grades=getGrades();grades[i]=grade;saveGrades(grades);renderPoints();}
+
+// ── Subject OS ────────────────────────────────────────────────────────────────
+const SR_INTERVALS=[1,3,7,14,30];
+
+const SUBJECTS_OS=[
+  {
+    id:'chem',name:'Chemistry HL',
+    link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
+    topics:['Atomic structure','Electronic configuration','Periodic table trends','Chemical bonding (ionic/covalent/metallic)','Shapes of molecules (VSEPR)','Intermolecular forces','Stoichiometry and moles','Gas laws','Thermochemistry (enthalpy, Hess\'s law)','Rates of reaction','Chemical equilibrium (Le Chatelier)','Acids and bases (pH, buffers)','Oxidation and reduction (redox)','Electrochemistry (electrolysis, cells)','Organic chemistry (hydrocarbons, alcohols, carboxylic acids)','Polymers','Environmental chemistry','Industrial chemistry','Volumetric analysis (titrations)','Water chemistry']
+  },
+  {
+    id:'phys',name:'Physics HL',
+    link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
+    topics:['Measurement and units','Linear motion (kinematics)','Newton\'s laws and forces','Momentum and collisions','Work energy and power','Circular motion','Gravity and planetary motion','Simple harmonic motion','Waves (properties and types)','Sound','Light (reflection and refraction)','Lenses and mirrors','Interference and diffraction','Electrostatics','Electric fields and potential','Current electricity (Ohm\'s law, circuits)','Capacitors','Magnetic fields','Electromagnetic induction','AC circuits and transformers','Particle physics','Nuclear physics','Radioactivity','The electron (photoelectric effect, cathode rays)','Semiconductors','Relativity (special)']
+  },
+  {
+    id:'acc',name:'Accounting HL',
+    link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
+    topics:['Double entry bookkeeping','Trial balance','Final accounts (sole trader)','Final accounts (partnership)','Final accounts (company/PLC)','Club accounts','Farm accounts','Service firm accounts','Tabular statement','Cash flow statement','Interpretation of accounts (ratios)','Budgeting and budgetary control','Break-even analysis','Marginal costing','Standard costing and variance analysis','Depreciation methods','Control accounts','Bank reconciliation','VAT and payroll','Government and national accounts']
+  },
+  {
+    id:'am',name:'Applied Maths HL',link:null,linkText:null,
+    topics:['Particle dynamics (Newton\'s laws)','Relative velocity','Projectile motion','Circular motion','Simple harmonic motion','Statics (moments and equilibrium)','Hydrostatics']
+  },
+  {id:'maths',name:'Maths HL',link:null,linkText:null,topics:[]},
+  {id:'irish',name:'Irish HL',link:null,linkText:null,topics:[]},
+  {id:'pe',name:'PE HL',link:null,linkText:null,topics:[]},
+  {id:'eng',name:'English HL',link:null,linkText:null,topics:[]},
+  {id:'french',name:'French HL',link:null,linkText:null,topics:[]},
+];
+
+function getTopicData(sid){return ls('jm_topics_'+sid,{});}
+function saveTopicData(sid,data){lss('jm_topics_'+sid,data);}
+function getCustomTopics(sid){return ls('jm_ctopics_'+sid,[]);}
+function saveCustomTopics(sid,arr){lss('jm_ctopics_'+sid,arr);}
+function getAllTopics(sid){
+  const subj=SUBJECTS_OS.find(s=>s.id===sid);
+  return [...subj.topics,...getCustomTopics(sid)];
 }
 
-// Streaks
+function toggleTopic(sid,idx){
+  const data=getTopicData(sid);
+  const topics=getAllTopics(sid);
+  const topic=topics[idx];
+  if(!topic)return;
+  const t=data[topic]||{};
+  if(t.covered){
+    data[topic]={covered:false};
+  } else {
+    const today=dk();
+    data[topic]={covered:true,coveredDate:today,reviewCount:0,nextReview:addDays(today,SR_INTERVALS[0])};
+  }
+  saveTopicData(sid,data);
+  refreshOSCard(sid);
+}
+
+function reviewTopic(sid,idx){
+  const data=getTopicData(sid);
+  const topics=getAllTopics(sid);
+  const topic=topics[idx];
+  if(!topic||!data[topic]||!data[topic].covered)return;
+  const t=data[topic];
+  const newCount=Math.min((t.reviewCount||0)+1,SR_INTERVALS.length-1);
+  const today=dk();
+  data[topic]={...t,reviewCount:newCount,nextReview:addDays(today,SR_INTERVALS[newCount])};
+  saveTopicData(sid,data);
+  refreshOSCard(sid);
+}
+
+function addCustomTopic(sid){
+  const inp=document.getElementById('ctopic-'+sid);
+  if(!inp)return;
+  const val=inp.value.trim();
+  if(!val)return;
+  const arr=getCustomTopics(sid);
+  if(arr.includes(val)){inp.value='';return;}
+  arr.push(val);
+  saveCustomTopics(sid,arr);
+  inp.value='';
+  refreshOSCard(sid);
+}
+
+function delCustomTopic(sid,idx){
+  const topics=getAllTopics(sid);
+  const subj=SUBJECTS_OS.find(s=>s.id===sid);
+  const customStart=subj.topics.length;
+  if(idx<customStart)return;
+  const customIdx=idx-customStart;
+  const arr=getCustomTopics(sid);
+  arr.splice(customIdx,1);
+  saveCustomTopics(sid,arr);
+  // also remove topic data
+  const data=getTopicData(sid);
+  delete data[topics[idx]];
+  saveTopicData(sid,data);
+  refreshOSCard(sid);
+}
+
+function setConf(sid,level){
+  const conf=ls('jm_conf',{});
+  conf[sid]=level;
+  lss('jm_conf',conf);
+  refreshOSCard(sid);
+}
+
+function addResult(sid){
+  const dateEl=document.getElementById('rdate-'+sid);
+  const scoreEl=document.getElementById('rscore-'+sid);
+  const notesEl=document.getElementById('rnotes-'+sid);
+  if(!dateEl||!scoreEl)return;
+  const score=scoreEl.value.trim();
+  if(!score)return;
+  const results=ls('jm_results_'+sid,[]);
+  results.unshift({date:dateEl.value||dk(),score,notes:notesEl.value.trim()});
+  lss('jm_results_'+sid,results);
+  scoreEl.value='';notesEl.value='';
+  refreshOSResultsOnly(sid);
+}
+
+function delResult(sid,i){
+  const results=ls('jm_results_'+sid,[]);
+  results.splice(i,1);
+  lss('jm_results_'+sid,results);
+  refreshOSResultsOnly(sid);
+}
+
+function refreshOSResultsOnly(sid){
+  const el=document.getElementById('resultslist-'+sid);
+  if(!el)return;
+  el.innerHTML=buildResultsHTML(sid);
+}
+
+function buildResultsHTML(sid){
+  const results=ls('jm_results_'+sid,[]);
+  if(!results.length)return'<div class="os-empty">No results logged yet</div>';
+  return results.map((r,i)=>`<div class="result-row">
+    <div class="result-info">
+      <span class="result-date">${r.date}</span>
+      <span class="result-score">${esc(r.score)}</span>
+      ${r.notes?`<span class="result-notes">${esc(r.notes)}</span>`:''}
+    </div>
+    <button class="result-del" onclick="delResult('${sid}',${i})">×</button>
+  </div>`).join('');
+}
+
+function buildOSBody(sid){
+  const subj=SUBJECTS_OS.find(s=>s.id===sid);
+  const conf=ls('jm_conf',{})[sid]||'';
+  const topicData=getTopicData(sid);
+  const allTopics=getAllTopics(sid);
+  const customStart=subj.topics.length;
+  const today=dk();
+  let coveredCount=0,dueCount=0;
+  let topicsHTML='';
+
+  allTopics.forEach((topic,idx)=>{
+    const t=topicData[topic]||{};
+    const isCustom=idx>=customStart;
+    if(t.covered)coveredCount++;
+    let srHtml='',srClass='ok';
+    if(t.covered&&t.nextReview){
+      const dl=daysUntil(t.nextReview);
+      if(dl<0){dueCount++;srClass='overdue';srHtml=`<span class="topic-sr overdue">${Math.abs(dl)}d late</span> <button class="sr-done-btn" onclick="reviewTopic('${sid}',${idx})">Done</button>`;}
+      else if(dl===0){dueCount++;srClass='due';srHtml=`<span class="topic-sr due">Due today</span> <button class="sr-done-btn" onclick="reviewTopic('${sid}',${idx})">Done</button>`;}
+      else{srHtml=`<span class="topic-sr ok">in ${dl}d</span>`;}
+    }
+    const delBtn=isCustom?`<button class="topic-del-btn" onclick="delCustomTopic('${sid}',${idx})">×</button>`:'';
+    topicsHTML+=`<div class="topic-row">
+      <div class="topic-chk${t.covered?' checked':''}" onclick="toggleTopic('${sid}',${idx})">${t.covered?'✓':''}</div>
+      <span class="topic-lbl">${esc(topic)}</span>
+      <div>${srHtml}</div>
+      ${delBtn}
+    </div>`;
+  });
+
+  // Update header stats
+  const statsEl=document.getElementById('sos-stats-'+sid);
+  if(statsEl)statsEl.textContent=`${coveredCount}/${allTopics.length} covered · ${dueCount} due`;
+  const dotEl=document.getElementById('sos-dot-'+sid);
+  if(dotEl)dotEl.className='sos-dot'+(conf?' '+conf:'');
+  updateSOSBadge();
+
+  return`<div class="sos-sec">
+    <div class="sos-sec-title">Confidence</div>
+    <div class="conf-row">
+      <button class="conf-btn${conf==='red'?' act-red':''}" onclick="setConf('${sid}','red')">🔴 Needs work</button>
+      <button class="conf-btn${conf==='amber'?' act-amber':''}" onclick="setConf('${sid}','amber')">🟠 Getting there</button>
+      <button class="conf-btn${conf==='green'?' act-green':''}" onclick="setConf('${sid}','green')">🟢 Solid</button>
+    </div>
+  </div>
+  <div class="sos-sec">
+    <div class="sos-sec-title">Topics (${coveredCount}/${allTopics.length}${dueCount?` · <span style="color:var(--orange)">${dueCount} due</span>`:''})</div>
+    <div id="topiclist-${sid}">${topicsHTML||'<div class="os-empty">No pre-loaded topics</div>'}</div>
+    <div class="add-topic-row">
+      <input class="os-input" id="ctopic-${sid}" type="text" placeholder="Add topic…" onkeydown="if(event.key==='Enter')addCustomTopic('${sid}')">
+      <button class="os-btn" onclick="addCustomTopic('${sid}')">+ Add</button>
+    </div>
+  </div>
+  <div class="sos-sec">
+    <div class="sos-sec-title">Past Results</div>
+    <div id="resultslist-${sid}">${buildResultsHTML(sid)}</div>
+    <div class="result-form">
+      <input class="os-input" id="rdate-${sid}" type="date" value="${today}">
+      <input class="os-input" id="rscore-${sid}" type="text" placeholder="Score e.g. 78%">
+      <input class="os-input result-form-full" id="rnotes-${sid}" type="text" placeholder="Notes (optional)">
+      <button class="os-btn result-form-full" onclick="addResult('${sid}')">+ Log result</button>
+    </div>
+  </div>
+  ${subj.link?`<div class="sos-sec"><a href="${subj.link}" target="_blank" class="sos-link">📎 ${subj.linkText}</a></div>`:''}`;
+}
+
+function refreshOSCard(sid){
+  const body=document.getElementById('sos-body-'+sid);
+  if(!body||!body.classList.contains('open'))return;
+  body.innerHTML=buildOSBody(sid);
+}
+
+function toggleOS(sid){
+  const body=document.getElementById('sos-body-'+sid);
+  const chev=document.getElementById('sos-chev-'+sid);
+  if(!body)return;
+  const isOpen=body.classList.contains('open');
+  if(!isOpen){
+    body.innerHTML=buildOSBody(sid);
+    body.classList.add('open');
+    if(chev)chev.classList.add('open');
+  } else {
+    body.classList.remove('open');
+    if(chev)chev.classList.remove('open');
+  }
+}
+
+function updateSOSBadge(){
+  let totalDue=0;
+  SUBJECTS_OS.forEach(subj=>{
+    const data=getTopicData(subj.id);
+    const topics=getAllTopics(subj.id);
+    topics.forEach(t=>{
+      const d=data[t];
+      if(d&&d.covered&&d.nextReview&&daysUntil(d.nextReview)<=0)totalDue++;
+    });
+  });
+  $('sosBadge').textContent=totalDue>0?`${totalDue} due`:'all clear';
+  $('sosBadge').style.background=totalDue>0?'rgba(251,146,60,.15)':'rgba(110,231,183,.1)';
+  $('sosBadge').style.color=totalDue>0?'var(--orange)':'var(--green)';
+}
+
+function initSOS(){
+  let html='';
+  const conf=ls('jm_conf',{});
+  SUBJECTS_OS.forEach(subj=>{
+    const topicData=getTopicData(subj.id);
+    const allTopics=getAllTopics(subj.id);
+    const covered=allTopics.filter(t=>topicData[t]&&topicData[t].covered).length;
+    const due=allTopics.filter(t=>topicData[t]&&topicData[t].covered&&topicData[t].nextReview&&daysUntil(topicData[t].nextReview)<=0).length;
+    const c=conf[subj.id]||'';
+    html+=`<div class="sos-card">
+      <div class="sos-hd" onclick="toggleOS('${subj.id}')">
+        <div class="sos-dot${c?' '+c:''}" id="sos-dot-${subj.id}"></div>
+        <div class="sos-hd-info">
+          <div class="sos-hd-name">${subj.name}</div>
+          <div class="sos-hd-stats" id="sos-stats-${subj.id}">${covered}/${allTopics.length} covered · ${due} due</div>
+        </div>
+        <div class="sos-chev" id="sos-chev-${subj.id}">›</div>
+      </div>
+      <div class="sos-body" id="sos-body-${subj.id}" data-sid="${subj.id}"></div>
+    </div>`;
+  });
+  $('sosCards').innerHTML=html;
+  updateSOSBadge();
+}
+initSOS();
+
+// ── Streaks ───────────────────────────────────────────────────────────────────
 const SK='jm_study_streaks';
 function getStreak(id){
-  const data=ls(SK,{});
-  const s=data[id]||{count:0,last:null};
+  const data=ls(SK,{});const s=data[id]||{count:0,last:null};
   if(!s.last)return s.count;
   const today=dk();if(s.last===today)return s.count;
   const d=new Date(s.last);d.setDate(d.getDate()+1);
@@ -390,15 +640,11 @@ function bumpStreak(id){
   if(s.last===today){alert('Already logged today!');return;}
   const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);
   s.count=s.last===dk(yesterday)?s.count+1:1;
-  s.last=today;data[id]=s;lss(SK,data);
-  renderStreaks();
+  s.last=today;data[id]=s;lss(SK,data);renderStreaks();
 }
 function editStreak(){
-  const n=prompt('Study day streak count:');
-  if(n===null)return;
-  const data=ls(SK,{});
-  data.study={count:+n||0,last:dk()};
-  lss(SK,data);renderStreaks();
+  const n=prompt('Study day streak count:');if(n===null)return;
+  const data=ls(SK,{});data.study={count:+n||0,last:dk()};lss(SK,data);renderStreaks();
 }
 function renderStreaks(){
   $('sDuolingo').textContent=getStreak('duolingo');
@@ -407,7 +653,7 @@ function renderStreaks(){
 }
 renderStreaks();
 
-// Applied Maths counter
+// ── Applied Maths ─────────────────────────────────────────────────────────────
 const AMK='jm_am_count';
 function renderAM(){
   const n=ls(AMK,0);
@@ -417,7 +663,7 @@ function renderAM(){
 function adjAM(delta){const n=Math.max(0,ls(AMK,0)+delta);lss(AMK,n);renderAM();}
 renderAM();
 
-// Study sessions
+// ── Study sessions ────────────────────────────────────────────────────────────
 const SSKEY='jm_study_sessions';
 function addStudySession(){
   const subj=$('ssSubj').value,type=$('ssType').value,dur=$('ssDur').value;
@@ -425,9 +671,7 @@ function addStudySession(){
   const sessions=ls(SSKEY,[]);
   sessions.unshift({subj,type,dur:+dur,date:dk(),ts:Date.now()});
   lss(SSKEY,sessions);$('ssDur').value='';
-  // bump study streak
-  bumpStreak('study');
-  renderStudySessions();
+  bumpStreak('study');renderStudySessions();
 }
 function renderStudySessions(){
   const sessions=ls(SSKEY,[]);
@@ -435,10 +679,7 @@ function renderStudySessions(){
   if(!sessions.length){$('studyLog').innerHTML='<div style="color:var(--t3);font-size:13px;text-align:center;padding:12px">No sessions yet</div>';return;}
   $('studyLog').innerHTML=sessions.slice(0,8).map(s=>`
     <div class="log-item">
-      <div class="log-hd">
-        <span class="log-type ${s.type}">${s.type}</span>
-        <span class="log-dur">${s.dur} min</span>
-      </div>
+      <div class="log-hd"><span class="log-type ${s.type}">${s.type}</span><span class="log-dur">${s.dur} min</span></div>
       <div class="log-subj">${s.subj}</div>
       <div class="log-date">${s.date}</div>
     </div>`).join('');

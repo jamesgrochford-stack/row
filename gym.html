@@ -35,6 +35,15 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 .lift-val{font-size:22px;font-weight:800;font-family:var(--mono);color:var(--t1);line-height:1}
 .lift-unit{font-size:13px;font-weight:600;color:var(--t3)}
 .lift.untested .lift-val{font-size:13px;font-weight:500;color:var(--t4);letter-spacing:0}
+.lift-row{display:flex;align-items:flex-end;justify-content:space-between;gap:6px}
+.pb-btn{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 8px;border-radius:6px;border:1px solid var(--b);background:var(--s);color:var(--t4);cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap;flex-shrink:0}
+.lift-prev{font-size:9px;color:var(--t4);margin-top:3px;font-family:var(--mono)}
+.lift-form{display:none;margin-top:8px;flex-direction:column;gap:6px}
+.lift-form.open{display:flex}
+.lift-input{background:var(--bg);border:1px solid var(--b2);border-radius:var(--rs);padding:7px 10px;color:var(--t1);font-size:14px;font-family:var(--mono);width:100%;outline:none}
+.lift-form-btns{display:flex;gap:6px}
+.lift-save-btn{flex:1;padding:7px;border-radius:var(--rs);border:1px solid rgba(110,231,183,.3);background:rgba(110,231,183,.09);color:var(--green);font-size:12px;font-weight:700;cursor:pointer}
+.lift-cancel-btn{padding:7px 12px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t3);font-size:12px;cursor:pointer}
 
 .sess-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .sess-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:12px}
@@ -84,24 +93,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 
   <div class="card">
     <div class="card-hd"><span class="card-title">🏋️ Key Lifts</span></div>
-    <div class="lifts-grid">
-      <div class="lift">
-        <div class="lift-name">Squat</div>
-        <div class="lift-val">97.5<span class="lift-unit"> kg</span></div>
-      </div>
-      <div class="lift">
-        <div class="lift-name">Bench Press</div>
-        <div class="lift-val">72.5<span class="lift-unit"> kg</span></div>
-      </div>
-      <div class="lift">
-        <div class="lift-name">Pull-ups</div>
-        <div class="lift-val">+5<span class="lift-unit"> kg</span></div>
-      </div>
-      <div class="lift untested">
-        <div class="lift-name">Trap Bar</div>
-        <div class="lift-val">Not yet tested</div>
-      </div>
-    </div>
+    <div class="lifts-grid" id="liftsGrid"></div>
   </div>
 
   <div class="card">
@@ -182,6 +174,62 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// ── Key Lifts / PBs ──────────────────────────────────────────────────────────
+var LIFTS_DEF=[
+  {id:'squat',    name:'Squat',       defaultVal:'97.5', unit:' kg'},
+  {id:'bench',    name:'Bench Press', defaultVal:'72.5', unit:' kg'},
+  {id:'pullups',  name:'Pull-ups',    defaultVal:'+5',   unit:' kg'},
+  {id:'trapbar',  name:'Trap Bar',    defaultVal:null,   unit:' kg'},
+];
+function getPBs(){return JSON.parse(localStorage.getItem('jm_pbs')||'{}');}
+function savePBs(d){localStorage.setItem('jm_pbs',JSON.stringify(d));}
+function toggleLiftForm(id){
+  var f=document.getElementById('lf-'+id);
+  if(!f)return;
+  var isOpen=f.classList.contains('open');
+  if(!isOpen){f.classList.add('open');var inp=document.getElementById('li-'+id);if(inp)inp.focus();}
+  else f.classList.remove('open');
+}
+function confirmPB(id){
+  var inp=document.getElementById('li-'+id);
+  if(!inp)return;
+  var val=inp.value.trim();
+  if(!val){inp.focus();return;}
+  var pbs=getPBs();
+  if(!pbs[id])pbs[id]=[];
+  pbs[id].unshift({val:val,date:new Date().toISOString().slice(0,10)});
+  savePBs(pbs);
+  inp.value='';
+  renderLifts();
+}
+function renderLifts(){
+  var pbs=getPBs();
+  document.getElementById('liftsGrid').innerHTML=LIFTS_DEF.map(function(l){
+    var history=pbs[l.id]||[];
+    var current=history.length?history[0]:null;
+    var previous=history.length>1?history[1]:null;
+    var displayVal=current?(current.val+l.unit):(l.defaultVal?l.defaultVal+l.unit:'Not yet tested');
+    var isUntested=!current&&!l.defaultVal;
+    var prevText=previous?('Prev: '+previous.val+l.unit+' · '+previous.date):(current?('First: '+current.date):'');
+    return'<div class="lift'+(isUntested?' untested':'')+'">'+
+      '<div class="lift-name">'+l.name+'</div>'+
+      '<div class="lift-row">'+
+        '<div class="lift-val">'+(isUntested?'Not tested':(current?current.val:(l.defaultVal||'—')))+(!isUntested?'<span class="lift-unit">'+l.unit+'</span>':'')+'</div>'+
+        '<button class="pb-btn" onclick="toggleLiftForm(\''+l.id+'\')">Update PB</button>'+
+      '</div>'+
+      (prevText?'<div class="lift-prev">'+prevText+'</div>':'')+
+      '<div class="lift-form" id="lf-'+l.id+'">'+
+        '<input class="lift-input" id="li-'+l.id+'" type="text" placeholder="New PB e.g. 100" onkeydown="if(event.key===\'Enter\')confirmPB(\''+l.id+'\')">'+
+        '<div class="lift-form-btns">'+
+          '<button class="lift-save-btn" onclick="confirmPB(\''+l.id+'\')">Save PB</button>'+
+          '<button class="lift-cancel-btn" onclick="toggleLiftForm(\''+l.id+'\')">Cancel</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+renderLifts();
+
 var SB_URL = 'https://ymksoxojvrbrmpdzfjxf.supabase.co';
 var SB_KEY = 'sb_publishable_sozYCEAdWzVt1Tni_EbPCA_gdw6JdvN';
 var LOG_KEY = 'jm_gym_log';

@@ -265,7 +265,7 @@ function renderSubs(){
   const today=new Date().getDate();
   $('subList').innerHTML=SUBS.map(s=>{
     const daysLeft=s.dayOfMonth>=today?s.dayOfMonth-today:s.dayOfMonth+(new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate()-today);
-    const soon=daysLeft<=5;
+    const soon=daysLeft<7;
     return`<div class="sub-item">
       <span class="sub-icon">${s.icon}</span>
       <div class="sub-body">

@@ -29,6 +29,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t1);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
 .btn:hover{background:var(--s2)}
 .btn-green{background:rgba(110,231,183,.1);border-color:rgba(110,231,183,.22);color:var(--green)}
+.btn-sm{padding:5px 10px;font-size:11px;border-radius:7px}
 .btn-full{width:100%;margin-top:10px}
 .fi{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:9px 12px;color:var(--t1);font-family:var(--font);font-size:14px;width:100%;-webkit-appearance:none}
 .fi:focus{outline:none;border-color:var(--b2)}
@@ -36,11 +37,7 @@ select.fi{cursor:pointer}
 .fg{display:flex;flex-direction:column;gap:5px}
 .fl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.stat-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--b)}
-.stat-row:last-child{border-bottom:none;padding-bottom:0}
-.stat-lbl{font-size:13px;color:var(--t2)}
-.stat-val{font-size:13px;font-weight:700;font-family:var(--mono);color:var(--t1)}
-.stat-target{font-size:11px;color:var(--t3);font-family:var(--mono)}
+.form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
 .prog-bar{height:5px;background:var(--b);border-radius:999px;overflow:hidden;margin-top:6px}
 .prog-fill{height:100%;border-radius:999px;transition:width .4s ease}
 .log-item{padding:10px 12px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);margin-bottom:6px}
@@ -53,6 +50,7 @@ select.fi{cursor:pointer}
 .log-dur{font-size:11px;color:var(--t3);font-family:var(--mono)}
 .log-notes{font-size:12px;color:var(--t2);margin-top:4px;line-height:1.4}
 .log-date{font-size:10px;color:var(--t4);margin-top:4px;font-family:var(--mono)}
+.log-meta{font-size:11px;color:var(--t3);margin-top:3px;display:flex;gap:12px}
 .week-grid{display:grid;gap:6px}
 .wday{display:flex;align-items:center;gap:10px;padding:9px 10px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs)}
 .wday-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);min-width:32px}
@@ -68,12 +66,46 @@ select.fi{cursor:pointer}
 .action-body{flex:1}
 .action-title{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:2px}
 .action-desc{font-size:12px;color:var(--t2);line-height:1.4}
-.film-item{display:flex;align-items:center;gap:10px;padding:9px 10px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);margin-bottom:5px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
-.film-check{width:20px;height:20px;border-radius:6px;border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;transition:all .15s}
-.film-item.done .film-check{background:var(--green);border-color:var(--green);color:#000}
-.film-player{flex:1;font-size:13px;color:var(--t2)}
-.film-item.done .film-player{color:var(--t1)}
-.film-count{font-size:11px;font-family:var(--mono);color:var(--t3)}
+
+/* Fitness Tests */
+.ft-row{padding:10px 0;border-bottom:1px solid var(--b)}
+.ft-row:last-child{border-bottom:none;padding-bottom:0}
+.ft-header{display:flex;align-items:center;justify-content:space-between}
+.ft-left{flex:1}
+.ft-name{font-size:13px;font-weight:600;color:var(--t1)}
+.ft-target{font-size:11px;color:var(--t3);font-family:var(--mono);margin-top:2px}
+.ft-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.ft-val{font-size:18px;font-weight:700;font-family:var(--mono)}
+.ft-update-btn{padding:4px 10px;font-size:10px;font-weight:700;border-radius:7px;border:1px solid var(--b);background:var(--s);color:var(--t3);cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.ft-prev{font-size:10px;color:var(--t4);margin-top:4px;font-family:var(--mono)}
+.ft-update-form{margin-top:8px;display:flex;gap:6px;align-items:center}
+.ft-input{background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rs);padding:7px 10px;color:var(--t1);font-size:13px;font-family:var(--mono);flex:1;outline:none}
+.ft-date-in{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:7px 10px;color:var(--t1);font-size:12px;font-family:var(--font);width:130px;outline:none}
+
+/* Film study */
+.film-player-card{display:flex;align-items:center;gap:10px;padding:9px 10px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);margin-bottom:5px}
+.film-done-dot{width:8px;height:8px;border-radius:50%;background:var(--b2);flex-shrink:0;transition:background .15s}
+.film-done-dot.done{background:var(--green)}
+.film-player-name{font-size:13px;color:var(--t2);flex:1}
+.film-player-count{font-size:11px;font-family:var(--mono);color:var(--t3)}
+.film-log-form{background:var(--bg2);border:1px solid var(--b2);border-radius:var(--rs);padding:12px;margin-top:8px}
+.film-breakdown{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:6px;margin-top:10px}
+.film-bp-tile{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:8px;text-align:center}
+.film-bp-count{font-size:22px;font-weight:700;font-family:var(--mono);color:var(--blue)}
+.film-bp-name{font-size:10px;color:var(--t3);margin-top:2px;font-weight:600}
+.film-hist-row{font-size:12px;color:var(--t3);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:6px}
+.film-hist-row:last-child{border-bottom:none}
+
+/* Confidence graph */
+.conf-graph{margin-top:12px}
+.conf-graph-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px}
+.conf-graph-wrap{overflow-x:auto;padding-bottom:2px}
+
+/* Stars */
+.star-row{display:flex;gap:4px}
+.star{font-size:20px;cursor:pointer;opacity:.3;-webkit-tap-highlight-color:transparent;transition:opacity .1s}
+.star.lit{opacity:1}
+
 .bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(5,5,6,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--b);padding:6px max(0px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(0px,env(safe-area-inset-left));z-index:100}
 .ntab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;text-decoration:none;color:var(--t4);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;-webkit-tap-highlight-color:transparent;transition:color .15s}
 .ntab .ni{font-size:20px;line-height:1}
@@ -134,11 +166,30 @@ select.fi{cursor:pointer}
         <input class="fi" id="sDur" type="number" placeholder="60">
       </div>
     </div>
-    <div class="fg" style="margin-bottom:8px">
+    <div class="fg" style="margin-bottom:10px">
       <label class="fl">Notes</label>
       <input class="fi" id="sNotes" placeholder="Focus areas, key moments…">
     </div>
-    <button class="btn btn-green btn-full" onclick="addSession()">Log Session</button>
+    <div class="form-grid" style="margin-bottom:10px">
+      <div class="fg">
+        <label class="fl">Session Rating (1–5)</label>
+        <div class="star-row" id="ratingStars" style="margin-top:4px"></div>
+        <input type="hidden" id="sRating" value="0">
+      </div>
+      <div class="fg">
+        <label class="fl">Confidence Today (1–5)</label>
+        <div class="star-row" id="confStars" style="margin-top:4px"></div>
+        <input type="hidden" id="sConf" value="0">
+      </div>
+    </div>
+    <button class="btn btn-green btn-full" style="margin-top:0" onclick="addSession()">Log Session</button>
+
+    <!-- Confidence graph -->
+    <div class="conf-graph" id="confGraphWrap" style="display:none">
+      <div class="conf-graph-title">Confidence — last 10 sessions</div>
+      <div class="conf-graph-wrap"><canvas id="confCanvas" height="48" style="max-width:100%"></canvas></div>
+    </div>
+
     <div id="sessionLog" style="margin-top:12px"></div>
   </div>
 
@@ -162,26 +213,7 @@ select.fi{cursor:pointer}
       <span class="card-title">📊 Fitness Tests</span>
       <span class="badge badge-green">CDM Benchmarks</span>
     </div>
-    <div class="stat-row">
-      <div><div class="stat-lbl">Yo-Yo IR Level 2</div><div class="stat-target">Target: 22.0+</div></div>
-      <div style="text-align:right"><div class="stat-val">21.4</div><div class="prog-bar" style="width:120px"><div class="prog-fill" style="width:74%;background:var(--yellow)"></div></div></div>
-    </div>
-    <div class="stat-row">
-      <div><div class="stat-lbl">Illinois Agility</div><div class="stat-target">Target: &lt;14.0s</div></div>
-      <div style="text-align:right"><div class="stat-val">14.39s</div><div class="prog-bar" style="width:120px"><div class="prog-fill" style="width:68%;background:var(--yellow)"></div></div></div>
-    </div>
-    <div class="stat-row">
-      <div><div class="stat-lbl">Bronco Test</div><div class="stat-target">Target: &lt;4:20</div></div>
-      <div style="text-align:right"><div class="stat-val">4:35</div><div class="prog-bar" style="width:120px"><div class="prog-fill" style="width:72%;background:var(--yellow)"></div></div></div>
-    </div>
-    <div class="stat-row">
-      <div><div class="stat-lbl">Flying 20m Sprint</div><div class="stat-target">Target: &lt;2.20s</div></div>
-      <div style="text-align:right"><div class="stat-val">2.28s</div><div class="prog-bar" style="width:120px"><div class="prog-fill" style="width:80%;background:var(--green)"></div></div></div>
-    </div>
-    <div class="stat-row">
-      <div><div class="stat-lbl">Broad Jump</div><div class="stat-target">Target: 2.75m+</div></div>
-      <div style="text-align:right"><div class="stat-val">2.63m</div><div class="prog-bar" style="width:120px"><div class="prog-fill" style="width:78%;background:var(--green)"></div></div></div>
-    </div>
+    <div id="fitTestsList"></div>
   </div>
 
   <!-- Film Study -->
@@ -191,9 +223,38 @@ select.fi{cursor:pointer}
       <span class="badge" id="filmBadge">0 this week</span>
     </div>
     <p style="font-size:12px;color:var(--t3);margin-bottom:12px">CDM reference players — study positioning, press triggers, transition work.</p>
-    <div id="filmList"></div>
-    <button class="btn btn-full" onclick="logFilm()" style="margin-top:4px">+ Log New Film Session</button>
-    <div id="filmHistory" style="margin-top:12px"></div>
+
+    <!-- Player tracker (this week) -->
+    <div id="filmPlayerList"></div>
+
+    <!-- Log form -->
+    <div class="film-log-form" id="filmLogForm" style="display:none">
+      <div class="fg" style="margin-bottom:8px">
+        <label class="fl">Player studied</label>
+        <select class="fi" id="filmPlayer">
+          <option value="Rodri">Rodri</option>
+          <option value="Declan Rice">Declan Rice</option>
+          <option value="Granit Xhaka">Granit Xhaka</option>
+          <option value="Ndidi">Ndidi</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="fg" style="margin-bottom:10px">
+        <label class="fl">Notes</label>
+        <input class="fi" id="filmNotes" placeholder="What did you take away?">
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-green" style="flex:1" onclick="submitFilm()">Save</button>
+        <button class="btn" onclick="hideFilmForm()">Cancel</button>
+      </div>
+    </div>
+    <button class="btn btn-full" id="filmLogBtn" onclick="showFilmForm()" style="margin-top:8px">+ Log Film Session</button>
+
+    <!-- This week breakdown -->
+    <div id="filmBreakdown" style="margin-top:12px"></div>
+
+    <!-- History -->
+    <div id="filmHistory" style="margin-top:8px"></div>
   </div>
 
 </div>
@@ -214,81 +275,259 @@ function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
 function dk(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function weekStart(){const d=new Date();d.setDate(d.getDate()-d.getDay());d.setHours(0,0,0,0);return d.getTime();}
 
-// Sessions
-const SKEY='jm_football_sessions';
-function addSession(){
-  const type=$('sType').value,dur=$('sDur').value,notes=$('sNotes').value.trim();
-  if(!dur){alert('Enter duration');return;}
-  const sessions=ls(SKEY,[]);
-  sessions.unshift({type,dur:+dur,notes,date:dk(),ts:Date.now()});
-  lss(SKEY,sessions);$('sDur').value='';$('sNotes').value='';
+// ── Star rating ───────────────────────────────────────────────────────────────
+function initStars(containerId, hiddenId) {
+  const c = $(containerId), h = $(hiddenId);
+  for (let i = 1; i <= 5; i++) {
+    const s = document.createElement('span');
+    s.className = 'star'; s.textContent = '★'; s.dataset.v = i;
+    s.onclick = () => { h.value = i; updateStars(c, i); };
+    c.appendChild(s);
+  }
+}
+function updateStars(container, val) {
+  container.querySelectorAll('.star').forEach(s => s.classList.toggle('lit', +s.dataset.v <= val));
+}
+initStars('ratingStars','sRating');
+initStars('confStars','sConf');
+
+// ── Sessions ──────────────────────────────────────────────────────────────────
+const SKEY = 'jm_football_sessions';
+function addSession() {
+  const type=$('sType').value, dur=$('sDur').value, notes=$('sNotes').value.trim();
+  const rating=+$('sRating').value||0, confidence=+$('sConf').value||0;
+  if (!dur) { alert('Enter duration'); return; }
+  const sessions = ls(SKEY, []);
+  sessions.unshift({type, dur:+dur, notes, rating, confidence, date:dk(), ts:Date.now()});
+  lss(SKEY, sessions);
+  $('sDur').value=''; $('sNotes').value='';
+  $('sRating').value=0; $('sConf').value=0;
+  updateStars($('ratingStars'), 0); updateStars($('confStars'), 0);
   renderSessions();
 }
-function delSession(i){if(!confirm('Delete this session?'))return;const sessions=ls(SKEY,[]);sessions.splice(i,1);lss(SKEY,sessions);renderSessions();}
-function renderSessions(){
-  const sessions=ls(SKEY,[]);
-  $('sessionCount').textContent=sessions.length+' sessions';
-  if(!sessions.length){$('sessionLog').innerHTML='<div style="color:var(--t3);font-size:13px;text-align:center;padding:12px">No sessions logged yet</div>';return;}
-  $('sessionLog').innerHTML=sessions.slice(0,8).map((s,i)=>`
-    <div class="log-item">
+function delSession(i) {
+  if (!confirm('Delete this session?')) return;
+  const sessions = ls(SKEY, []);
+  sessions.splice(i, 1);
+  lss(SKEY, sessions);
+  renderSessions();
+}
+function renderSessions() {
+  const sessions = ls(SKEY, []);
+  $('sessionCount').textContent = sessions.length + ' sessions';
+  renderConfGraph(sessions);
+  if (!sessions.length) {
+    $('sessionLog').innerHTML = '<div style="color:var(--t3);font-size:13px;text-align:center;padding:12px">No sessions logged yet</div>';
+    return;
+  }
+  $('sessionLog').innerHTML = sessions.slice(0, 8).map((s, i) => {
+    const stars = s.rating ? '★'.repeat(s.rating)+'☆'.repeat(5-s.rating) : '';
+    const confText = s.confidence ? `Conf: ${s.confidence}/5` : '';
+    return `<div class="log-item">
       <div class="log-header">
         <span class="log-type ${s.type}">${s.type}</span>
         <span style="display:flex;align-items:center;gap:8px">
           <span class="log-dur">${s.dur} min</span>
-          <button onclick="delSession(${i})" style="background:none;border:none;color:var(--t4);cursor:pointer;font-size:16px;padding:0;line-height:1;-webkit-tap-highlight-color:transparent" title="Delete">×</button>
+          <button onclick="delSession(${i})" style="background:none;border:none;color:var(--t4);cursor:pointer;font-size:16px;padding:0;line-height:1;-webkit-tap-highlight-color:transparent">×</button>
         </span>
       </div>
-      ${s.notes?`<div class="log-notes">${s.notes}</div>`:''}
+      ${s.notes ? `<div class="log-notes">${s.notes}</div>` : ''}
+      ${stars || confText ? `<div class="log-meta">${stars?`<span style="color:var(--yellow);letter-spacing:1px;font-size:12px">${stars}</span>`:''}${confText?`<span>🧠 ${confText}</span>`:''}</div>` : ''}
       <div class="log-date">${s.date}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
+
+function renderConfGraph(sessions) {
+  const pts = sessions.filter(s => s.confidence > 0).slice(0, 10).reverse();
+  const wrap = $('confGraphWrap');
+  if (pts.length < 2) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  const canvas = $('confCanvas');
+  const W = Math.min(canvas.parentElement.offsetWidth || 300, 500);
+  canvas.width = W; canvas.height = 48;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, 48);
+  const pad = 6;
+  const xStep = (W - pad * 2) / (pts.length - 1);
+  const yScale = (48 - pad * 2) / 4; // 1-5 → 0-4
+  const coords = pts.map((s, i) => ({
+    x: pad + i * xStep,
+    y: 48 - pad - (s.confidence - 1) * yScale
+  }));
+  // Draw y gridlines at 1,3,5
+  ctx.strokeStyle = 'rgba(255,255,255,.06)';
+  ctx.lineWidth = 1;
+  [1, 3, 5].forEach(v => {
+    const y = 48 - pad - (v - 1) * yScale;
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  });
+  // Draw line
+  ctx.strokeStyle = 'rgba(125,211,252,.7)'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  coords.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
+  ctx.stroke();
+  // Draw dots
+  coords.forEach(p => {
+    ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = '#7DD3FC'; ctx.fill();
+  });
+}
+
 renderSessions();
 
-// Film Study
-const PLAYERS=[
-  {name:'Rodri',club:'Man City / Spain',focus:'Positioning & press triggers'},
-  {name:'Declan Rice',club:'Arsenal / England',focus:'Box-to-box energy & duels'},
-  {name:'Granit Xhaka',club:'Bayer Leverkusen',focus:'Aggression & leadership'},
-  {name:'Wilfred Ndidi',club:'Leicester',focus:'Defensive screen & recovery'},
+// ── Fitness Tests ─────────────────────────────────────────────────────────────
+const FIT_TESTS = [
+  {id:'yoyo', name:'Yo-Yo IR Level 2', target:'22.0+', unit:'', defaultVal:'21.4', pct:74, barColor:'var(--yellow)', higherBetter:true},
+  {id:'illinois', name:'Illinois Agility', target:'<14.0s', unit:'s', defaultVal:'14.39', pct:68, barColor:'var(--yellow)', higherBetter:false},
+  {id:'bronco', name:'Bronco Test', target:'<4:20', unit:'', defaultVal:'4:35', pct:72, barColor:'var(--yellow)', higherBetter:false},
+  {id:'sprint20', name:'Flying 20m Sprint', target:'<2.20s', unit:'s', defaultVal:'2.28', pct:80, barColor:'var(--green)', higherBetter:false},
+  {id:'broadjump', name:'Broad Jump', target:'2.75m+', unit:'m', defaultVal:'2.63', pct:78, barColor:'var(--green)', higherBetter:true},
 ];
-const FKEY='jm_film_study';
-function renderFilm(){
-  const logs=ls(FKEY,[]);
-  const ws=weekStart();
-  const thisWeek=logs.filter(l=>l.ts>=ws).length;
-  $('filmBadge').textContent=thisWeek+' this week';
-  $('filmList').innerHTML=PLAYERS.map(p=>`
-    <div class="film-item" onclick="logPlayerFilm('${p.name}')">
-      <div class="film-check">${logs.some(l=>l.player===p.name&&l.ts>=ws)?'✓':''}</div>
-      <div style="flex:1">
-        <div class="film-player">${p.name} <span style="color:var(--t3);font-size:11px">· ${p.club}</span></div>
-        <div style="font-size:11px;color:var(--t3);margin-top:2px">${p.focus}</div>
+
+function getFitData(id) {
+  const data = ls('jm_fitness', {});
+  return data[id] || [];
+}
+
+function saveFitResult(id, val, date) {
+  const data = ls('jm_fitness', {});
+  if (!data[id]) data[id] = [];
+  data[id].unshift({val, date});
+  lss('jm_fitness', data);
+}
+
+function showUpdateForm(id) {
+  const el = document.getElementById('ft-form-'+id);
+  if (!el) return;
+  el.style.display = el.style.display === 'none' ? 'flex' : 'none';
+  if (el.style.display !== 'none') {
+    const inp = document.getElementById('ft-inp-'+id);
+    if (inp) inp.focus();
+  }
+}
+
+function confirmFitUpdate(id) {
+  const inp = document.getElementById('ft-inp-'+id);
+  const dateInp = document.getElementById('ft-date-'+id);
+  if (!inp) return;
+  const val = inp.value.trim();
+  if (!val) { alert('Enter a result value'); return; }
+  const date = dateInp && dateInp.value ? dateInp.value : dk();
+  saveFitResult(id, val, date);
+  renderFitTests();
+}
+
+function renderFitTests() {
+  const today = dk();
+  $('fitTestsList').innerHTML = FIT_TESTS.map(t => {
+    const history = getFitData(t.id);
+    const current = history.length ? history[0] : null;
+    const previous = history.length > 1 ? history[1] : null;
+    const displayVal = current ? current.val + t.unit : t.defaultVal + t.unit;
+    const prevText = previous ? `Prev: ${previous.val}${t.unit} · ${previous.date}` : (current ? `First recorded: ${current.date}` : 'No history');
+    return `<div class="ft-row" id="ft-${t.id}">
+      <div class="ft-header">
+        <div class="ft-left">
+          <div class="ft-name">${t.name}</div>
+          <div class="ft-target">Target: ${t.target}</div>
+        </div>
+        <div class="ft-right">
+          <div class="ft-val" style="color:${t.barColor}">${displayVal}</div>
+          <button class="ft-update-btn" onclick="showUpdateForm('${t.id}')">Update</button>
+        </div>
       </div>
-      <div class="film-count">${logs.filter(l=>l.player===p.name).length} total</div>
-    </div>`).join('');
-  const recent=logs.slice(0,5);
-  $('filmHistory').innerHTML=recent.length?recent.map((l,ri)=>{
-    const i=ri; // slice is from front, so index matches original
-    return`<div style="font-size:12px;color:var(--t3);padding:5px 0;border-bottom:1px solid var(--b);display:flex;align-items:center;gap:6px">
-      <span style="flex:1">${l.date} · ${l.player}${l.notes?' · '+l.notes:''}</span>
-      <button onclick="delFilm(${i})" style="background:none;border:none;color:var(--t4);cursor:pointer;font-size:15px;padding:0;line-height:1;-webkit-tap-highlight-color:transparent;flex-shrink:0">×</button>
+      <div class="prog-bar" style="margin-top:8px"><div class="prog-fill" style="width:${t.pct}%;background:${t.barColor}"></div></div>
+      <div class="ft-prev">${prevText}</div>
+      <div class="ft-update-form" id="ft-form-${t.id}" style="display:none">
+        <input class="ft-input" id="ft-inp-${t.id}" type="text" placeholder="New result…" onkeydown="if(event.key==='Enter')confirmFitUpdate('${t.id}')">
+        <input class="ft-date-in" id="ft-date-${t.id}" type="date" value="${today}">
+        <button class="btn btn-sm btn-green" onclick="confirmFitUpdate('${t.id}')">Save</button>
+      </div>
     </div>`;
-  }).join(''):'';
+  }).join('');
 }
-function logPlayerFilm(player){
-  const logs=ls(FKEY,[]);
-  logs.unshift({player,date:dk(),ts:Date.now(),notes:''});
-  lss(FKEY,logs);renderFilm();
+renderFitTests();
+
+// ── Film Study ────────────────────────────────────────────────────────────────
+const PLAYERS = ['Rodri','Declan Rice','Granit Xhaka','Ndidi'];
+const PLAYER_INFO = {
+  'Rodri':       {club:'Man City / Spain',   focus:'Positioning & press triggers'},
+  'Declan Rice': {club:'Arsenal / England',  focus:'Box-to-box energy & duels'},
+  'Granit Xhaka':{club:'Bayer Leverkusen',   focus:'Aggression & leadership'},
+  'Ndidi':       {club:'Leicester',           focus:'Defensive screen & recovery'},
+};
+const FKEY = 'jm_film_study';
+
+function showFilmForm() {
+  $('filmLogForm').style.display = 'block';
+  $('filmLogBtn').style.display = 'none';
 }
-function logFilm(){
-  const player=prompt('Player name:');
-  if(!player)return;
-  const notes=prompt('Notes (optional):') || '';
-  const logs=ls(FKEY,[]);
-  logs.unshift({player,date:dk(),ts:Date.now(),notes});
-  lss(FKEY,logs);renderFilm();
+function hideFilmForm() {
+  $('filmLogForm').style.display = 'none';
+  $('filmLogBtn').style.display = '';
+  $('filmNotes').value = '';
 }
-function delFilm(i){if(!confirm('Delete this film session?'))return;const logs=ls(FKEY,[]);logs.splice(i,1);lss(FKEY,logs);renderFilm();}
+function submitFilm() {
+  const player = $('filmPlayer').value;
+  const notes = $('filmNotes').value.trim();
+  const logs = ls(FKEY, []);
+  logs.unshift({player, notes, date:dk(), ts:Date.now()});
+  lss(FKEY, logs);
+  hideFilmForm();
+  renderFilm();
+}
+function delFilm(i) {
+  if (!confirm('Delete this film session?')) return;
+  const logs = ls(FKEY, []);
+  logs.splice(i, 1);
+  lss(FKEY, logs);
+  renderFilm();
+}
+
+function renderFilm() {
+  const logs = ls(FKEY, []);
+  const ws = weekStart();
+  const thisWeekLogs = logs.filter(l => l.ts >= ws);
+  $('filmBadge').textContent = thisWeekLogs.length + ' this week';
+
+  // Player list (this-week status)
+  $('filmPlayerList').innerHTML = PLAYERS.map(p => {
+    const info = PLAYER_INFO[p] || {};
+    const weekCount = thisWeekLogs.filter(l => l.player === p).length;
+    const totalCount = logs.filter(l => l.player === p).length;
+    const done = weekCount > 0;
+    return `<div class="film-player-card">
+      <div class="film-done-dot${done?' done':''}"></div>
+      <div style="flex:1">
+        <div class="film-player-name">${p} <span style="color:var(--t3);font-size:11px">· ${info.club||''}</span></div>
+        <div style="font-size:11px;color:var(--t3);margin-top:2px">${info.focus||''}</div>
+      </div>
+      <div class="film-player-count">${totalCount} total</div>
+    </div>`;
+  }).join('');
+
+  // This week breakdown
+  if (thisWeekLogs.length > 0) {
+    const byPlayer = {};
+    thisWeekLogs.forEach(l => { byPlayer[l.player] = (byPlayer[l.player]||0) + 1; });
+    const tiles = Object.entries(byPlayer).map(([p, c]) =>
+      `<div class="film-bp-tile"><div class="film-bp-count">${c}</div><div class="film-bp-name">${p}</div></div>`
+    ).join('');
+    $('filmBreakdown').innerHTML = `<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px">This week by player</div><div class="film-breakdown">${tiles}</div>`;
+  } else {
+    $('filmBreakdown').innerHTML = '';
+  }
+
+  // History (last 8)
+  const recent = logs.slice(0, 8);
+  $('filmHistory').innerHTML = recent.length ? recent.map((l, i) =>
+    `<div class="film-hist-row">
+      <span style="flex:1">${l.date} · <strong style="color:var(--t1)">${l.player}</strong>${l.notes ? ' · ' + l.notes : ''}</span>
+      <button onclick="delFilm(${i})" style="background:none;border:none;color:var(--t4);cursor:pointer;font-size:15px;padding:0;line-height:1;-webkit-tap-highlight-color:transparent;flex-shrink:0">×</button>
+    </div>`
+  ).join('') : '';
+}
 renderFilm();
 </script>
 </body>
