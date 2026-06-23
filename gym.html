@@ -313,7 +313,8 @@ function renderWeeklyVolume(){
 var SB_URL = 'https://ymksoxojvrbrmpdzfjxf.supabase.co';
 var SB_KEY = 'sb_publishable_sozYCEAdWzVt1Tni_EbPCA_gdw6JdvN';
 var LOG_KEY = 'jm_gym_log';
-var sb = null, lastSyncJson = '';
+var sb = window.supabase ? window.supabase.createClient(SB_URL, SB_KEY) : null;
+var lastSyncJson = '';
 
 function gel(id){ return document.getElementById(id); }
 function lsGet(k,d){ try{ var v=localStorage.getItem(k); return v!==null?JSON.parse(v):d; }catch(e){ return d; } }
@@ -389,8 +390,7 @@ function renderLog(){
 }
 
 (function(){
-  if(!window.supabase) return;
-  sb=window.supabase.createClient(SB_URL,SB_KEY);
+  if(!sb) return;
   sb.from('app_state').select('data').eq('key',LOG_KEY).maybeSingle()
     .then(function(res){
       if(res&&res.data&&res.data.data){

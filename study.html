@@ -38,122 +38,15 @@ select.fi{cursor:pointer}
 .fl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 
-/* Subjects grid */
-.subjects-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.subj-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:12px}
-.subj-card.critical{border-color:rgba(255,138,138,.3);background:rgba(255,138,138,.04)}
-.subj-card.target{border-color:rgba(251,191,36,.2)}
-.subj-name{font-size:13px;font-weight:700;color:var(--t1);margin-bottom:4px}
-.subj-grade{font-size:11px;font-weight:600;padding:2px 7px;border-radius:999px;display:inline-block;margin-bottom:6px}
-.grade-h1{background:rgba(110,231,183,.15);color:var(--green)}
-.grade-h2{background:rgba(251,191,36,.15);color:var(--yellow)}
-.grade-h7{background:rgba(167,139,250,.15);color:var(--purple)}
-.grade-ext{background:rgba(125,211,252,.15);color:var(--blue)}
-.grade-target{background:rgba(255,138,138,.15);color:var(--red)}
-.subj-score{font-size:11px;color:var(--t3);font-family:var(--mono)}
-.subj-crit{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--red);margin-top:4px}
-.prog-bar{height:4px;background:var(--b);border-radius:999px;overflow:hidden;margin-top:6px}
-.prog-fill{height:100%;border-radius:999px;transition:width .4s ease}
-
-/* Points estimator */
-.pts-display{text-align:center;padding:12px 0 16px}
-.pts-current{font-size:52px;font-weight:700;font-family:var(--mono);color:var(--yellow);line-height:1}
-.pts-target{font-size:14px;color:var(--t3);margin-top:6px}
-.pts-gap{font-size:13px;font-weight:600;color:var(--red);margin-top:4px}
-.pts-row{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--b);font-size:13px;margin-bottom:4px}
-.pts-subj{color:var(--t2)}
-.pts-val{font-family:var(--mono);font-weight:700;color:var(--t1)}
-.prog-bar-lg{height:8px;background:var(--b);border-radius:999px;overflow:hidden}
-.prog-fill-lg{height:100%;border-radius:999px;background:var(--blue);transition:width .4s ease}
-
-/* Subject OS */
-.sos-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);margin-bottom:6px;overflow:hidden}
-.sos-card:last-child{margin-bottom:0}
-.sos-hd{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
-.sos-dot{width:10px;height:10px;border-radius:50%;background:var(--t4);flex-shrink:0;transition:background .2s}
-.sos-dot.red{background:var(--red)}
-.sos-dot.amber{background:var(--orange)}
-.sos-dot.green{background:var(--green)}
-.sos-hd-info{flex:1;min-width:0}
-.sos-hd-name{font-size:14px;font-weight:700;color:var(--t1)}
-.sos-hd-stats{font-size:11px;color:var(--t3);margin-top:2px}
-.sos-chev{font-size:18px;color:var(--t4);transition:transform .2s;flex-shrink:0}
-.sos-chev.open{transform:rotate(90deg)}
-.sos-body{display:none;padding:0 14px 14px;border-top:1px solid var(--b)}
-.sos-body.open{display:block}
-.sos-sec{margin-top:14px}
-.sos-sec-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:8px}
-
-/* Confidence buttons */
-.conf-row{display:flex;gap:6px;flex-wrap:wrap}
-.conf-btn{flex:1;min-width:0;padding:7px 4px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t3);font-size:11px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;text-align:center;transition:all .15s}
-.conf-btn.act-red{border-color:rgba(255,138,138,.5);background:rgba(255,138,138,.1);color:var(--red)}
-.conf-btn.act-amber{border-color:rgba(251,146,60,.5);background:rgba(251,146,60,.1);color:var(--orange)}
-.conf-btn.act-green{border-color:rgba(110,231,183,.5);background:rgba(110,231,183,.1);color:var(--green)}
-
-/* Topic rows */
-.topic-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.topic-row:last-child{border-bottom:none}
-.topic-chk{width:18px;height:18px;border-radius:5px;border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s}
-.topic-chk.checked{background:var(--green);border-color:var(--green);color:#050506}
-.topic-lbl{flex:1;font-size:12px;color:var(--t2);line-height:1.3}
-.topic-sr{font-size:10px;font-family:var(--mono);flex-shrink:0;text-align:right}
-.topic-sr.ok{color:var(--t4)}
-.topic-sr.due{color:var(--yellow)}
-.topic-sr.overdue{color:var(--orange)}
-.sr-done-btn{margin-left:4px;font-size:10px;font-weight:700;padding:1px 6px;border-radius:999px;background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.3);color:var(--orange);cursor:pointer;-webkit-tap-highlight-color:transparent}
-.topic-del-btn{background:none;border:none;color:var(--t4);font-size:14px;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;flex-shrink:0}
-.add-topic-row{display:flex;gap:6px;margin-top:8px}
-.os-input{background:var(--bg);border:1px solid var(--b);border-radius:var(--rs);padding:7px 10px;color:var(--t1);font-size:12px;font-family:var(--font);flex:1;-webkit-appearance:none;outline:none}
-.os-input:focus{border-color:var(--b2)}
-.os-btn{padding:7px 12px;border-radius:var(--rs);border:1px solid var(--b2);background:var(--s2);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;flex-shrink:0}
-
-/* Results */
-.result-row{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.result-row:last-child{border-bottom:none}
-.result-info{flex:1;font-size:12px}
-.result-date{font-family:var(--mono);color:var(--t3);margin-right:6px}
-.result-score{font-weight:700;color:var(--t1)}
-.result-notes{color:var(--t3);display:block;margin-top:2px}
-.result-del{background:none;border:none;color:var(--t4);font-size:16px;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;flex-shrink:0}
-.result-form{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px}
-.result-form-full{grid-column:1/-1}
-.os-empty{font-size:12px;color:var(--t4);padding:8px 0;text-align:center}
-.sos-link{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue);text-decoration:none;padding:8px 10px;background:rgba(125,211,252,.06);border:1px solid rgba(125,211,252,.15);border-radius:var(--rs)}
-
-/* Streaks */
-.streak-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.streak-tile{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:14px 10px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
-.streak-tile:hover{background:var(--s2)}
-.streak-num{font-size:28px;font-weight:700;font-family:var(--mono);line-height:1}
-.streak-lbl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-weight:600}
-.streak-emoji{font-size:18px;margin-bottom:4px}
-
-/* AM counter */
-.am-big{text-align:center;padding:16px 0 8px}
-.am-num{font-size:52px;font-weight:700;font-family:var(--mono);color:var(--blue);line-height:1}
-.am-label{font-size:13px;color:var(--t3);margin-top:4px}
-.am-btns{display:flex;gap:8px;justify-content:center;margin-top:12px}
-
-/* Session log */
-.log-item{padding:10px 12px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);margin-bottom:6px}
-.log-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
-.log-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:2px 7px;border-radius:999px}
-.log-type.video{background:rgba(125,211,252,.15);color:var(--blue)}
-.log-type.anki{background:rgba(167,139,250,.15);color:var(--purple)}
-.log-type.paper{background:rgba(110,231,183,.15);color:var(--green)}
-.log-type.notes{background:rgba(255,255,255,.1);color:var(--t2)}
-.log-type.exam-q{background:rgba(251,191,36,.15);color:var(--yellow)}
-.log-dur{font-size:11px;color:var(--t3);font-family:var(--mono)}
-.log-subj{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:2px}
-.log-date{font-size:10px;color:var(--t4);margin-top:4px;font-family:var(--mono)}
-
-.bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(5,5,6,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--b);padding:6px max(0px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(0px,env(safe-area-inset-left));z-index:100}
-.ntab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;text-decoration:none;color:var(--t4);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;-webkit-tap-highlight-color:transparent;transition:color .15s}
-.ntab .ni{font-size:20px;line-height:1}
-.ntab.active{color:var(--t1)}
-
-/* ── Today's Study Panel ──────────────────────────────────────────────────── */
+/* ── Today's Study Panel ── */
+.plan-nav{display:flex;align-items:center;gap:12px;margin:4px 0 16px}
+.plan-nav-btn{width:36px;height:36px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t2);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;transition:background .15s;flex-shrink:0;line-height:1}
+.plan-nav-btn:hover{background:var(--s2)}
+.plan-nav-btn:disabled{opacity:.25;cursor:default}
+.plan-nav-center{flex:1;text-align:center}
+.plan-nav-day{font-size:16px;font-weight:700;color:var(--t1)}
+.plan-nav-istoday{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--green);margin-top:2px}
+.plan-nav-date{font-size:11px;color:var(--t3);margin-top:2px}
 .plan-session-card{background:var(--bg2);border:1px solid var(--b);border-left:3px solid transparent;border-radius:var(--rs);padding:12px;margin-bottom:8px}
 .plan-session-card:last-child{margin-bottom:0}
 .plan-session-card.done{opacity:.42}
@@ -173,19 +66,123 @@ select.fi{cursor:pointer}
 .plan-edge-sub{font-size:12px;color:var(--t3)}
 .plan-strip-hd{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--t4);margin:14px 0 8px}
 .plan-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
-.plan-strip-day{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:8px 4px;text-align:center}
+.plan-strip-day{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:8px 4px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .plan-strip-day.is-today{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.05)}
 .plan-strip-day.is-past{opacity:.35}
+.plan-strip-day.is-viewing{border-color:var(--blue);background:rgba(125,211,252,.06)}
 .plan-strip-dayname{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t4);margin-bottom:5px}
-.plan-strip-day.is-today .plan-strip-dayname{color:var(--t2)}
+.plan-strip-day.is-today .plan-strip-dayname,.plan-strip-day.is-viewing .plan-strip-dayname{color:var(--t2)}
 .plan-strip-dots{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;min-height:10px}
 .plan-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+/* ── Streaks ── */
+.streak-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.streak-tile{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:12px 8px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
+.streak-tile:hover{background:var(--s2)}
+.streak-num{font-size:26px;font-weight:700;font-family:var(--mono);line-height:1}
+.streak-lbl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-weight:600}
+.streak-emoji{font-size:16px;margin-bottom:3px}
+
+/* ── AM counter ── */
+.am-big{text-align:center;padding:12px 0 6px}
+.am-num{font-size:52px;font-weight:700;font-family:var(--mono);color:var(--blue);line-height:1}
+.am-label{font-size:12px;color:var(--t3);margin-top:4px}
+.am-btns{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.am-chapters{margin-top:14px;padding-top:12px;border-top:1px solid var(--b)}
+.am-ch-hd{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t4);margin-bottom:8px}
+.am-ch{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.am-ch:last-child{border-bottom:none}
+.am-ch-name{font-size:12px;color:var(--t2);flex:1}
+.am-ch-count{font-size:11px;font-family:var(--mono);color:var(--t3);flex-shrink:0}
+.am-ch.ch-current .am-ch-name{color:var(--blue);font-weight:700}
+.am-ch.ch-current .am-ch-count{color:var(--blue)}
+.am-ch.ch-done .am-ch-name{color:var(--t4)}
+.am-ch.ch-done .am-ch-count{color:var(--t4)}
+
+/* ── Points estimator ── */
+.pts-toggle-hd{cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.pts-display{text-align:center;padding:12px 0 16px}
+.pts-current{font-size:52px;font-weight:700;font-family:var(--mono);color:var(--yellow);line-height:1}
+.pts-target{font-size:14px;color:var(--t3);margin-top:6px}
+.pts-gap{font-size:13px;font-weight:600;color:var(--red);margin-top:4px}
+.pts-row{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--b);font-size:13px;margin-bottom:4px}
+.pts-subj{color:var(--t2)}
+.pts-val{font-family:var(--mono);font-weight:700;color:var(--t1)}
+.prog-bar-lg{height:8px;background:var(--b);border-radius:999px;overflow:hidden}
+.prog-fill-lg{height:100%;border-radius:999px;background:var(--blue);transition:width .4s ease}
+
+/* ── Subject OS ── */
+.sos-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);margin-bottom:6px;overflow:hidden}
+.sos-card:last-child{margin-bottom:0}
+.sos-hd{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.sos-dot{width:10px;height:10px;border-radius:50%;background:var(--t4);flex-shrink:0;transition:background .2s}
+.sos-dot.red{background:var(--red)}
+.sos-dot.amber{background:var(--orange)}
+.sos-dot.green{background:var(--green)}
+.sos-hd-info{flex:1;min-width:0}
+.sos-hd-name{font-size:14px;font-weight:700;color:var(--t1)}
+.sos-hd-stats{font-size:11px;color:var(--t3);margin-top:2px}
+.sos-chev{font-size:18px;color:var(--t4);transition:transform .2s;flex-shrink:0}
+.sos-chev.open{transform:rotate(90deg)}
+.sos-body{display:none;padding:0 14px 14px;border-top:1px solid var(--b)}
+.sos-body.open{display:block}
+.sos-sec{margin-top:14px}
+.sos-sec-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:8px}
+.conf-row{display:flex;gap:6px;flex-wrap:wrap}
+.conf-btn{flex:1;min-width:0;padding:7px 4px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t3);font-size:11px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;text-align:center;transition:all .15s}
+.conf-btn.act-red{border-color:rgba(255,138,138,.5);background:rgba(255,138,138,.1);color:var(--red)}
+.conf-btn.act-amber{border-color:rgba(251,146,60,.5);background:rgba(251,146,60,.1);color:var(--orange)}
+.conf-btn.act-green{border-color:rgba(110,231,183,.5);background:rgba(110,231,183,.1);color:var(--green)}
+.topic-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.topic-row:last-child{border-bottom:none}
+.topic-chk{width:18px;height:18px;border-radius:5px;border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s}
+.topic-chk.checked{background:var(--green);border-color:var(--green);color:#050506}
+.topic-lbl{flex:1;font-size:12px;color:var(--t2);line-height:1.3}
+.topic-sr{font-size:10px;font-family:var(--mono);flex-shrink:0;text-align:right}
+.topic-sr.ok{color:var(--t4)}
+.topic-sr.due{color:var(--yellow)}
+.topic-sr.overdue{color:var(--orange)}
+.sr-done-btn{margin-left:4px;font-size:10px;font-weight:700;padding:1px 6px;border-radius:999px;background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.3);color:var(--orange);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.topic-del-btn{background:none;border:none;color:var(--t4);font-size:14px;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;flex-shrink:0}
+.add-topic-row{display:flex;gap:6px;margin-top:8px}
+.os-input{background:var(--bg);border:1px solid var(--b);border-radius:var(--rs);padding:7px 10px;color:var(--t1);font-size:12px;font-family:var(--font);flex:1;-webkit-appearance:none;outline:none}
+.os-input:focus{border-color:var(--b2)}
+.os-btn{padding:7px 12px;border-radius:var(--rs);border:1px solid var(--b2);background:var(--s2);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;flex-shrink:0}
+.result-row{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.result-row:last-child{border-bottom:none}
+.result-info{flex:1;font-size:12px}
+.result-date{font-family:var(--mono);color:var(--t3);margin-right:6px}
+.result-score{font-weight:700;color:var(--t1)}
+.result-notes{color:var(--t3);display:block;margin-top:2px}
+.result-del{background:none;border:none;color:var(--t4);font-size:16px;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;flex-shrink:0}
+.result-form{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px}
+.result-form-full{grid-column:1/-1}
+.os-empty{font-size:12px;color:var(--t4);padding:8px 0;text-align:center}
+.sos-link{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--blue);text-decoration:none;padding:8px 10px;background:rgba(125,211,252,.06);border:1px solid rgba(125,211,252,.15);border-radius:var(--rs)}
+
+/* ── Session log ── */
+.log-item{padding:10px 12px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);margin-bottom:6px}
+.log-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.log-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:2px 7px;border-radius:999px}
+.log-type.video{background:rgba(125,211,252,.15);color:var(--blue)}
+.log-type.anki{background:rgba(167,139,250,.15);color:var(--purple)}
+.log-type.paper{background:rgba(110,231,183,.15);color:var(--green)}
+.log-type.notes{background:rgba(255,255,255,.1);color:var(--t2)}
+.log-type.exam-q{background:rgba(251,191,36,.15);color:var(--yellow)}
+.log-dur{font-size:11px;color:var(--t3);font-family:var(--mono)}
+.log-subj{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:2px}
+.log-date{font-size:10px;color:var(--t4);margin-top:4px;font-family:var(--mono)}
+
+.bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(5,5,6,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--b);padding:6px max(0px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(0px,env(safe-area-inset-left));z-index:100}
+.ntab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;text-decoration:none;color:var(--t4);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;-webkit-tap-highlight-color:transparent;transition:color .15s}
+.ntab .ni{font-size:20px;line-height:1}
+.ntab.active{color:var(--t1)}
 </style>
 </head>
 <body>
 <div class="bento">
 
-  <!-- AAC Critical -->
+  <!-- 1. AAC Critical -->
   <div class="card" style="border-color:rgba(255,138,138,.3);background:rgba(255,138,138,.05)">
     <div class="card-hd" style="margin-bottom:10px">
       <span class="card-title" style="color:var(--red)">🚨 Critical — AAC Projects</span>
@@ -194,34 +191,89 @@ select.fi{cursor:pointer}
     <div style="display:flex;flex-direction:column;gap:6px">
       <div style="padding:10px;background:rgba(255,138,138,.08);border:1px solid rgba(255,138,138,.2);border-radius:var(--rs)">
         <div style="font-size:13px;font-weight:700;color:var(--red)">⚠️ Physics AAC — Not Started</div>
-        <div style="font-size:12px;color:var(--t2);margin-top:3px">Assessed coursework component · 40% of Physics HL grade · Summer priority</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:3px">Assessed coursework · 40% of Physics HL grade · Summer priority</div>
       </div>
       <div style="padding:10px;background:rgba(255,138,138,.08);border:1px solid rgba(255,138,138,.2);border-radius:var(--rs)">
         <div style="font-size:13px;font-weight:700;color:var(--red)">⚠️ Chemistry AAC — Not Started</div>
-        <div style="font-size:12px;color:var(--t2);margin-top:3px">Assessed coursework component · 40% of Chemistry HL grade · Summer priority</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:3px">Assessed coursework · 40% of Chemistry HL grade · Summer priority</div>
       </div>
     </div>
   </div>
 
-  <!-- Points Estimator -->
-  <div class="card">
-    <div class="card-hd">
-      <span class="card-title">🎯 Points Estimator</span>
-      <span class="badge badge-yellow">Target: 625</span>
+  <!-- 2. Today's Study Panel (dominant) -->
+  <div class="card" id="today-plan">
+    <div class="card-hd" style="margin-bottom:6px">
+      <span class="card-title">📅 Today's Study</span>
+      <span class="badge" id="plan-week-badge">—</span>
     </div>
-    <div style="background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);border-radius:var(--rs);padding:8px 12px;margin-bottom:14px;font-size:11px;color:rgba(251,191,36,.85)">
-      ⚡ Top 6 of 9 subjects count · Maths HL H1 = +25 bonus · Dimmed subjects not counting
+    <div class="plan-nav">
+      <button class="plan-nav-btn" id="plan-nav-prev" onclick="planNavDay(-1)">←</button>
+      <div class="plan-nav-center">
+        <div class="plan-nav-day" id="plan-nav-label">—</div>
+        <div id="plan-nav-istoday" class="plan-nav-istoday" style="display:none">TODAY</div>
+        <div class="plan-nav-date" id="plan-today-date"></div>
+      </div>
+      <button class="plan-nav-btn" id="plan-nav-next" onclick="planNavDay(1)">→</button>
     </div>
-    <div class="pts-display">
-      <div class="pts-current" id="ptsTotal">—</div>
-      <div class="pts-target">Top 6 subjects · Target: 625</div>
-      <div class="pts-gap" id="ptsGap"></div>
-    </div>
-    <div class="prog-bar-lg" style="margin-bottom:16px"><div class="prog-fill-lg" id="ptsProg" style="background:linear-gradient(90deg,var(--yellow),var(--green))"></div></div>
-    <div id="ptsList"></div>
+    <div id="plan-sessions-today"></div>
+    <div id="plan-week-strip"></div>
   </div>
 
-  <!-- Subject OS -->
+  <!-- 3. Streaks (compact row) -->
+  <div class="card">
+    <div class="card-hd" style="margin-bottom:10px"><span class="card-title">🔥 Streaks</span><span style="font-size:11px;color:var(--t4)">tap to log today</span></div>
+    <div class="streak-grid">
+      <div class="streak-tile" onclick="bumpStreak('duolingo')"><div class="streak-emoji">🇫🇷</div><div class="streak-num" id="sDuolingo" style="color:var(--orange)">0</div><div class="streak-lbl">Duolingo</div></div>
+      <div class="streak-tile" onclick="bumpStreak('anki')"><div class="streak-emoji">🃏</div><div class="streak-num" id="sAnki" style="color:var(--purple)">0</div><div class="streak-lbl">Anki</div></div>
+      <div class="streak-tile" onclick="editStreak()"><div class="streak-emoji">📅</div><div class="streak-num" id="sStudy" style="color:var(--blue)">0</div><div class="streak-lbl">Study Days</div></div>
+    </div>
+  </div>
+
+  <!-- 4. Applied Maths Counter -->
+  <div class="card">
+    <div class="card-hd">
+      <span class="card-title">📐 Applied Maths</span>
+      <span class="badge badge-blue" id="amBadge">0 / 27</span>
+    </div>
+    <div class="am-big">
+      <div class="am-num" id="amCount">0</div>
+      <div class="am-label">lessons completed · target 27 total</div>
+    </div>
+    <div class="prog-bar-lg" style="margin-top:12px"><div class="prog-fill-lg" id="amProg" style="width:0%"></div></div>
+    <div class="am-btns">
+      <button class="btn" onclick="adjAM(-1)">− 1</button>
+      <button class="btn btn-green" onclick="adjAM(1)">+ 1 Lesson</button>
+    </div>
+    <div class="am-chapters">
+      <div class="am-ch-hd">Chapter breakdown</div>
+      <div id="amChapters"></div>
+    </div>
+  </div>
+
+  <!-- 5. Points Estimator (collapsed) -->
+  <div class="card">
+    <div class="card-hd pts-toggle-hd" onclick="togglePts()" style="margin-bottom:0">
+      <span class="card-title">🎯 Points Estimator</span>
+      <span style="display:flex;align-items:center;gap:8px">
+        <span id="ptsSummary" style="font-size:12px;color:var(--t4)">tap to view</span>
+        <span class="badge badge-yellow">Target: 625</span>
+      </span>
+    </div>
+    <div id="ptsBody" style="display:none;margin-top:14px">
+      <div style="background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.18);border-radius:var(--rs);padding:8px 12px;margin-bottom:14px;font-size:11px;color:rgba(251,191,36,.85)">
+        ⚡ Top 6 of 9 subjects count · Maths HL H1 = +25 bonus · Dimmed subjects not counting
+      </div>
+      <div class="pts-display">
+        <div class="pts-current" id="ptsTotal">—</div>
+        <div class="pts-target">Top 6 subjects · Target: 625</div>
+        <div class="pts-gap" id="ptsGap"></div>
+      </div>
+      <div class="prog-bar-lg" style="margin-bottom:16px"><div class="prog-fill-lg" id="ptsProg" style="background:linear-gradient(90deg,var(--yellow),var(--green))"></div></div>
+      <div id="ptsList"></div>
+    </div>
+  </div>
+
+  <!-- 6. Subject OS -->
   <div class="card">
     <div class="card-hd">
       <span class="card-title">📖 Subject OS</span>
@@ -230,53 +282,12 @@ select.fi{cursor:pointer}
     <div id="sosCards"></div>
   </div>
 
-  <!-- Streaks -->
-  <div class="card">
-    <div class="card-hd"><span class="card-title">🔥 Daily Streaks</span></div>
-    <div class="streak-grid">
-      <div class="streak-tile" onclick="bumpStreak('duolingo')"><div class="streak-emoji">🇫🇷</div><div class="streak-num" id="sDuolingo" style="color:var(--orange)">0</div><div class="streak-lbl">Duolingo</div></div>
-      <div class="streak-tile" onclick="bumpStreak('anki')"><div class="streak-emoji">🃏</div><div class="streak-num" id="sAnki" style="color:var(--purple)">0</div><div class="streak-lbl">Anki</div></div>
-      <div class="streak-tile" onclick="editStreak()"><div class="streak-emoji">📅</div><div class="streak-num" id="sStudy" style="color:var(--blue)">0</div><div class="streak-lbl">Study Days</div></div>
-    </div>
-    <p style="font-size:11px;color:var(--t3);text-align:center;margin-top:10px">Tap to log today · streaks reset if you miss a day</p>
-  </div>
-
-  <!-- Today's Study Panel -->
-  <div class="card" id="today-plan">
-    <div class="card-hd" style="margin-bottom:2px">
-      <span class="card-title">📅 Today's Study</span>
-      <span class="badge" id="plan-week-badge">—</span>
-    </div>
-    <div id="plan-today-date" style="font-size:11px;color:var(--t3);margin-bottom:14px"></div>
-    <div id="plan-sessions-today"></div>
-    <div id="plan-week-strip"></div>
-  </div>
-
-  <!-- Applied Maths Counter -->
-  <div class="card">
-    <div class="card-hd">
-      <span class="card-title">📐 Applied Maths</span>
-      <span class="badge badge-blue" id="amBadge">0 / 35</span>
-    </div>
-    <div class="am-big">
-      <div class="am-num" id="amCount">0</div>
-      <div class="am-label">lessons completed · target 35 total · 3/week</div>
-    </div>
-    <div class="prog-bar-lg" style="margin-top:12px"><div class="prog-fill-lg" id="amProg" style="width:0%"></div></div>
-    <div class="am-btns">
-      <button class="btn" onclick="adjAM(-1)">− 1</button>
-      <button class="btn btn-green" onclick="adjAM(1)">+ 1 Lesson</button>
-    </div>
-    <p style="font-size:11px;color:var(--t3);text-align:center;margin-top:10px">3 lessons/week needed · external tutor programme</p>
-  </div>
-
-  <!-- Study Session Logger -->
+  <!-- 7. Study Session Logger -->
   <div class="card">
     <div class="card-hd">
       <span class="card-title">📝 Study Sessions</span>
       <span class="badge" id="studyCount">0 sessions</span>
     </div>
-
     <div class="form-grid" style="margin-bottom:8px">
       <div class="fg">
         <label class="fl">Subject</label>
@@ -303,7 +314,7 @@ select.fi{cursor:pointer}
     <div id="studyLog" style="margin-top:12px"></div>
   </div>
 
-  <!-- Study time chart -->
+  <!-- 8. Study time chart -->
   <div class="card">
     <div class="card-hd">
       <span class="card-title">📊 Study Time — This Week</span>
@@ -326,17 +337,25 @@ select.fi{cursor:pointer}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
+// ── Supabase — init client eagerly so writes never race ───────────────────────
 const SB_URL_S='https://ymksoxojvrbrmpdzfjxf.supabase.co';
 const SB_KEY_S='sb_publishable_sozYCEAdWzVt1Tni_EbPCA_gdw6JdvN';
-let sbS=null;
-function sbPushS(key,val){if(!sbS)return;sbS.from('app_state').upsert({key,data:val,updated_at:new Date().toISOString()},{onConflict:'key'}).catch(()=>{});}
+let sbS = window.supabase ? window.supabase.createClient(SB_URL_S, SB_KEY_S) : null;
+const sbDirty = new Set(); // keys modified locally this session — never overwritten by fetch
+
+function sbPushS(key,val){
+  sbDirty.add(key);
+  if(!sbS)return;
+  sbS.from('app_state').upsert({key,data:val,updated_at:new Date().toISOString()},{onConflict:'key'}).catch(()=>{});
+}
+
 const $ = id => document.getElementById(id);
 function ls(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d}catch{return d}}
 function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
 function dk(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-function addDays(dateStr,n){const d=new Date(dateStr);d.setDate(d.getDate()+n);return dk(d);}
-function daysUntil(dateStr){const today=new Date(dk());const tgt=new Date(dateStr);return Math.round((tgt-today)/86400000);}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function addDays(dateStr,n){const d=new Date(dateStr);d.setDate(d.getDate()+n);return dk(d)}
+function daysUntil(dateStr){const today=new Date(dk());const tgt=new Date(dateStr);return Math.round((tgt-today)/86400000)}
 
 // ── Points estimator ──────────────────────────────────────────────────────────
 const GRADE_PTS={H1:100,H2:88,H3:77,H4:66,H5:56,H6:46,H7:37,H8:0};
@@ -353,15 +372,26 @@ const SUBJECTS=[
   {name:'French HL',   defaultGrade:'H7'},
 ];
 const TARGET=625;
-function getGrades(){const s=ls('jm_pts_grades',null);return(s&&s.length===SUBJECTS.length)?s:SUBJECTS.map(s=>s.defaultGrade);}
-function saveGrades(grades){lss('jm_pts_grades',grades);lss('jm_pts',SUBJECTS.map((s,i)=>({name:s.name,pts:GRADE_PTS[grades[i]],mathsBonus:s.mathsBonus||false})));sbPushS('jm_pts_grades',grades);}
+let ptsOpen=false;
+
+function togglePts(){
+  ptsOpen=!ptsOpen;
+  $('ptsBody').style.display=ptsOpen?'block':'none';
+  $('ptsBody').style.marginTop=ptsOpen?'14px':'0';
+  $('ptsSummary').textContent=ptsOpen?'tap to hide':'tap to view';
+  if(ptsOpen) renderPoints();
+}
+
+function getGrades(){const s=ls('jm_pts_grades',null);return(s&&s.length===SUBJECTS.length)?s:SUBJECTS.map(s=>s.defaultGrade)}
+function saveGrades(grades){lss('jm_pts_grades',grades);lss('jm_pts',SUBJECTS.map((s,i)=>({name:s.name,pts:GRADE_PTS[grades[i]],mathsBonus:s.mathsBonus||false})));sbPushS('jm_pts_grades',grades)}
 function calcTop6(grades){
-  const eff=grades.map((g,i)=>{const pts=GRADE_PTS[g]||0;const bonus=(SUBJECTS[i].mathsBonus&&pts===100)?25:0;return{name:SUBJECTS[i].name,pts,bonus,eff:pts+bonus,idx:i};});
+  const eff=grades.map((g,i)=>{const pts=GRADE_PTS[g]||0;const bonus=(SUBJECTS[i].mathsBonus&&pts===100)?25:0;return{name:SUBJECTS[i].name,pts,bonus,eff:pts+bonus,idx:i}});
   const sorted=[...eff].sort((a,b)=>b.eff-a.eff);
   const top6=new Set(sorted.slice(0,6).map(s=>s.idx));
   return{effective:eff,top6,total:sorted.slice(0,6).reduce((a,s)=>a+s.eff,0)};
 }
 function renderPoints(){
+  if(!ptsOpen)return;
   const grades=getGrades();
   const {effective,top6,total}=calcTop6(grades);
   $('ptsTotal').textContent=total;
@@ -385,7 +415,6 @@ function renderPoints(){
     </div>`;
   }).join('');
 }
-renderPoints();
 const OS_TO_SUBJ_IDX={chem:3,phys:2,acc:5,am:6,maths:0,irish:1,pe:4,eng:7,french:8};
 function setGrade(i,grade){
   const grades=getGrades();grades[i]=grade;saveGrades(grades);renderPoints();
@@ -402,27 +431,15 @@ function setGrade(i,grade){
 
 // ── Subject OS ────────────────────────────────────────────────────────────────
 const SR_INTERVALS=[1,3,7,14,30];
-
 const SUBJECTS_OS=[
-  {
-    id:'chem',name:'Chemistry HL',
-    link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
-    topics:['Atomic structure','Electronic configuration','Periodic table trends','Chemical bonding (ionic/covalent/metallic)','Shapes of molecules (VSEPR)','Intermolecular forces','Stoichiometry and moles','Gas laws','Thermochemistry (enthalpy, Hess\'s law)','Rates of reaction','Chemical equilibrium (Le Chatelier)','Acids and bases (pH, buffers)','Oxidation and reduction (redox)','Electrochemistry (electrolysis, cells)','Organic chemistry (hydrocarbons, alcohols, carboxylic acids)','Polymers','Environmental chemistry','Industrial chemistry','Volumetric analysis (titrations)','Water chemistry']
-  },
-  {
-    id:'phys',name:'Physics HL',
-    link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
-    topics:['Measurement and units','Linear motion (kinematics)','Newton\'s laws and forces','Momentum and collisions','Work energy and power','Circular motion','Gravity and planetary motion','Simple harmonic motion','Waves (properties and types)','Sound','Light (reflection and refraction)','Lenses and mirrors','Interference and diffraction','Electrostatics','Electric fields and potential','Current electricity (Ohm\'s law, circuits)','Capacitors','Magnetic fields','Electromagnetic induction','AC circuits and transformers','Particle physics','Nuclear physics','Radioactivity','The electron (photoelectric effect, cathode rays)','Semiconductors','Relativity (special)']
-  },
-  {
-    id:'acc',name:'Accounting HL',
-    link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
-    topics:['Double entry bookkeeping','Trial balance','Final accounts (sole trader)','Final accounts (partnership)','Final accounts (company/PLC)','Club accounts','Farm accounts','Service firm accounts','Tabular statement','Cash flow statement','Interpretation of accounts (ratios)','Budgeting and budgetary control','Break-even analysis','Marginal costing','Standard costing and variance analysis','Depreciation methods','Control accounts','Bank reconciliation','VAT and payroll','Government and national accounts']
-  },
-  {
-    id:'am',name:'Applied Maths HL',link:null,linkText:null,
-    topics:['Particle dynamics (Newton\'s laws)','Relative velocity','Projectile motion','Circular motion','Simple harmonic motion','Statics (moments and equilibrium)','Hydrostatics']
-  },
+  {id:'chem',name:'Chemistry HL',link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
+   topics:['Atomic structure','Electronic configuration','Periodic table trends','Chemical bonding (ionic/covalent/metallic)','Shapes of molecules (VSEPR)','Intermolecular forces','Stoichiometry and moles','Gas laws','Thermochemistry (enthalpy, Hess\'s law)','Rates of reaction','Chemical equilibrium (Le Chatelier)','Acids and bases (pH, buffers)','Oxidation and reduction (redox)','Electrochemistry (electrolysis, cells)','Organic chemistry (hydrocarbons, alcohols, carboxylic acids)','Polymers','Environmental chemistry','Industrial chemistry','Volumetric analysis (titrations)','Water chemistry']},
+  {id:'phys',name:'Physics HL',link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
+   topics:['Measurement and units','Linear motion (kinematics)','Newton\'s laws and forces','Momentum and collisions','Work energy and power','Circular motion','Gravity and planetary motion','Simple harmonic motion','Waves (properties and types)','Sound','Light (reflection and refraction)','Lenses and mirrors','Interference and diffraction','Electrostatics','Electric fields and potential','Current electricity (Ohm\'s law, circuits)','Capacitors','Magnetic fields','Electromagnetic induction','AC circuits and transformers','Particle physics','Nuclear physics','Radioactivity','The electron (photoelectric effect, cathode rays)','Semiconductors','Relativity (special)']},
+  {id:'acc',name:'Accounting HL',link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
+   topics:['Double entry bookkeeping','Trial balance','Final accounts (sole trader)','Final accounts (partnership)','Final accounts (company/PLC)','Club accounts','Farm accounts','Service firm accounts','Tabular statement','Cash flow statement','Interpretation of accounts (ratios)','Budgeting and budgetary control','Break-even analysis','Marginal costing','Standard costing and variance analysis','Depreciation methods','Control accounts','Bank reconciliation','VAT and payroll','Government and national accounts']},
+  {id:'am',name:'Applied Maths HL',link:null,linkText:null,
+   topics:['Particle dynamics (Newton\'s laws)','Relative velocity','Projectile motion','Circular motion','Simple harmonic motion','Statics (moments and equilibrium)','Hydrostatics']},
   {id:'maths',name:'Maths HL',link:null,linkText:null,topics:[]},
   {id:'irish',name:'Irish HL',link:null,linkText:null,topics:[]},
   {id:'pe',name:'PE HL',link:null,linkText:null,topics:[]},
@@ -430,178 +447,81 @@ const SUBJECTS_OS=[
   {id:'french',name:'French HL',link:null,linkText:null,topics:[]},
 ];
 
-function getTopicData(sid){return ls('jm_topics_'+sid,{});}
-function saveTopicData(sid,data){lss('jm_topics_'+sid,data);sbPushS('jm_topics_'+sid,data);}
-function getCustomTopics(sid){return ls('jm_ctopics_'+sid,[]);}
-function saveCustomTopics(sid,arr){lss('jm_ctopics_'+sid,arr);sbPushS('jm_ctopics_'+sid,arr);}
-function getAllTopics(sid){
-  const subj=SUBJECTS_OS.find(s=>s.id===sid);
-  return [...subj.topics,...getCustomTopics(sid)];
-}
+function getTopicData(sid){return ls('jm_topics_'+sid,{})}
+function saveTopicData(sid,data){lss('jm_topics_'+sid,data);sbPushS('jm_topics_'+sid,data)}
+function getCustomTopics(sid){return ls('jm_ctopics_'+sid,[])}
+function saveCustomTopics(sid,arr){lss('jm_ctopics_'+sid,arr);sbPushS('jm_ctopics_'+sid,arr)}
+function getAllTopics(sid){const subj=SUBJECTS_OS.find(s=>s.id===sid);return [...subj.topics,...getCustomTopics(sid)]}
 
 function toggleTopic(sid,idx){
-  const data=getTopicData(sid);
-  const topics=getAllTopics(sid);
-  const topic=topics[idx];
-  if(!topic)return;
+  const data=getTopicData(sid);const topics=getAllTopics(sid);const topic=topics[idx];if(!topic)return;
   const t=data[topic]||{};
-  if(t.covered){
-    data[topic]={covered:false};
-  } else {
-    const today=dk();
-    data[topic]={covered:true,coveredDate:today,reviewCount:0,nextReview:addDays(today,SR_INTERVALS[0])};
-  }
-  saveTopicData(sid,data);
-  refreshOSCard(sid);
+  if(t.covered){data[topic]={covered:false}}else{const today=dk();data[topic]={covered:true,coveredDate:today,reviewCount:0,nextReview:addDays(today,SR_INTERVALS[0])};}
+  saveTopicData(sid,data);refreshOSCard(sid);
 }
-
 function reviewTopic(sid,idx){
-  const data=getTopicData(sid);
-  const topics=getAllTopics(sid);
-  const topic=topics[idx];
+  const data=getTopicData(sid);const topics=getAllTopics(sid);const topic=topics[idx];
   if(!topic||!data[topic]||!data[topic].covered)return;
-  const t=data[topic];
-  const newCount=Math.min((t.reviewCount||0)+1,SR_INTERVALS.length-1);
-  const today=dk();
+  const t=data[topic];const newCount=Math.min((t.reviewCount||0)+1,SR_INTERVALS.length-1);const today=dk();
   data[topic]={...t,reviewCount:newCount,nextReview:addDays(today,SR_INTERVALS[newCount])};
-  saveTopicData(sid,data);
-  refreshOSCard(sid);
+  saveTopicData(sid,data);refreshOSCard(sid);
 }
-
 function addCustomTopic(sid){
-  const inp=document.getElementById('ctopic-'+sid);
-  if(!inp)return;
-  const val=inp.value.trim();
-  if(!val)return;
-  const arr=getCustomTopics(sid);
-  if(arr.includes(val)){inp.value='';return;}
-  arr.push(val);
-  saveCustomTopics(sid,arr);
-  inp.value='';
-  refreshOSCard(sid);
+  const inp=document.getElementById('ctopic-'+sid);if(!inp)return;const val=inp.value.trim();if(!val)return;
+  const arr=getCustomTopics(sid);if(arr.includes(val)){inp.value='';return;}
+  arr.push(val);saveCustomTopics(sid,arr);inp.value='';refreshOSCard(sid);
 }
-
 function delCustomTopic(sid,idx){
-  const topics=getAllTopics(sid);
-  const subj=SUBJECTS_OS.find(s=>s.id===sid);
-  const customStart=subj.topics.length;
-  if(idx<customStart)return;
-  const customIdx=idx-customStart;
-  const arr=getCustomTopics(sid);
-  arr.splice(customIdx,1);
-  saveCustomTopics(sid,arr);
-  // also remove topic data
-  const data=getTopicData(sid);
-  delete data[topics[idx]];
-  saveTopicData(sid,data);
-  refreshOSCard(sid);
+  const topics=getAllTopics(sid);const subj=SUBJECTS_OS.find(s=>s.id===sid);const customStart=subj.topics.length;
+  if(idx<customStart)return;const customIdx=idx-customStart;const arr=getCustomTopics(sid);arr.splice(customIdx,1);
+  saveCustomTopics(sid,arr);const data=getTopicData(sid);delete data[topics[idx]];saveTopicData(sid,data);refreshOSCard(sid);
 }
-
-function setConf(sid,level){
-  const conf=ls('jm_conf',{});
-  conf[sid]=level;
-  lss('jm_conf',conf);
-  sbPushS('jm_conf',conf);
-  refreshOSCard(sid);
-}
-
+function setConf(sid,level){const conf=ls('jm_conf',{});conf[sid]=level;lss('jm_conf',conf);sbPushS('jm_conf',conf);refreshOSCard(sid)}
 function addResult(sid){
-  const dateEl=document.getElementById('rdate-'+sid);
-  const scoreEl=document.getElementById('rscore-'+sid);
-  const notesEl=document.getElementById('rnotes-'+sid);
-  if(!dateEl||!scoreEl)return;
-  const score=scoreEl.value.trim();
-  if(!score)return;
-  const results=ls('jm_results_'+sid,[]);
-  results.unshift({date:dateEl.value||dk(),score,notes:notesEl.value.trim()});
-  lss('jm_results_'+sid,results);
-  sbPushS('jm_results_'+sid,results);
-  scoreEl.value='';notesEl.value='';
-  refreshOSResultsOnly(sid);
+  const dateEl=document.getElementById('rdate-'+sid),scoreEl=document.getElementById('rscore-'+sid),notesEl=document.getElementById('rnotes-'+sid);
+  if(!dateEl||!scoreEl)return;const score=scoreEl.value.trim();if(!score)return;
+  const results=ls('jm_results_'+sid,[]);results.unshift({date:dateEl.value||dk(),score,notes:notesEl.value.trim()});
+  lss('jm_results_'+sid,results);sbPushS('jm_results_'+sid,results);scoreEl.value='';notesEl.value='';refreshOSResultsOnly(sid);
 }
-
 function delResult(sid,i){
-  const results=ls('jm_results_'+sid,[]);
-  results.splice(i,1);
-  lss('jm_results_'+sid,results);
-  sbPushS('jm_results_'+sid,results);
-  refreshOSResultsOnly(sid);
+  const results=ls('jm_results_'+sid,[]);results.splice(i,1);lss('jm_results_'+sid,results);sbPushS('jm_results_'+sid,results);refreshOSResultsOnly(sid);
 }
-
-function refreshOSResultsOnly(sid){
-  const el=document.getElementById('resultslist-'+sid);
-  if(!el)return;
-  el.innerHTML=buildResultsHTML(sid);
-}
-
+function refreshOSResultsOnly(sid){const el=document.getElementById('resultslist-'+sid);if(el)el.innerHTML=buildResultsHTML(sid)}
 function buildResultsHTML(sid){
   const results=ls('jm_results_'+sid,[]);
   if(!results.length)return'<div class="os-empty">No results logged yet</div>';
-  return results.map((r,i)=>`<div class="result-row">
-    <div class="result-info">
-      <span class="result-date">${r.date}</span>
-      <span class="result-score">${esc(r.score)}</span>
-      ${r.notes?`<span class="result-notes">${esc(r.notes)}</span>`:''}
-    </div>
-    <button class="result-del" onclick="delResult('${sid}',${i})">×</button>
-  </div>`).join('');
+  return results.map((r,i)=>`<div class="result-row"><div class="result-info"><span class="result-date">${r.date}</span><span class="result-score">${esc(r.score)}</span>${r.notes?`<span class="result-notes">${esc(r.notes)}</span>`:''}</div><button class="result-del" onclick="delResult('${sid}',${i})">×</button></div>`).join('');
 }
-
 function buildOSBody(sid){
-  const subj=SUBJECTS_OS.find(s=>s.id===sid);
-  const conf=ls('jm_conf',{})[sid]||'';
-  const topicData=getTopicData(sid);
-  const allTopics=getAllTopics(sid);
-  const customStart=subj.topics.length;
-  const today=dk();
-  let coveredCount=0,dueCount=0;
-  let topicsHTML='';
-
+  const subj=SUBJECTS_OS.find(s=>s.id===sid);const conf=ls('jm_conf',{})[sid]||'';const topicData=getTopicData(sid);
+  const allTopics=getAllTopics(sid);const customStart=subj.topics.length;const today=dk();
+  let coveredCount=0,dueCount=0,topicsHTML='';
   allTopics.forEach((topic,idx)=>{
-    const t=topicData[topic]||{};
-    const isCustom=idx>=customStart;
+    const t=topicData[topic]||{};const isCustom=idx>=customStart;
     if(t.covered)coveredCount++;
-    let srHtml='',srClass='ok';
+    let srHtml='';
     if(t.covered&&t.nextReview){
       const dl=daysUntil(t.nextReview);
-      if(dl<0){dueCount++;srClass='overdue';srHtml=`<span class="topic-sr overdue">${Math.abs(dl)}d late</span> <button class="sr-done-btn" onclick="reviewTopic('${sid}',${idx})">Done</button>`;}
-      else if(dl===0){dueCount++;srClass='due';srHtml=`<span class="topic-sr due">Due today</span> <button class="sr-done-btn" onclick="reviewTopic('${sid}',${idx})">Done</button>`;}
+      if(dl<0){dueCount++;srHtml=`<span class="topic-sr overdue">${Math.abs(dl)}d late</span> <button class="sr-done-btn" onclick="reviewTopic('${sid}',${idx})">Done</button>`;}
+      else if(dl===0){dueCount++;srHtml=`<span class="topic-sr due">Due today</span> <button class="sr-done-btn" onclick="reviewTopic('${sid}',${idx})">Done</button>`;}
       else{srHtml=`<span class="topic-sr ok">in ${dl}d</span>`;}
     }
     const delBtn=isCustom?`<button class="topic-del-btn" onclick="delCustomTopic('${sid}',${idx})">×</button>`:'';
-    topicsHTML+=`<div class="topic-row">
-      <div class="topic-chk${t.covered?' checked':''}" onclick="toggleTopic('${sid}',${idx})">${t.covered?'✓':''}</div>
-      <span class="topic-lbl">${esc(topic)}</span>
-      <div>${srHtml}</div>
-      ${delBtn}
-    </div>`;
+    topicsHTML+=`<div class="topic-row"><div class="topic-chk${t.covered?' checked':''}" onclick="toggleTopic('${sid}',${idx})">${t.covered?'✓':''}</div><span class="topic-lbl">${esc(topic)}</span><div>${srHtml}</div>${delBtn}</div>`;
   });
-
-  // Update header stats
-  const statsEl=document.getElementById('sos-stats-'+sid);
-  if(statsEl)statsEl.textContent=`${coveredCount}/${allTopics.length} covered · ${dueCount} due`;
-  const dotEl=document.getElementById('sos-dot-'+sid);
-  if(dotEl)dotEl.className='sos-dot'+(conf?' '+conf:'');
+  const statsEl=document.getElementById('sos-stats-'+sid);if(statsEl)statsEl.textContent=`${coveredCount}/${allTopics.length} covered · ${dueCount} due`;
+  const dotEl=document.getElementById('sos-dot-'+sid);if(dotEl)dotEl.className='sos-dot'+(conf?' '+conf:'');
   updateSOSBadge();
-
-  return`<div class="sos-sec">
-    <div class="sos-sec-title">Confidence</div>
-    <div class="conf-row">
-      <button class="conf-btn${conf==='red'?' act-red':''}" onclick="setConf('${sid}','red')">🔴 Needs work</button>
-      <button class="conf-btn${conf==='amber'?' act-amber':''}" onclick="setConf('${sid}','amber')">🟠 Getting there</button>
-      <button class="conf-btn${conf==='green'?' act-green':''}" onclick="setConf('${sid}','green')">🟢 Solid</button>
-    </div>
-  </div>
-  <div class="sos-sec">
-    <div class="sos-sec-title">Topics (${coveredCount}/${allTopics.length}${dueCount?` · <span style="color:var(--orange)">${dueCount} due</span>`:''})</div>
+  return`<div class="sos-sec"><div class="sos-sec-title">Confidence</div><div class="conf-row">
+    <button class="conf-btn${conf==='red'?' act-red':''}" onclick="setConf('${sid}','red')">🔴 Needs work</button>
+    <button class="conf-btn${conf==='amber'?' act-amber':''}" onclick="setConf('${sid}','amber')">🟠 Getting there</button>
+    <button class="conf-btn${conf==='green'?' act-green':''}" onclick="setConf('${sid}','green')">🟢 Solid</button>
+  </div></div>
+  <div class="sos-sec"><div class="sos-sec-title">Topics (${coveredCount}/${allTopics.length}${dueCount?` · <span style="color:var(--orange)">${dueCount} due</span>`:''})</div>
     <div id="topiclist-${sid}">${topicsHTML||'<div class="os-empty">No pre-loaded topics</div>'}</div>
-    <div class="add-topic-row">
-      <input class="os-input" id="ctopic-${sid}" type="text" placeholder="Add topic…" onkeydown="if(event.key==='Enter')addCustomTopic('${sid}')">
-      <button class="os-btn" onclick="addCustomTopic('${sid}')">+ Add</button>
-    </div>
+    <div class="add-topic-row"><input class="os-input" id="ctopic-${sid}" type="text" placeholder="Add topic…" onkeydown="if(event.key==='Enter')addCustomTopic('${sid}')"><button class="os-btn" onclick="addCustomTopic('${sid}')">+ Add</button></div>
   </div>
-  <div class="sos-sec">
-    <div class="sos-sec-title">Past Results</div>
+  <div class="sos-sec"><div class="sos-sec-title">Past Results</div>
     <div id="resultslist-${sid}">${buildResultsHTML(sid)}</div>
     <div class="result-form">
       <input class="os-input" id="rdate-${sid}" type="date" value="${today}">
@@ -612,93 +532,48 @@ function buildOSBody(sid){
   </div>
   ${subj.link?`<div class="sos-sec"><a href="${subj.link}" target="_blank" class="sos-link">📎 ${subj.linkText}</a></div>`:''}`;
 }
-
-function refreshOSCard(sid){
-  const body=document.getElementById('sos-body-'+sid);
-  if(!body||!body.classList.contains('open'))return;
-  body.innerHTML=buildOSBody(sid);
-}
-
+function refreshOSCard(sid){const body=document.getElementById('sos-body-'+sid);if(!body||!body.classList.contains('open'))return;body.innerHTML=buildOSBody(sid)}
 function toggleOS(sid){
-  const body=document.getElementById('sos-body-'+sid);
-  const chev=document.getElementById('sos-chev-'+sid);
-  if(!body)return;
+  const body=document.getElementById('sos-body-'+sid);const chev=document.getElementById('sos-chev-'+sid);if(!body)return;
   const isOpen=body.classList.contains('open');
-  if(!isOpen){
-    body.innerHTML=buildOSBody(sid);
-    body.classList.add('open');
-    if(chev)chev.classList.add('open');
-  } else {
-    body.classList.remove('open');
-    if(chev)chev.classList.remove('open');
-  }
+  if(!isOpen){body.innerHTML=buildOSBody(sid);body.classList.add('open');if(chev)chev.classList.add('open');}
+  else{body.classList.remove('open');if(chev)chev.classList.remove('open');}
 }
-
 function updateSOSBadge(){
   let totalDue=0;
-  SUBJECTS_OS.forEach(subj=>{
-    const data=getTopicData(subj.id);
-    const topics=getAllTopics(subj.id);
-    topics.forEach(t=>{
-      const d=data[t];
-      if(d&&d.covered&&d.nextReview&&daysUntil(d.nextReview)<=0)totalDue++;
-    });
-  });
+  SUBJECTS_OS.forEach(subj=>{const data=getTopicData(subj.id);getAllTopics(subj.id).forEach(t=>{const d=data[t];if(d&&d.covered&&d.nextReview&&daysUntil(d.nextReview)<=0)totalDue++;});});
   $('sosBadge').textContent=totalDue>0?`${totalDue} due`:'all clear';
   $('sosBadge').style.background=totalDue>0?'rgba(251,146,60,.15)':'rgba(110,231,183,.1)';
   $('sosBadge').style.color=totalDue>0?'var(--orange)':'var(--green)';
 }
-
 function initSOS(){
-  let html='';
-  const conf=ls('jm_conf',{});
-  const grades=getGrades();
+  let html='';const conf=ls('jm_conf',{});const grades=getGrades();
   SUBJECTS_OS.forEach(subj=>{
-    const topicData=getTopicData(subj.id);
-    const allTopics=getAllTopics(subj.id);
+    const topicData=getTopicData(subj.id);const allTopics=getAllTopics(subj.id);
     const covered=allTopics.filter(t=>topicData[t]&&topicData[t].covered).length;
     const due=allTopics.filter(t=>topicData[t]&&topicData[t].covered&&topicData[t].nextReview&&daysUntil(topicData[t].nextReview)<=0).length;
-    const c=conf[subj.id]||'';
-    const sidx=OS_TO_SUBJ_IDX[subj.id];
-    const grade=sidx!==undefined?grades[sidx]:null;
-    const pts=grade?(GRADE_PTS[grade]||0):0;
+    const c=conf[subj.id]||'';const sidx=OS_TO_SUBJ_IDX[subj.id];
+    const grade=sidx!==undefined?grades[sidx]:null;const pts=grade?(GRADE_PTS[grade]||0):0;
     const bonus=(sidx!==undefined&&SUBJECTS[sidx]&&SUBJECTS[sidx].mathsBonus&&pts===100)?25:0;
     const gradeBadge=grade?`<span id="osbadge-${subj.id}" style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;background:rgba(251,191,36,.1);color:var(--yellow);flex-shrink:0;margin-right:4px">${grade}·${pts+bonus}p</span>`:'';
-    html+=`<div class="sos-card">
-      <div class="sos-hd" onclick="toggleOS('${subj.id}')">
-        <div class="sos-dot${c?' '+c:''}" id="sos-dot-${subj.id}"></div>
-        <div class="sos-hd-info">
-          <div class="sos-hd-name">${subj.name}</div>
-          <div class="sos-hd-stats" id="sos-stats-${subj.id}">${covered}/${allTopics.length} covered · ${due} due</div>
-        </div>
-        ${gradeBadge}
-        <div class="sos-chev" id="sos-chev-${subj.id}">›</div>
-      </div>
-      <div class="sos-body" id="sos-body-${subj.id}" data-sid="${subj.id}"></div>
-    </div>`;
+    html+=`<div class="sos-card"><div class="sos-hd" onclick="toggleOS('${subj.id}')"><div class="sos-dot${c?' '+c:''}" id="sos-dot-${subj.id}"></div><div class="sos-hd-info"><div class="sos-hd-name">${subj.name}</div><div class="sos-hd-stats" id="sos-stats-${subj.id}">${covered}/${allTopics.length} covered · ${due} due</div></div>${gradeBadge}<div class="sos-chev" id="sos-chev-${subj.id}">›</div></div><div class="sos-body" id="sos-body-${subj.id}"></div></div>`;
   });
-  $('sosCards').innerHTML=html;
-  updateSOSBadge();
+  $('sosCards').innerHTML=html;updateSOSBadge();
 }
 initSOS();
 
 // ── Streaks ───────────────────────────────────────────────────────────────────
 const SK='jm_study_streaks';
 function getStreak(id){
-  const data=ls(SK,{});const s=data[id]||{count:0,last:null};
-  if(!s.last)return s.count;
+  const data=ls(SK,{});const s=data[id]||{count:0,last:null};if(!s.last)return s.count;
   const today=dk();if(s.last===today)return s.count;
-  const d=new Date(s.last);d.setDate(d.getDate()+1);
-  if(dk(d)===today)return s.count;
-  return 0;
+  const d=new Date(s.last);d.setDate(d.getDate()+1);if(dk(d)===today)return s.count;return 0;
 }
 function bumpStreak(id){
-  const data=ls(SK,{});const today=dk();
-  const s=data[id]||{count:0,last:null};
+  const data=ls(SK,{});const today=dk();const s=data[id]||{count:0,last:null};
   if(s.last===today){alert('Already logged today!');return;}
   const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);
-  s.count=s.last===dk(yesterday)?s.count+1:1;
-  s.last=today;data[id]=s;lss(SK,data);sbPushS(SK,data);renderStreaks();
+  s.count=s.last===dk(yesterday)?s.count+1:1;s.last=today;data[id]=s;lss(SK,data);sbPushS(SK,data);renderStreaks();
 }
 function editStreak(){
   const n=prompt('Study day streak count:');if(n===null)return;
@@ -713,12 +588,32 @@ renderStreaks();
 
 // ── Applied Maths ─────────────────────────────────────────────────────────────
 const AMK='jm_am_count';
+const AM_TARGET=27;
+const AM_CHAPTERS=[
+  {name:'Ch1 — UAM',lessons:7},
+  {name:'Ch2 — Vectors',lessons:3},
+  {name:'Ch3 — Projectiles',lessons:5},
+  {name:'Ch4 — Newton\'s Laws',lessons:3},
+  {name:'Ch6 — Work & Energy',lessons:2},
+  {name:'Ch7 — Circular Motion',lessons:3},
+  {name:'Ch8 — Collisions',lessons:4},
+];
 function renderAM(){
   const n=ls(AMK,0);
-  $('amCount').textContent=n;$('amBadge').textContent=n+' / 35';
-  $('amProg').style.width=Math.min(100,n/35*100)+'%';
+  $('amCount').textContent=n;
+  $('amBadge').textContent=n+' / '+AM_TARGET;
+  $('amProg').style.width=Math.min(100,n/AM_TARGET*100)+'%';
+  let rem=n,html='',foundCurrent=false;
+  for(const ch of AM_CHAPTERS){
+    let cls='am-ch',cnt='';
+    if(rem>=ch.lessons){cls+=' ch-done';cnt=ch.lessons+'/'+ch.lessons+' ✓';rem-=ch.lessons;}
+    else if(!foundCurrent){cls+=' ch-current';cnt=rem+'/'+ch.lessons;foundCurrent=true;}
+    else{cnt='0/'+ch.lessons;}
+    html+=`<div class="${cls}"><span class="am-ch-name">${ch.name}</span><span class="am-ch-count">${cnt}</span></div>`;
+  }
+  $('amChapters').innerHTML=html;
 }
-function adjAM(delta){const n=Math.max(0,ls(AMK,0)+delta);lss(AMK,n);sbPushS(AMK,n);renderAM();}
+function adjAM(delta){const n=Math.max(0,ls(AMK,0)+delta);lss(AMK,n);sbPushS(AMK,n);renderAM()}
 renderAM();
 
 // ── Study sessions ────────────────────────────────────────────────────────────
@@ -726,8 +621,7 @@ const SSKEY='jm_study_sessions';
 function addStudySession(){
   const subj=$('ssSubj').value,type=$('ssType').value,dur=$('ssDur').value;
   if(!dur){alert('Enter duration');return;}
-  const sessions=ls(SSKEY,[]);
-  sessions.unshift({subj,type,dur:+dur,date:dk(),ts:Date.now()});
+  const sessions=ls(SSKEY,[]);sessions.unshift({subj,type,dur:+dur,date:dk(),ts:Date.now()});
   lss(SSKEY,sessions);sbPushS(SSKEY,sessions);$('ssDur').value='';
   bumpStreak('study');renderStudySessions();renderStudyChart();
 }
@@ -735,324 +629,165 @@ function renderStudySessions(){
   const sessions=ls(SSKEY,[]);
   $('studyCount').textContent=sessions.length+' sessions';
   if(!sessions.length){$('studyLog').innerHTML='<div style="color:var(--t3);font-size:13px;text-align:center;padding:12px">No sessions yet</div>';return;}
-  $('studyLog').innerHTML=sessions.slice(0,8).map(s=>`
-    <div class="log-item">
-      <div class="log-hd"><span class="log-type ${s.type}">${s.type}</span><span class="log-dur">${s.dur} min</span></div>
-      <div class="log-subj">${s.subj}</div>
-      <div class="log-date">${s.date}</div>
-    </div>`).join('');
+  $('studyLog').innerHTML=sessions.slice(0,8).map(s=>`<div class="log-item"><div class="log-hd"><span class="log-type ${s.type}">${s.type}</span><span class="log-dur">${s.dur} min</span></div><div class="log-subj">${s.subj}</div><div class="log-date">${s.date}</div></div>`).join('');
 }
 renderStudySessions();
 
 // ── Study time chart ──────────────────────────────────────────────────────────
 let studyChartInst=null;
 function renderStudyChart(){
-  const canvas=$('studyChart');
-  if(!canvas||!window.Chart)return;
-  const sessions=ls(SSKEY,[]);
-  const now=new Date();
+  const canvas=$('studyChart');if(!canvas||!window.Chart)return;
+  const sessions=ls(SSKEY,[]);const now=new Date();
   const ws=new Date(now);ws.setDate(ws.getDate()-ws.getDay());ws.setHours(0,0,0,0);
   const thisWeek=sessions.filter(s=>s.ts>=ws.getTime());
-  const subjectNames=SUBJECTS.map(s=>s.name);
-  const minBySubj={};subjectNames.forEach(n=>minBySubj[n]=0);
-  let total=0;
-  thisWeek.forEach(s=>{if(minBySubj[s.subj]!==undefined){minBySubj[s.subj]+=s.dur;total+=s.dur;}});
+  const subjectNames=SUBJECTS.map(s=>s.name);const minBySubj={};subjectNames.forEach(n=>minBySubj[n]=0);
+  let total=0;thisWeek.forEach(s=>{if(minBySubj[s.subj]!==undefined){minBySubj[s.subj]+=s.dur;total+=s.dur;}});
   $('weekTotalBadge').textContent=total+' min';
   const shortNames=subjectNames.map(n=>n.replace(' HL','').replace('Applied ','AM '));
   const data=subjectNames.map(n=>minBySubj[n]);
   const palette=['rgba(125,211,252,.8)','rgba(167,139,250,.8)','rgba(110,231,183,.8)','rgba(255,138,138,.8)','rgba(251,191,36,.8)','rgba(251,146,60,.8)','rgba(125,211,252,.55)','rgba(167,139,250,.55)','rgba(110,231,183,.55)'];
   if(studyChartInst)studyChartInst.destroy();
   studyChartInst=new Chart(canvas.getContext('2d'),{
-    type:'bar',
-    data:{labels:shortNames,datasets:[{data,backgroundColor:palette,borderRadius:4,borderSkipped:false}]},
-    options:{
-      responsive:true,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.raw+' min'}}},
-      scales:{
-        x:{ticks:{color:'rgba(255,255,255,.3)',font:{size:9},maxRotation:30},grid:{display:false}},
-        y:{min:0,ticks:{color:'rgba(255,255,255,.3)',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}}
-      }
-    }
+    type:'bar',data:{labels:shortNames,datasets:[{data,backgroundColor:palette,borderRadius:4,borderSkipped:false}]},
+    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.raw+' min'}}},
+    scales:{x:{ticks:{color:'rgba(255,255,255,.3)',font:{size:9},maxRotation:30},grid:{display:false}},y:{min:0,ticks:{color:'rgba(255,255,255,.3)',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}}}}
   });
 }
 renderStudyChart();
 
-// ── Today's Study Panel ──────────────────────────────────────────────────────
-const SUMMER_START_D = new Date(2026, 5, 23);
-const SUMMER_END_D   = new Date(2026, 7, 29);
-const PLAN_DONE_KEY  = 'jm_plan_done_' + dk();
+// ── Today's Study Panel ───────────────────────────────────────────────────────
+const SUMMER_START_D=new Date(2026,5,23);
+const SUMMER_END_D=new Date(2026,7,29);
+const SUBJ_COLORS={accent:'#c8f060',amber:'#f0a040',blue:'#60b4f0',green:'#60d090',purple:'#b08af0',red:'#ff6b6b',grey:'#888888'};
 
-const SUBJ_COLORS = {
-  accent:'#c8f060', amber:'#f0a040', blue:'#60b4f0',
-  green:'#60d090', purple:'#b08af0', red:'#ff6b6b', grey:'#888888'
-};
+// Day navigator state: 0=Mon, 1=Tue, 2=Wed, 3=Thu, 4=Fri
+const PLAN_DAY_ORDER=['mon','tue','wed','thu','fri'];
+const PLAN_DAY_NAMES=['Monday','Tuesday','Wednesday','Thursday','Friday'];
 
-const schedule = {
-  1: {
-    mon: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch1 L1 — Horizontal UAM', duration:50, color:'accent' }
-    ],
-    tue: [
-      { subject:'Accounting', type:'Understand', detail:'Week 1 — Revaluation of Fixed Assets. Grinds360 book p.27 + video lessons.', duration:50, color:'amber' },
-      { subject:'Anki', type:'Maintenance', detail:'Physics rotation — 10 min', duration:10, color:'grey' }
-    ],
-    wed: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch1 L2 — Vertical UAM (Free-fall)', duration:50, color:'accent' },
-      { subject:'Chemistry', type:'Theory', detail:'Chemistry theory session — Wednesday slot', duration:50, color:'blue' }
-    ],
-    thu: [
-      { subject:'PE', type:'Session 1', detail:'Type A — Analysing Performance, Safe Practice, Role of Coach. Grinds360 3A/3B/3C.', duration:60, color:'green' },
-      { subject:'PE-PAP', type:'PAP', detail:'Read SEC PAP guidelines (curriculumonline.ie) — 45 min', duration:45, color:'green' }
-    ],
-    fri: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch1 L3 — Successive Times and Distances', duration:50, color:'accent' },
-      { subject:'Physics', type:'Session 1', detail:'LC Section A format familiarisation. Download 2023/2022/2019 papers. Build Section A template card.', duration:55, color:'purple' }
-    ]
+let planViewDayIdx=(function(){
+  const dow=new Date().getDay(); // 0=Sun,1=Mon,...6=Sat
+  if(dow===0||dow===6)return 0; // weekend → show Mon
+  return dow-1; // Mon=1→0, Tue=2→1, ...
+})();
+
+function getWeekDateForIdx(idx){
+  const now=new Date();
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const dow=today.getDay();
+  const toMon=dow===0?-6:1-dow;
+  const monday=new Date(today);monday.setDate(today.getDate()+toMon);
+  const d=new Date(monday);d.setDate(monday.getDate()+idx);
+  return d;
+}
+function getPlanViewDate(){return getWeekDateForIdx(planViewDayIdx)}
+function getPlanViewDayKey(){return PLAN_DAY_ORDER[planViewDayIdx]}
+function getPlanDoneKey(){return 'jm_plan_done_'+dk(getPlanViewDate())}
+
+function planNavDay(dir){
+  planViewDayIdx=Math.max(0,Math.min(4,planViewDayIdx+dir));
+  renderPlanPanel();
+}
+
+const schedule={
+  1:{
+    mon:[{subject:'Applied Maths',type:'Lesson',detail:'Ch1 L1 — Horizontal UAM',duration:50,color:'accent'}],
+    tue:[{subject:'Accounting',type:'Understand',detail:'Week 1 — Revaluation of Fixed Assets. Grinds360 book p.27 + video lessons.',duration:50,color:'amber'},{subject:'Anki',type:'Maintenance',detail:'Physics rotation — 10 min',duration:10,color:'grey'}],
+    wed:[{subject:'Applied Maths',type:'Lesson',detail:'Ch1 L2 — Vertical UAM (Free-fall)',duration:50,color:'accent'},{subject:'Chemistry',type:'Theory',detail:'Chemistry theory session — Wednesday slot',duration:50,color:'blue'}],
+    thu:[{subject:'PE',type:'Session 1',detail:'Type A — Analysing Performance, Safe Practice, Role of Coach. Grinds360 3A/3B/3C.',duration:60,color:'green'},{subject:'PE-PAP',type:'PAP',detail:'Read SEC PAP guidelines (curriculumonline.ie) — 45 min',duration:45,color:'green'}],
+    fri:[{subject:'Applied Maths',type:'Lesson',detail:'Ch1 L3 — Successive Times and Distances',duration:50,color:'accent'},{subject:'Physics',type:'Session 1',detail:'LC Section A format familiarisation. Download 2023/2022/2019 papers. Build Section A template card.',duration:55,color:'purple'}]
   },
-  2: {
-    mon: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch1 L4 — Catch-up Problems', duration:50, color:'accent' }
-    ],
-    tue: [
-      { subject:'Accounting', type:'Understand', detail:'Week 2 — Suspense + Control Accounts. Grinds360 book p.131 + p.135. Suspense recorded grind.', duration:50, color:'amber' },
-      { subject:'Anki', type:'Maintenance', detail:'Physics rotation — 10 min', duration:10, color:'grey' }
-    ],
-    wed: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch1 L5 — Bodies Moving in Opposite Directions', duration:50, color:'accent' },
-      { subject:'Chemistry', type:'Theory', detail:'Chemistry theory session — Wednesday slot', duration:50, color:'blue' }
-    ],
-    thu: [
-      { subject:'Accounting', type:'Attempt', detail:'Week 2 — Unseen Suspense or Control Account past paper question. Cold. Verify if 84% was real.', duration:50, color:'amber' },
-      { subject:'PE-PAP', type:'PAP', detail:'Watch PAP Masterclasses 1+2 on Grinds360 (at 1.75x)', duration:45, color:'green' }
-    ],
-    fri: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch1 L6 — Velocity-Time Graphs. Take the full session — most nuanced UAM lesson.', duration:50, color:'accent' },
-      { subject:'Physics', type:'Project 1', detail:'Read official AAC Physics in Practice guidelines. Download from examinations.ie. Note assessment criteria.', duration:30, color:'purple' }
-    ]
+  2:{
+    mon:[{subject:'Applied Maths',type:'Lesson',detail:'Ch1 L4 — Catch-up Problems',duration:50,color:'accent'}],
+    tue:[{subject:'Accounting',type:'Understand',detail:'Week 2 — Suspense + Control Accounts. Grinds360 book p.131 + p.135. Suspense recorded grind.',duration:50,color:'amber'},{subject:'Anki',type:'Maintenance',detail:'Physics rotation — 10 min',duration:10,color:'grey'}],
+    wed:[{subject:'Applied Maths',type:'Lesson',detail:'Ch1 L5 — Bodies Moving in Opposite Directions',duration:50,color:'accent'},{subject:'Chemistry',type:'Theory',detail:'Chemistry theory session — Wednesday slot',duration:50,color:'blue'}],
+    thu:[{subject:'Accounting',type:'Attempt',detail:'Week 2 — Unseen Suspense or Control Account past paper question. Cold. Verify if 84% was real.',duration:50,color:'amber'},{subject:'PE-PAP',type:'PAP',detail:'Watch PAP Masterclasses 1+2 on Grinds360 (at 1.75x)',duration:45,color:'green'}],
+    fri:[{subject:'Applied Maths',type:'Lesson',detail:'Ch1 L6 — Velocity-Time Graphs. Take the full session — most nuanced UAM lesson.',duration:50,color:'accent'},{subject:'Physics',type:'Project 1',detail:'Read official AAC Physics in Practice guidelines. Download from examinations.ie. Note assessment criteria.',duration:30,color:'purple'}]
   },
-  3: {
-    mon: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch1 L7 — Dimensional Analysis (short lesson)', duration:50, color:'accent' }
-    ],
-    tue: [
-      { subject:'Accounting', type:'Understand', detail:'Week 3 — Club Accounts rebuild. Grinds360 book p.108 + Club Accounts recorded grind (69 min).', duration:50, color:'amber' },
-      { subject:'Anki', type:'Maintenance', detail:'Physics rotation — 10 min', duration:10, color:'grey' }
-    ],
-    wed: [
-      { subject:'Applied Maths', type:'Checkpoint', detail:'✓ CHECKPOINT: UAM — 2 Old LC Questions timed, marked against scheme. Below 70% on both → do a third.', duration:50, color:'accent' },
-      { subject:'Chemistry', type:'Application', detail:'Chemistry application/past paper session — alternating Friday/Wednesday', duration:50, color:'blue' }
-    ],
-    thu: [
-      { subject:'Accounting', type:'Attempt', detail:'Week 3 — 2019 Q6 Club Accounts. 45-minute timer. Do not watch Grinds360 solution first.', duration:50, color:'amber' },
-      { subject:'PE-PAP', type:'PAP', detail:'PAP Masterclass 3. Decide activity (gym recommended), confirm with PE teacher.', duration:45, color:'green' }
-    ],
-    fri: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch2 L1 — Basic Vectors', duration:50, color:'accent' },
-      { subject:'Irish', type:'Float', detail:'Irish Session 1 (if not done): Essay Phrases + Topic Selection. ~50 min. Must happen before S2 and S6.', duration:50, color:'red' }
-    ]
+  3:{
+    mon:[{subject:'Applied Maths',type:'Lesson',detail:'Ch1 L7 — Dimensional Analysis (short lesson)',duration:50,color:'accent'}],
+    tue:[{subject:'Accounting',type:'Understand',detail:'Week 3 — Club Accounts rebuild. Grinds360 book p.108 + Club Accounts recorded grind (69 min).',duration:50,color:'amber'},{subject:'Anki',type:'Maintenance',detail:'Physics rotation — 10 min',duration:10,color:'grey'}],
+    wed:[{subject:'Applied Maths',type:'Checkpoint',detail:'✓ CHECKPOINT: UAM — 2 Old LC Questions timed, marked against scheme. Below 70% on both → do a third.',duration:50,color:'accent'},{subject:'Chemistry',type:'Application',detail:'Chemistry application/past paper session — alternating Friday/Wednesday',duration:50,color:'blue'}],
+    thu:[{subject:'Accounting',type:'Attempt',detail:'Week 3 — 2019 Q6 Club Accounts. 45-minute timer. Do not watch Grinds360 solution first.',duration:50,color:'amber'},{subject:'PE-PAP',type:'PAP',detail:'PAP Masterclass 3. Decide activity (gym recommended), confirm with PE teacher.',duration:45,color:'green'}],
+    fri:[{subject:'Applied Maths',type:'Lesson',detail:'Ch2 L1 — Basic Vectors',duration:50,color:'accent'},{subject:'Irish',type:'Float',detail:'Irish Session 1 (if not done): Essay Phrases + Topic Selection. ~50 min. Must happen before S2 and S6.',duration:50,color:'red'}]
   },
-  4: {
-    mon: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch2 L2 — Components of a Vector and Dot Product', duration:50, color:'accent' }
-    ],
-    tue: [
-      { subject:'Accounting', type:'Understand', detail:'Week 4 — Service Firms rebuild. Grinds360 book p.112 + Loan Workings + Investment Workings + Service Accounts grind.', duration:50, color:'amber' },
-      { subject:'Anki', type:'Maintenance', detail:'Physics rotation — 10 min', duration:10, color:'grey' }
-    ],
-    wed: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch2 L3 — i and j Vectors. TWO exercises (Ex3 + Ex4) — both must be completed.', duration:50, color:'accent' },
-      { subject:'Chemistry', type:'Theory', detail:'Chemistry theory session — Wednesday slot', duration:50, color:'blue' }
-    ],
-    thu: [
-      { subject:'Accounting', type:'Attempt', detail:'Week 4 — 2020 Q7 Service Firm. 45-minute timer. Score vs 53% class result = measure of summer progress.', duration:50, color:'amber' },
-      { subject:'PE-PAP', type:'PAP', detail:'Complete Stage 1 performance analysis. Run all tests. Compile Hevy + Garmin data.', duration:60, color:'green' }
-    ],
-    fri: [
-      { subject:'Applied Maths', type:'Checkpoint', detail:'✓ CHECKPOINT: Vectors — 2 Old LC Questions timed. Below 70% → check i/j notation from L3 before proceeding.', duration:50, color:'accent' },
-      { subject:'Physics', type:'Project 2', detail:'Confirm AAC topic (leading: Phase Change Materials). Draft research question naming IV, DV, context.', duration:30, color:'purple' }
-    ]
+  4:{
+    mon:[{subject:'Applied Maths',type:'Lesson',detail:'Ch2 L2 — Components of a Vector and Dot Product',duration:50,color:'accent'}],
+    tue:[{subject:'Accounting',type:'Understand',detail:'Week 4 — Service Firms rebuild. Grinds360 book p.112 + Loan Workings + Investment Workings + Service Accounts grind.',duration:50,color:'amber'},{subject:'Anki',type:'Maintenance',detail:'Physics rotation — 10 min',duration:10,color:'grey'}],
+    wed:[{subject:'Applied Maths',type:'Lesson',detail:'Ch2 L3 — i and j Vectors. TWO exercises (Ex3 + Ex4) — both must be completed.',duration:50,color:'accent'},{subject:'Chemistry',type:'Theory',detail:'Chemistry theory session — Wednesday slot',duration:50,color:'blue'}],
+    thu:[{subject:'Accounting',type:'Attempt',detail:'Week 4 — 2020 Q7 Service Firm. 45-minute timer. Score vs 53% class result = measure of summer progress.',duration:50,color:'amber'},{subject:'PE-PAP',type:'PAP',detail:'Complete Stage 1 performance analysis. Run all tests. Compile Hevy + Garmin data.',duration:60,color:'green'}],
+    fri:[{subject:'Applied Maths',type:'Checkpoint',detail:'✓ CHECKPOINT: Vectors — 2 LC Questions timed. Below 70% → check i/j notation from L3 before proceeding.',duration:50,color:'accent'},{subject:'Physics',type:'Project 2',detail:'Confirm AAC topic (leading: Phase Change Materials). Draft research question naming IV, DV, context.',duration:30,color:'purple'}]
   },
-  5: {
-    mon: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch3 L1 — Applying equations of motion in x and y directions', duration:50, color:'accent' }
-    ],
-    tue: [
-      { subject:'Accounting', type:'Understand', detail:'Week 5 — Q1 Sole Trader Final Accounts: structure. Grinds360 book p.39 + Quick Guide to Q1 + Week 1 Final Accounts grind.', duration:50, color:'amber' },
-      { subject:'Anki', type:'Maintenance', detail:'Physics rotation — 10 min', duration:10, color:'grey' }
-    ],
-    wed: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch3 L2 — Proving general rules (range and max height from first principles)', duration:50, color:'accent' },
-      { subject:'Chemistry', type:'Application', detail:'Chemistry application/past paper session', duration:50, color:'blue' }
-    ],
-    thu: [
-      { subject:'Accounting', type:'Attempt', detail:'Week 5 — First Q1 Sole Trader attempt. 54-minute timer. Studyclix. Identify every adjustment type missed.', duration:54, color:'amber' },
-      { subject:'PE', type:'Session 3', detail:'Type A — Physical Activity Participation and Promoting Pathways (5A + 5B). Grinds360 + 2–3 Studyclix Qs.', duration:50, color:'green' }
-    ],
-    fri: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch3 L3 — Finding Angles', duration:50, color:'accent' },
-      { subject:'Irish', type:'Float', detail:'Irish float session — S2, S3, S4, or S5 depending on what\'s been done. Check sequence constraints.', duration:55, color:'red' }
-    ]
+  5:{
+    mon:[{subject:'Applied Maths',type:'Lesson',detail:'Ch3 L1 — Applying equations of motion in x and y directions',duration:50,color:'accent'}],
+    tue:[{subject:'Accounting',type:'Understand',detail:'Week 5 — Q1 Sole Trader Final Accounts: structure. Grinds360 book p.39 + Quick Guide to Q1 + Week 1 Final Accounts grind.',duration:50,color:'amber'},{subject:'Anki',type:'Maintenance',detail:'Physics rotation — 10 min',duration:10,color:'grey'}],
+    wed:[{subject:'Applied Maths',type:'Lesson',detail:'Ch3 L2 — Proving general rules (range and max height from first principles)',duration:50,color:'accent'},{subject:'Chemistry',type:'Application',detail:'Chemistry application/past paper session',duration:50,color:'blue'}],
+    thu:[{subject:'Accounting',type:'Attempt',detail:'Week 5 — First Q1 Sole Trader attempt. 54-minute timer. Studyclix. Identify every adjustment type missed.',duration:54,color:'amber'},{subject:'PE',type:'Session 3',detail:'Type A — Physical Activity Participation and Promoting Pathways (5A + 5B). Grinds360 + 2–3 Studyclix Qs.',duration:50,color:'green'}],
+    fri:[{subject:'Applied Maths',type:'Lesson',detail:'Ch3 L3 — Finding Angles',duration:50,color:'accent'},{subject:'Irish',type:'Float',detail:'Irish float session — S2, S3, S4, or S5 depending on what\'s been done. Check sequence constraints.',duration:55,color:'red'}]
   },
-  6: {
-    mon: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch3 L4 — i and j Vector Approach. New territory — take the full session.', duration:50, color:'accent' }
-    ],
-    tue: [
-      { subject:'Accounting', type:'Understand', detail:'Week 6 — Q1 Sole Trader: adjustments in depth. Depreciation adjustment lessons + Week 2 Final Accounts grind.', duration:50, color:'amber' },
-      { subject:'Anki', type:'Maintenance', detail:'Physics rotation — 10 min', duration:10, color:'grey' }
-    ],
-    wed: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch3 L5 — Projectiles and Elasticity', duration:50, color:'accent' },
-      { subject:'Chemistry', type:'Theory', detail:'Chemistry theory session — Wednesday slot', duration:50, color:'blue' }
-    ],
-    thu: [
-      { subject:'Accounting', type:'Attempt', detail:'Week 6 — Second Q1 Sole Trader (different year). 54-minute timer.', duration:54, color:'amber' },
-      { subject:'PE', type:'Session 4', detail:'Type A — Ethics and Fair Play (Ch 6). Grinds360 ethics videos + 2–3 written practice answers.', duration:55, color:'green' },
-      { subject:'PE-PAP', type:'PAP', detail:'Design Stage 3 training programme targeting all 4 SMART goals.', duration:45, color:'green' }
-    ],
-    fri: [
-      { subject:'Applied Maths', type:'Checkpoint', detail:'✓ CHECKPOINT: Projectiles — 2 Old LC Questions timed. If L5 ran long Wed, push checkpoint to Mon Wk7.', duration:50, color:'accent' },
-      { subject:'Physics', type:'Project 3', detail:'Background reading on confirmed PCM topic. Wikipedia level. Notes: phenomenon, physics principles, prior measurements.', duration:30, color:'purple' }
-    ]
+  6:{
+    mon:[{subject:'Applied Maths',type:'Lesson',detail:'Ch3 L4 — i and j Vector Approach. New territory — take the full session.',duration:50,color:'accent'}],
+    tue:[{subject:'Accounting',type:'Understand',detail:'Week 6 — Q1 Sole Trader: adjustments in depth. Depreciation adjustment lessons + Week 2 Final Accounts grind.',duration:50,color:'amber'},{subject:'Anki',type:'Maintenance',detail:'Physics rotation — 10 min',duration:10,color:'grey'}],
+    wed:[{subject:'Applied Maths',type:'Lesson',detail:'Ch3 L5 — Projectiles and Elasticity',duration:50,color:'accent'},{subject:'Chemistry',type:'Theory',detail:'Chemistry theory session — Wednesday slot',duration:50,color:'blue'}],
+    thu:[{subject:'Accounting',type:'Attempt',detail:'Week 6 — Second Q1 Sole Trader (different year). 54-minute timer.',duration:54,color:'amber'},{subject:'PE',type:'Session 4',detail:'Type A — Ethics and Fair Play (Ch 6). Grinds360 ethics videos + 2–3 written practice answers.',duration:55,color:'green'},{subject:'PE-PAP',type:'PAP',detail:'Design Stage 3 training programme targeting all 4 SMART goals.',duration:45,color:'green'}],
+    fri:[{subject:'Applied Maths',type:'Checkpoint',detail:'✓ CHECKPOINT: Projectiles — 2 Old LC Questions timed. If L5 ran long Wed, push checkpoint to Mon Wk7.',duration:50,color:'accent'},{subject:'Physics',type:'Project 3',detail:'Background reading on confirmed PCM topic. Wikipedia level. Notes: phenomenon, physics principles, prior measurements.',duration:30,color:'purple'}]
   },
-  7: {
-    mon: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch4 L2 — Connected Particles. (Ch4 L1 may be here if Wk6 checkpoint was pushed)', duration:50, color:'accent' }
-    ],
-    tue: [
-      { subject:'Accounting', type:'Understand', detail:'Week 7 — Company Final Accounts. Grinds360 Company section + Q1 Company video. Note: share capital, debentures, corp tax, dividends.', duration:50, color:'amber' },
-      { subject:'Anki', type:'Maintenance', detail:'Physics rotation — 10 min', duration:10, color:'grey' }
-    ],
-    wed: [
-      { subject:'Applied Maths', type:'Checkpoint', detail:'✓ CHECKPOINT: Ch4 L3 Pulleys + Newton\'s Laws checkpoint — budget full 50 min (Pulleys + checkpoint is tight).', duration:50, color:'accent' },
-      { subject:'Chemistry', type:'Application', detail:'Chemistry application/past paper session', duration:50, color:'blue' }
-    ],
-    thu: [
-      { subject:'Accounting', type:'Attempt', detail:'Week 7 — Q1 Company from 2022, 2023, or 2024. 54-minute timer.', duration:54, color:'amber' },
-      { subject:'PE', type:'Session 5', detail:'Type B — Section 1 timed practice. 50 min timed. Mark + categorise every dropped mark.', duration:55, color:'green' }
-    ],
-    fri: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch6 L1 — Work and Energy', duration:50, color:'accent' },
-      { subject:'Irish', type:'Float', detail:'Irish float session — use whichever session has not been done. Check S1→S2→S6 sequence constraint.', duration:55, color:'red' }
-    ]
+  7:{
+    mon:[{subject:'Applied Maths',type:'Lesson',detail:'Ch4 L2 — Connected Particles. (Ch4 L1 may be here if Wk6 checkpoint was pushed)',duration:50,color:'accent'}],
+    tue:[{subject:'Accounting',type:'Understand',detail:'Week 7 — Company Final Accounts. Grinds360 Company section + Q1 Company video. Note: share capital, debentures, corp tax, dividends.',duration:50,color:'amber'},{subject:'Anki',type:'Maintenance',detail:'Physics rotation — 10 min',duration:10,color:'grey'}],
+    wed:[{subject:'Applied Maths',type:'Checkpoint',detail:'✓ CHECKPOINT: Ch4 L3 Pulleys + Newton\'s Laws checkpoint — budget full 50 min (Pulleys + checkpoint is tight).',duration:50,color:'accent'},{subject:'Chemistry',type:'Application',detail:'Chemistry application/past paper session',duration:50,color:'blue'}],
+    thu:[{subject:'Accounting',type:'Attempt',detail:'Week 7 — Q1 Company from 2022, 2023, or 2024. 54-minute timer.',duration:54,color:'amber'},{subject:'PE',type:'Session 5',detail:'Type B — Section 1 timed practice. 50 min timed. Mark + categorise every dropped mark.',duration:55,color:'green'}],
+    fri:[{subject:'Applied Maths',type:'Lesson',detail:'Ch6 L1 — Work and Energy',duration:50,color:'accent'},{subject:'Irish',type:'Float',detail:'Irish float session — use whichever session has not been done. Check S1→S2→S6 sequence constraint.',duration:55,color:'red'}]
   },
-  8: {
-    mon: [
-      { subject:'Applied Maths', type:'Checkpoint', detail:'✓ CHECKPOINT: Ch6 L2 Conservation Laws + Work & Energy checkpoint immediately after.', duration:50, color:'accent' }
-    ],
-    tue: [
-      { subject:'Accounting', type:'Understand', detail:'Week 8 — Q1 consolidation. Re-read error log Wks 5–7. Find 3 most-missed adjustment types, re-read book sections. Watch 2024 Q1 Suspense & Bank Rec workings.', duration:50, color:'amber' },
-      { subject:'Anki', type:'Maintenance', detail:'Physics rotation — 10 min', duration:10, color:'grey' }
-    ],
-    wed: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch7 L1 — Equations of Circular Motion. New conceptual territory — go slowly.', duration:50, color:'accent' },
-      { subject:'Chemistry', type:'Theory', detail:'Chemistry theory session — Wednesday slot', duration:50, color:'blue' }
-    ],
-    thu: [
-      { subject:'Accounting', type:'Attempt', detail:'Week 8 — Q1 from unused year. Choose A or B on the day as in the exam.', duration:54, color:'amber' },
-      { subject:'PE', type:'Session 6', detail:'Type B — Section 2 case study (40 min) + Section 3 long questions (50 min). Mark both against scheme.', duration:90, color:'green' }
-    ],
-    fri: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch7 L2 — Horizontal Circular Motion', duration:50, color:'accent' },
-      { subject:'Physics', type:'Project 4', detail:'Outline methodology: what to measure, how, equipment needed, number of trials, data recording format.', duration:30, color:'purple' }
-    ]
+  8:{
+    mon:[{subject:'Applied Maths',type:'Checkpoint',detail:'✓ CHECKPOINT: Ch6 L2 Conservation Laws + Work & Energy checkpoint immediately after.',duration:50,color:'accent'}],
+    tue:[{subject:'Accounting',type:'Understand',detail:'Week 8 — Q1 consolidation. Re-read error log Wks 5–7. Find 3 most-missed adjustment types, re-read book sections. Watch 2024 Q1 Suspense & Bank Rec workings.',duration:50,color:'amber'},{subject:'Anki',type:'Maintenance',detail:'Physics rotation — 10 min',duration:10,color:'grey'}],
+    wed:[{subject:'Applied Maths',type:'Lesson',detail:'Ch7 L1 — Equations of Circular Motion. New conceptual territory — go slowly.',duration:50,color:'accent'},{subject:'Chemistry',type:'Theory',detail:'Chemistry theory session — Wednesday slot',duration:50,color:'blue'}],
+    thu:[{subject:'Accounting',type:'Attempt',detail:'Week 8 — Q1 from unused year. Choose A or B on the day as in the exam.',duration:54,color:'amber'},{subject:'PE',type:'Session 6',detail:'Type B — Section 2 case study (40 min) + Section 3 long questions (50 min). Mark both against scheme.',duration:90,color:'green'}],
+    fri:[{subject:'Applied Maths',type:'Lesson',detail:'Ch7 L2 — Horizontal Circular Motion',duration:50,color:'accent'},{subject:'Physics',type:'Project 4',detail:'Outline methodology: what to measure, how, equipment needed, number of trials, data recording format.',duration:30,color:'purple'}]
   },
-  9: {
-    mon: [
-      { subject:'Applied Maths', type:'Checkpoint', detail:'✓ CHECKPOINT: Ch7 L3 Vertical Circular Motion + Circular Motion checkpoint — 2 LC questions.', duration:50, color:'accent' }
-    ],
-    tue: [
-      { subject:'Accounting', type:'Understand', detail:'Week 9 — Q5 Interpretation of Accounts. Grinds360 book p.125 + Interpretation grind (70 min) + Writing to a Shareholder (71 min).', duration:90, color:'amber' },
-      { subject:'Anki', type:'Maintenance', detail:'Physics rotation — 10 min', duration:10, color:'grey' }
-    ],
-    wed: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch8 L1 — Direct Collisions', duration:50, color:'accent' },
-      { subject:'Chemistry', type:'Application', detail:'Chemistry application/past paper session', duration:50, color:'blue' }
-    ],
-    thu: [
-      { subject:'Accounting', type:'Attempt', detail:'Week 9 — Q5 from 2023 or 2024. 45-minute timer. Calculate all ratios + full written commentary.', duration:45, color:'amber' },
-      { subject:'PE', type:'PAP Run', detail:'Stage 3 programme running. Log in Hevy. Write one reflection per goal (ongoing).', duration:45, color:'green' }
-    ],
-    fri: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch8 L2 — More than one collision', duration:50, color:'accent' },
-      { subject:'Irish', type:'Float', detail:'Irish float session — S5 or S6 (S6 requires S1 + S3 done first). Final sessions before September.', duration:60, color:'red' }
-    ]
+  9:{
+    mon:[{subject:'Applied Maths',type:'Checkpoint',detail:'✓ CHECKPOINT: Ch7 L3 Vertical Circular Motion + Circular Motion checkpoint — 2 LC questions.',duration:50,color:'accent'}],
+    tue:[{subject:'Accounting',type:'Understand',detail:'Week 9 — Q5 Interpretation of Accounts. Grinds360 book p.125 + Interpretation grind (70 min) + Writing to a Shareholder (71 min).',duration:90,color:'amber'},{subject:'Anki',type:'Maintenance',detail:'Physics rotation — 10 min',duration:10,color:'grey'}],
+    wed:[{subject:'Applied Maths',type:'Lesson',detail:'Ch8 L1 — Direct Collisions',duration:50,color:'accent'},{subject:'Chemistry',type:'Application',detail:'Chemistry application/past paper session',duration:50,color:'blue'}],
+    thu:[{subject:'Accounting',type:'Attempt',detail:'Week 9 — Q5 from 2023 or 2024. 45-minute timer. Calculate all ratios + full written commentary.',duration:45,color:'amber'},{subject:'PE',type:'PAP Run',detail:'Stage 3 programme running. Log in Hevy. Write one reflection per goal (ongoing).',duration:45,color:'green'}],
+    fri:[{subject:'Applied Maths',type:'Lesson',detail:'Ch8 L2 — More than one collision',duration:50,color:'accent'},{subject:'Irish',type:'Float',detail:'Irish float session — S5 or S6 (S6 requires S1 + S3 done first). Final sessions before September.',duration:60,color:'red'}]
   },
-  10: {
-    mon: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch8 L3 — Collisions with Strings', duration:50, color:'accent' }
-    ],
-    tue: [
-      { subject:'Accounting', type:'Understand', detail:'Week 10 — Review. Read full error log and all topic checklists. Write one-page handover note to self for September.', duration:50, color:'amber' },
-      { subject:'Anki', type:'Maintenance', detail:'Physics rotation — 10 min', duration:10, color:'grey' }
-    ],
-    wed: [
-      { subject:'Applied Maths', type:'Lesson', detail:'Ch8 L4 — Oblique Collisions. Hardest lesson all summer. Video + notes only — exercises on a separate day if needed.', duration:50, color:'accent' },
-      { subject:'Chemistry', type:'Theory', detail:'Chemistry theory session — final week', duration:50, color:'blue' }
-    ],
-    thu: [
-      { subject:'Accounting', type:'Attempt', detail:'Week 10 — Second Q5 attempt (different year). 45-minute timer. Baseline for 6th year.', duration:45, color:'amber' },
-      { subject:'PE', type:'Session 7', detail:'✓ CHECKPOINT: Full 100-min exam conditions. Section 1 (50 min) → Section 2 (40 min) → begin S3. Mark all. Compare to Sessions 5 and 6.', duration:100, color:'green' },
-      { subject:'PE-PAP', type:'PAP', detail:'Draft Stage 4 concluding analysis (interim — programme continues into 6th year).', duration:45, color:'green' }
-    ],
-    fri: [
-      { subject:'Applied Maths', type:'Checkpoint', detail:'✓ FINAL CHECKPOINT: Collisions — 2 Old LC Questions. Course complete. Log final lesson count.', duration:50, color:'accent' },
-      { subject:'Physics', type:'Project 5', detail:'September readiness review. Consolidate all Physics project sessions into one-page summary for supervisor.', duration:30, color:'purple' }
-    ]
+  10:{
+    mon:[{subject:'Applied Maths',type:'Lesson',detail:'Ch8 L3 — Collisions with Strings',duration:50,color:'accent'}],
+    tue:[{subject:'Accounting',type:'Understand',detail:'Week 10 — Review. Read full error log and all topic checklists. Write one-page handover note to self for September.',duration:50,color:'amber'},{subject:'Anki',type:'Maintenance',detail:'Physics rotation — 10 min',duration:10,color:'grey'}],
+    wed:[{subject:'Applied Maths',type:'Lesson',detail:'Ch8 L4 — Oblique Collisions. Hardest lesson all summer. Video + notes only — exercises on a separate day if needed.',duration:50,color:'accent'},{subject:'Chemistry',type:'Theory',detail:'Chemistry theory session — final week',duration:50,color:'blue'}],
+    thu:[{subject:'Accounting',type:'Attempt',detail:'Week 10 — Second Q5 attempt (different year). 45-minute timer. Baseline for 6th year.',duration:45,color:'amber'},{subject:'PE',type:'Session 7',detail:'✓ CHECKPOINT: Full 100-min exam conditions. Section 1 (50 min) → Section 2 (40 min) → begin S3. Mark all. Compare to Sessions 5 and 6.',duration:100,color:'green'},{subject:'PE-PAP',type:'PAP',detail:'Draft Stage 4 concluding analysis (interim — programme continues into 6th year).',duration:45,color:'green'}],
+    fri:[{subject:'Applied Maths',type:'Checkpoint',detail:'✓ FINAL CHECKPOINT: Collisions — 2 Old LC Questions. Course complete. Log final lesson count.',duration:50,color:'accent'},{subject:'Physics',type:'Project 5',detail:'September readiness review. Consolidate all Physics project sessions into one-page summary for supervisor.',duration:30,color:'purple'}]
   }
 };
 
-function planBadgeLabel(type) {
-  const m = {
-    Lesson:'LESSON', Checkpoint:'CHECKPOINT', Understand:'UNDERSTAND',
-    Attempt:'ATTEMPT', Theory:'THEORY', Application:'PAST PAPER',
-    Float:'IRISH', Maintenance:'ANKI', PAP:'PAP', 'PAP Run':'PAP'
-  };
-  if (m[type]) return m[type];
-  if (type.startsWith('Project')) return 'AAC PROJECT';
-  if (type.startsWith('Session')) return +type.split(' ')[1] <= 4 ? 'THEORY' : 'EXAM PRACTICE';
+function planBadgeLabel(type){
+  const m={Lesson:'LESSON',Checkpoint:'CHECKPOINT',Understand:'UNDERSTAND',Attempt:'ATTEMPT',Theory:'THEORY',Application:'PAST PAPER',Float:'IRISH',Maintenance:'ANKI',PAP:'PAP','PAP Run':'PAP'};
+  if(m[type])return m[type];
+  if(type.startsWith('Project'))return'AAC PROJECT';
+  if(type.startsWith('Session'))return +type.split(' ')[1]<=4?'THEORY':'EXAM PRACTICE';
   return type.toUpperCase();
 }
 
-function getSummerWeekNum() {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const diff = Math.floor((today - SUMMER_START_D) / 86400000);
-  if (diff < 0) return 0;
-  return Math.floor(diff / 7) + 1;
+function getSummerWeekNum(){
+  const now=new Date();const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const diff=Math.floor((today-SUMMER_START_D)/86400000);
+  if(diff<0)return 0;return Math.floor(diff/7)+1;
 }
 
-function getDayKeyPlan() {
-  return ['sun','mon','tue','wed','thu','fri','sat'][new Date().getDay()];
+function planFmtDate(d){
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()]+' '+d.getFullYear();
 }
 
-function getPlanDone() { return ls(PLAN_DONE_KEY, {}); }
-function savePlanDone(d) { lss(PLAN_DONE_KEY, d); sbPushS(PLAN_DONE_KEY, d); }
-
-function togglePlanDone(idx) {
-  const d = getPlanDone(); d[idx] = !d[idx]; savePlanDone(d); renderPlanPanel();
-}
-
-function togglePlanDetail(idx) {
-  const el = document.getElementById('pdet-' + idx);
-  if (el) el.classList.toggle('expanded');
-}
-
-function planFmtDate(d) {
-  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  return days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-}
-
-function buildPlanSessionCard(s, idx, isDone) {
-  const col = SUBJ_COLORS[s.color] || '#888';
-  const lbl = planBadgeLabel(s.type);
-  const bg = col + '1a';
-  const cls = isDone ? ' done' : '';
-  const doneBtn = isDone
-    ? `<button class="plan-done-btn done" onclick="togglePlanDone(${idx})">✓ Done</button>`
-    : `<button class="plan-done-btn" onclick="togglePlanDone(${idx})">Mark Done</button>`;
-  return `<div class="plan-session-card${cls}" style="border-left-color:${col}">
+function buildPlanSessionCard(s,idx,isDone){
+  const col=SUBJ_COLORS[s.color]||'#888';const lbl=planBadgeLabel(s.type);
+  const bg=col+'1a';const cls=isDone?' done':'';
+  const doneBtn=isDone
+    ?`<button class="plan-done-btn done" onclick="togglePlanDone(${idx})">✓ Done</button>`
+    :`<button class="plan-done-btn" onclick="togglePlanDone(${idx})">Mark Done</button>`;
+  return`<div class="plan-session-card${cls}" style="border-left-color:${col}">
     <div class="plan-session-hd">
       <span class="plan-subj-name" style="color:${col}">${esc(s.subject)}</span>
       <span class="plan-type-badge" style="background:${bg};color:${col}">${lbl}</span>
@@ -1066,100 +801,108 @@ function buildPlanSessionCard(s, idx, isDone) {
   </div>`;
 }
 
-function renderPlanPanel() {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const weekBadgeEl = $('plan-week-badge');
-  const dateEl = $('plan-today-date');
-  const sessionsEl = $('plan-sessions-today');
-  const stripEl = $('plan-week-strip');
-  if (!sessionsEl) return;
+function togglePlanDone(idx){
+  const key=getPlanDoneKey();const d=ls(key,{});d[idx]=!d[idx];lss(key,d);sbPushS(key,d);renderPlanPanel();
+}
+function togglePlanDetail(idx){const el=document.getElementById('pdet-'+idx);if(el)el.classList.toggle('expanded')}
 
-  if (dateEl) dateEl.textContent = planFmtDate(now);
+function renderPlanPanel(){
+  const now=new Date();
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const weekBadgeEl=$('plan-week-badge');
+  const sessionsEl=$('plan-sessions-today');
+  const stripEl=$('plan-week-strip');
+  const navLbl=$('plan-nav-label');
+  const navIsToday=$('plan-nav-istoday');
+  const dateEl=$('plan-today-date');
+  const prevBtn=$('plan-nav-prev');
+  const nextBtn=$('plan-nav-next');
+  if(!sessionsEl)return;
 
-  if (today > SUMMER_END_D) {
-    if (weekBadgeEl) weekBadgeEl.textContent = 'COMPLETE';
-    sessionsEl.innerHTML = `<div class="plan-edge-msg">
-      <div class="plan-edge-icon">🎓</div>
-      <div class="plan-edge-title">Summer plan complete — September starts soon</div>
-      <div class="plan-edge-sub">10 weeks done. Head into 6th year.</div>
-    </div>`;
-    if (stripEl) stripEl.innerHTML = '';
-    return;
+  // Update nav
+  if(navLbl)navLbl.textContent=PLAN_DAY_NAMES[planViewDayIdx];
+  const viewDate=getPlanViewDate();
+  const viewDateStr=dk(viewDate);
+  const todayStr=dk(now);
+  const isTodayView=viewDateStr===todayStr;
+  if(navIsToday)navIsToday.style.display=isTodayView?'block':'none';
+  if(dateEl)dateEl.textContent=planFmtDate(viewDate);
+  if(prevBtn)prevBtn.disabled=planViewDayIdx===0;
+  if(nextBtn)nextBtn.disabled=planViewDayIdx===4;
+
+  const weekNum=getSummerWeekNum();
+  if(weekBadgeEl)weekBadgeEl.textContent=weekNum>=1&&weekNum<=10?'WEEK '+weekNum+' OF 10':weekNum<1?'STARTS SOON':'COMPLETE';
+
+  if(today>SUMMER_END_D){
+    sessionsEl.innerHTML=`<div class="plan-edge-msg"><div class="plan-edge-icon">🎓</div><div class="plan-edge-title">Summer plan complete — September starts soon</div><div class="plan-edge-sub">10 weeks done. Head into 6th year.</div></div>`;
+    if(stripEl)stripEl.innerHTML='';return;
   }
 
-  const weekNum = getSummerWeekNum();
-  const dayKey = getDayKeyPlan();
-  const done = getPlanDone();
-
-  if (weekBadgeEl) {
-    weekBadgeEl.textContent = weekNum >= 1 && weekNum <= 10 ? 'WEEK ' + weekNum + ' OF 10' : weekNum < 1 ? 'STARTS SOON' : 'COMPLETE';
+  if(weekNum<1||weekNum>10){
+    sessionsEl.innerHTML=`<div class="plan-edge-msg"><div class="plan-edge-sub">Summer plan not yet active.</div></div>`;
+    if(stripEl)stripEl.innerHTML='';return;
   }
 
-  if (dayKey === 'sat') {
-    sessionsEl.innerHTML = `<div class="plan-edge-msg">
-      <div class="plan-edge-icon">⚽</div>
-      <div class="plan-edge-title">Match Day — Zero Study</div>
-      <div class="plan-edge-sub">Focus on the game. Study resumes Sunday (Anki only).</div>
-    </div>`;
-    if (stripEl) stripEl.innerHTML = '';
-    return;
+  const viewDayKey=getPlanViewDayKey();
+  const realDow=now.getDay(); // 0=Sun,...6=Sat
+
+  // If today is weekend and viewing "today" equivalent, show edge message
+  if(isTodayView){
+    if(realDow===6){
+      sessionsEl.innerHTML=`<div class="plan-edge-msg"><div class="plan-edge-icon">⚽</div><div class="plan-edge-title">Match Day — Zero Study</div><div class="plan-edge-sub">Focus on the game. Study resumes Monday.</div></div>`;
+      if(stripEl)stripEl.innerHTML='';return;
+    }
+    if(realDow===0){
+      const anki={subject:'Anki',type:'Maintenance',detail:'PE rotation — 10 min only. No other study today.',duration:10,color:'grey'};
+      const key=getPlanDoneKey();const done=ls(key,{});
+      sessionsEl.innerHTML=buildPlanSessionCard(anki,0,done[0]||false);
+      if(stripEl)stripEl.innerHTML='';return;
+    }
   }
 
-  if (dayKey === 'sun') {
-    const anki = { subject:'Anki', type:'Maintenance', detail:'PE rotation — 10 min only', duration:10, color:'grey' };
-    sessionsEl.innerHTML = buildPlanSessionCard(anki, 0, done[0] || false);
-    if (stripEl) stripEl.innerHTML = '';
-    return;
-  }
+  const weekPlan=schedule[weekNum]||{};
+  const sessions=weekPlan[viewDayKey]||[];
+  const done=ls(getPlanDoneKey(),{});
 
-  if (weekNum < 1 || weekNum > 10) {
-    sessionsEl.innerHTML = `<div class="plan-edge-msg"><div class="plan-edge-sub">Summer plan not yet active.</div></div>`;
-    if (stripEl) stripEl.innerHTML = '';
-    return;
-  }
+  sessionsEl.innerHTML=sessions.length
+    ?sessions.map((s,i)=>buildPlanSessionCard(s,i,done[i]||false)).join('')
+    :`<div style="color:var(--t3);font-size:13px;text-align:center;padding:16px">No sessions scheduled.</div>`;
 
-  const weekPlan = schedule[weekNum] || {};
-  const sessions = weekPlan[dayKey] || [];
-
-  sessionsEl.innerHTML = sessions.length
-    ? sessions.map((s, i) => buildPlanSessionCard(s, i, done[i] || false)).join('')
-    : `<div style="color:var(--t3);font-size:13px;text-align:center;padding:16px">No sessions scheduled today.</div>`;
-
-  if (stripEl) {
-    const dayOrder = ['mon','tue','wed','thu','fri'];
-    const dayLbls = {mon:'MON', tue:'TUE', wed:'WED', thu:'THU', fri:'FRI'};
-    const dayIdx = {mon:0, tue:1, wed:2, thu:3, fri:4, sat:5, sun:6};
-    const todayN = dayIdx[dayKey] !== undefined ? dayIdx[dayKey] : -1;
-    let html = '<div class="plan-strip-hd">THIS WEEK</div><div class="plan-strip">';
-    dayOrder.forEach(day => {
-      const ss = weekPlan[day] || [];
-      const n = dayIdx[day];
-      let cls = 'plan-strip-day';
-      if (day === dayKey) cls += ' is-today';
-      else if (todayN >= 0 && n < todayN) cls += ' is-past';
-      const dots = ss.map(s => `<div class="plan-dot" style="background:${SUBJ_COLORS[s.color]||'#888'}" title="${s.subject}"></div>`).join('');
-      html += `<div class="${cls}">
-        <div class="plan-strip-dayname">${dayLbls[day]}</div>
-        <div class="plan-strip-dots">${dots || '<div style="font-size:8px;color:var(--t4)">—</div>'}</div>
+  if(stripEl){
+    const dayIdx={mon:0,tue:1,wed:2,thu:3,fri:4};
+    const todayDowN=realDow===0||realDow===6?-1:realDow-1; // Mon=0...Fri=4, weekend=-1
+    let html='<div class="plan-strip-hd">THIS WEEK</div><div class="plan-strip">';
+    PLAN_DAY_ORDER.forEach((day,i)=>{
+      const ss=weekPlan[day]||[];
+      let cls='plan-strip-day';
+      if(i===planViewDayIdx)cls+=' is-viewing';
+      if(i===todayDowN)cls+=' is-today';
+      if(todayDowN>=0&&i<todayDowN&&i!==planViewDayIdx)cls+=' is-past';
+      const dots=ss.map(s=>`<div class="plan-dot" style="background:${SUBJ_COLORS[s.color]||'#888'}" title="${s.subject}"></div>`).join('');
+      html+=`<div class="${cls}" onclick="planViewDayIdx=${i};renderPlanPanel()">
+        <div class="plan-strip-dayname">${PLAN_DAY_NAMES[i].slice(0,3).toUpperCase()}</div>
+        <div class="plan-strip-dots">${dots||'<div style="font-size:8px;color:var(--t4)">—</div>'}</div>
       </div>`;
     });
-    html += '</div>';
-    stripEl.innerHTML = html;
+    html+='</div>';
+    stripEl.innerHTML=html;
   }
 }
-
 renderPlanPanel();
 
-(function sbStudyInit(){
-  if(!window.supabase)return;
-  sbS=window.supabase.createClient(SB_URL_S,SB_KEY_S);
-  const keys=['jm_conf','jm_pts_grades',AMK,SK,SSKEY,PLAN_DONE_KEY];
+// ── Supabase data fetch (after all renders — dirtyKeys prevents overwrite) ────
+(function sbStudyFetch(){
+  if(!sbS)return;
+  const keys=['jm_conf','jm_pts_grades',AMK,SK,SSKEY];
   SUBJECTS_OS.forEach(s=>{keys.push('jm_topics_'+s.id);keys.push('jm_ctopics_'+s.id);keys.push('jm_results_'+s.id);});
+  // Load plan_done for all days of current week
+  for(let i=0;i<5;i++){keys.push('jm_plan_done_'+dk(getWeekDateForIdx(i)));}
   sbS.from('app_state').select('key,data').in('key',keys)
     .then(res=>{
       if(res&&res.data){
-        res.data.forEach(row=>localStorage.setItem(row.key,JSON.stringify(row.data)));
+        res.data.forEach(row=>{
+          if(!sbDirty.has(row.key)){localStorage.setItem(row.key,JSON.stringify(row.data));}
+        });
         renderPoints();initSOS();renderStreaks();renderAM();renderStudyChart();renderStudySessions();renderPlanPanel();
       }
     }).catch(()=>{});

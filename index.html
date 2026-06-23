@@ -419,7 +419,9 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 <script>
 var SB_URL = 'https://ymksoxojvrbrmpdzfjxf.supabase.co';
 var SB_KEY = 'sb_publishable_sozYCEAdWzVt1Tni_EbPCA_gdw6JdvN';
-var sb = null, lastSync = {};
+var sb = window.supabase ? window.supabase.createClient(SB_URL, SB_KEY) : null;
+var lastSync = {};
+var sbDirty = {};
 
 var HABIT_IDS = ['am-skin','pm-skin','retainer','spf','journal','phone','water','nutrition'];
 var HABIT_LABELS = {'am-skin':'🌅 Morning skincare','pm-skin':'🌙 Evening skincare','retainer':'🦷 Retainer','spf':'☀️ SPF applied','journal':'📓 Journal entry','phone':'📵 Phone down by 21:30','water':'💧 Water target hit','nutrition':'🥗 Post-training nutrition'};
@@ -721,7 +723,8 @@ function renderBatteryChart(){
 
 /* ── Supabase ── */
 function sbPush(key,val,dotId){
-  if(!sb) return;
+  sbDirty[key]=true;
+  if(!sb) { setSyncDot(dotId,''); return; }
   var json=JSON.stringify(val); lastSync[key]=json;
   setSyncDot(dotId,'syncing');
   sb.from('app_state').upsert({key:key,data:val,updated_at:new Date().toISOString()},{onConflict:'key'})
@@ -730,8 +733,7 @@ function sbPush(key,val,dotId){
 }
 
 (function sbInit(){
-  if(!window.supabase) return;
-  sb=window.supabase.createClient(SB_URL,SB_KEY);
+  if(!sb) return;
   var today=dateKey();
   var syncKeys=[garminKey(),'jm_habits_'+today,'jm_water_'+today,journalKey()];
   var ydJObj=new Date();ydJObj.setDate(ydJObj.getDate()-1);syncKeys.push(journalKey(ydJObj));
@@ -740,8 +742,10 @@ function sbPush(key,val,dotId){
     .then(function(res){
       if(res&&res.data){
         res.data.forEach(function(row){
-          localStorage.setItem(row.key,JSON.stringify(row.data));
-          lastSync[row.key]=JSON.stringify(row.data);
+          if(!sbDirty[row.key]){
+            localStorage.setItem(row.key,JSON.stringify(row.data));
+            lastSync[row.key]=JSON.stringify(row.data);
+          }
         });
         renderGarmin(); renderHabits(); renderWater(); renderHabitChart(); renderJournal();
       }
@@ -769,6 +773,56 @@ renderHabits();
 renderWater();
 renderHabitChart();
 renderJournal();
+updateStudyBlocks();
+
+/* ── Study block schedule ── */
+function getSummerWeekNum(){
+  var start=new Date(2026,5,23);var now=new Date();
+  var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  var diff=Math.floor((today-start)/86400000);
+  if(diff<0)return 0;return Math.floor(diff/7)+1;
+}
+
+var SCHED_SESSIONS={
+  1:{mon:[{s:'Applied Maths',t:'Lesson',d:'Ch1 L1 — Horizontal UAM',m:50}],tue:[{s:'Accounting',t:'Understand',d:'Week 1 — Revaluation of Fixed Assets',m:50},{s:'Anki',t:'Maintenance',d:'Physics rotation',m:10}],wed:[{s:'Applied Maths',t:'Lesson',d:'Ch1 L2 — Vertical UAM',m:50},{s:'Chemistry',t:'Theory',d:'Chemistry theory session',m:50}],thu:[{s:'PE',t:'Session 1',d:'Analysing Performance / Safe Practice / Role of Coach',m:60},{s:'PE-PAP',t:'PAP',d:'Read SEC PAP guidelines',m:45}],fri:[{s:'Applied Maths',t:'Lesson',d:'Ch1 L3 — Successive Times and Distances',m:50},{s:'Physics',t:'Session 1',d:'LC Section A format familiarisation',m:55}]},
+  2:{mon:[{s:'Applied Maths',t:'Lesson',d:'Ch1 L4 — Catch-up Problems',m:50}],tue:[{s:'Accounting',t:'Understand',d:'Week 2 — Suspense + Control Accounts',m:50},{s:'Anki',t:'Maintenance',d:'Physics rotation',m:10}],wed:[{s:'Applied Maths',t:'Lesson',d:'Ch1 L5 — Bodies Moving in Opposite Directions',m:50},{s:'Chemistry',t:'Theory',d:'Chemistry theory session',m:50}],thu:[{s:'Accounting',t:'Attempt',d:'Week 2 — Unseen Suspense or Control Account',m:50},{s:'PE-PAP',t:'PAP',d:'Watch PAP Masterclasses 1+2',m:45}],fri:[{s:'Applied Maths',t:'Lesson',d:'Ch1 L6 — Velocity-Time Graphs',m:50},{s:'Physics',t:'Project 1',d:'Read official AAC Physics in Practice guidelines',m:30}]},
+  3:{mon:[{s:'Applied Maths',t:'Lesson',d:'Ch1 L7 — Dimensional Analysis',m:50}],tue:[{s:'Accounting',t:'Understand',d:'Week 3 — Club Accounts rebuild',m:50},{s:'Anki',t:'Maintenance',d:'Physics rotation',m:10}],wed:[{s:'Applied Maths',t:'Checkpoint',d:'UAM — 2 Old LC Questions timed',m:50},{s:'Chemistry',t:'Past Paper',d:'Chemistry application session',m:50}],thu:[{s:'Accounting',t:'Attempt',d:'Week 3 — 2019 Q6 Club Accounts',m:50},{s:'PE-PAP',t:'PAP',d:'PAP Masterclass 3',m:45}],fri:[{s:'Applied Maths',t:'Lesson',d:'Ch2 L1 — Basic Vectors',m:50},{s:'Irish',t:'Float',d:'Irish Session 1 — Essay Phrases + Topic Selection',m:50}]},
+  4:{mon:[{s:'Applied Maths',t:'Lesson',d:'Ch2 L2 — Components of a Vector',m:50}],tue:[{s:'Accounting',t:'Understand',d:'Week 4 — Service Firms rebuild',m:50},{s:'Anki',t:'Maintenance',d:'Physics rotation',m:10}],wed:[{s:'Applied Maths',t:'Lesson',d:'Ch2 L3 — i and j Vectors',m:50},{s:'Chemistry',t:'Theory',d:'Chemistry theory session',m:50}],thu:[{s:'Accounting',t:'Attempt',d:'Week 4 — 2020 Q7 Service Firm',m:50},{s:'PE-PAP',t:'PAP',d:'Stage 1 performance analysis',m:60}],fri:[{s:'Applied Maths',t:'Checkpoint',d:'Vectors — 2 LC Questions timed',m:50},{s:'Physics',t:'Project 2',d:'Confirm AAC topic + draft research question',m:30}]},
+  5:{mon:[{s:'Applied Maths',t:'Lesson',d:'Ch3 L1 — Equations of motion in x and y',m:50}],tue:[{s:'Accounting',t:'Understand',d:'Week 5 — Q1 Sole Trader Final Accounts structure',m:50},{s:'Anki',t:'Maintenance',d:'Physics rotation',m:10}],wed:[{s:'Applied Maths',t:'Lesson',d:'Ch3 L2 — Range and max height from first principles',m:50},{s:'Chemistry',t:'Past Paper',d:'Chemistry application session',m:50}],thu:[{s:'Accounting',t:'Attempt',d:'Week 5 — First Q1 Sole Trader attempt',m:54},{s:'PE',t:'Session 3',d:'Physical Activity Participation and Promoting Pathways',m:50}],fri:[{s:'Applied Maths',t:'Lesson',d:'Ch3 L3 — Finding Angles',m:50},{s:'Irish',t:'Float',d:'Irish float session — S2, S3, S4, or S5',m:55}]},
+  6:{mon:[{s:'Applied Maths',t:'Lesson',d:'Ch3 L4 — i and j Vector Approach',m:50}],tue:[{s:'Accounting',t:'Understand',d:'Week 6 — Q1 Sole Trader adjustments in depth',m:50},{s:'Anki',t:'Maintenance',d:'Physics rotation',m:10}],wed:[{s:'Applied Maths',t:'Lesson',d:'Ch3 L5 — Projectiles and Elasticity',m:50},{s:'Chemistry',t:'Theory',d:'Chemistry theory session',m:50}],thu:[{s:'Accounting',t:'Attempt',d:'Week 6 — Second Q1 Sole Trader',m:54},{s:'PE',t:'Session 4',d:'Ethics and Fair Play'},{s:'PE-PAP',t:'PAP',d:'Design Stage 3 training programme',m:45}],fri:[{s:'Applied Maths',t:'Checkpoint',d:'Projectiles — 2 Old LC Questions timed',m:50},{s:'Physics',t:'Project 3',d:'Background reading on PCM topic',m:30}]},
+  7:{mon:[{s:'Applied Maths',t:'Lesson',d:'Ch4 L2 — Connected Particles',m:50}],tue:[{s:'Accounting',t:'Understand',d:'Week 7 — Company Final Accounts',m:50},{s:'Anki',t:'Maintenance',d:'Physics rotation',m:10}],wed:[{s:'Applied Maths',t:'Checkpoint',d:'Ch4 L3 Pulleys + Newton\'s Laws checkpoint',m:50},{s:'Chemistry',t:'Past Paper',d:'Chemistry application session',m:50}],thu:[{s:'Accounting',t:'Attempt',d:'Week 7 — Q1 Company 2022/23/24',m:54},{s:'PE',t:'Session 5',d:'Type B — Section 1 timed practice',m:55}],fri:[{s:'Applied Maths',t:'Lesson',d:'Ch6 L1 — Work and Energy',m:50},{s:'Irish',t:'Float',d:'Irish float session',m:55}]},
+  8:{mon:[{s:'Applied Maths',t:'Checkpoint',d:'Ch6 L2 Conservation Laws + Work & Energy checkpoint',m:50}],tue:[{s:'Accounting',t:'Understand',d:'Week 8 — Q1 consolidation',m:50},{s:'Anki',t:'Maintenance',d:'Physics rotation',m:10}],wed:[{s:'Applied Maths',t:'Lesson',d:'Ch7 L1 — Equations of Circular Motion',m:50},{s:'Chemistry',t:'Theory',d:'Chemistry theory session',m:50}],thu:[{s:'Accounting',t:'Attempt',d:'Week 8 — Q1 from unused year',m:54},{s:'PE',t:'Session 6',d:'Type B — Section 2 case study + Section 3',m:90}],fri:[{s:'Applied Maths',t:'Lesson',d:'Ch7 L2 — Horizontal Circular Motion',m:50},{s:'Physics',t:'Project 4',d:'Outline methodology',m:30}]},
+  9:{mon:[{s:'Applied Maths',t:'Checkpoint',d:'Ch7 L3 Vertical Circular Motion + checkpoint',m:50}],tue:[{s:'Accounting',t:'Understand',d:'Week 9 — Q5 Interpretation of Accounts',m:90},{s:'Anki',t:'Maintenance',d:'Physics rotation',m:10}],wed:[{s:'Applied Maths',t:'Lesson',d:'Ch8 L1 — Direct Collisions',m:50},{s:'Chemistry',t:'Past Paper',d:'Chemistry application session',m:50}],thu:[{s:'Accounting',t:'Attempt',d:'Week 9 — Q5 from 2023 or 2024',m:45},{s:'PE',t:'PAP Run',d:'Stage 3 programme running. Log in Hevy.',m:45}],fri:[{s:'Applied Maths',t:'Lesson',d:'Ch8 L2 — More than one collision',m:50},{s:'Irish',t:'Float',d:'Irish float — S5 or S6',m:60}]},
+  10:{mon:[{s:'Applied Maths',t:'Lesson',d:'Ch8 L3 — Collisions with Strings',m:50}],tue:[{s:'Accounting',t:'Understand',d:'Week 10 — Review + handover note to self',m:50},{s:'Anki',t:'Maintenance',d:'Physics rotation',m:10}],wed:[{s:'Applied Maths',t:'Lesson',d:'Ch8 L4 — Oblique Collisions',m:50},{s:'Chemistry',t:'Theory',d:'Chemistry theory session — final week',m:50}],thu:[{s:'Accounting',t:'Attempt',d:'Week 10 — Second Q5 attempt',m:45},{s:'PE',t:'Session 7',d:'Full 100-min exam conditions',m:100},{s:'PE-PAP',t:'PAP',d:'Draft Stage 4 concluding analysis',m:45}],fri:[{s:'Applied Maths',t:'Checkpoint',d:'FINAL CHECKPOINT: Collisions — 2 Old LC Questions',m:50},{s:'Physics',t:'Project 5',d:'September readiness review',m:30}]}
+};
+
+var DOW_TO_KEY={1:'mon',2:'tue',3:'wed',4:'thu',5:'fri'};
+
+function updateStudyBlocks(){
+  var dow=new Date().getDay();
+  var dayKey=DOW_TO_KEY[dow];
+  if(!dayKey)return; // weekend
+  var week=getSummerWeekNum();
+  if(week<1||week>10)return;
+  var sessions=(SCHED_SESSIONS[week]||{})[dayKey]||[];
+  // Update study block detail elements in the active timeline
+  var schedId='sched'+(['','Mon','Tue','Wed','Thu','Fri'][dow]||'');
+  var tl=gel(schedId);
+  if(!tl)return;
+  var studyItems=[];
+  var all=tl.querySelectorAll('.ti-detail');
+  all.forEach(function(el){
+    var label=el.parentElement&&el.parentElement.querySelector('.ti-label');
+    if(label&&(label.textContent.indexOf('Study block')===0||label.textContent.indexOf('Study blocks')===0)){
+      studyItems.push(el);
+    }
+  });
+  sessions.forEach(function(s,i){
+    var el=studyItems[i];
+    if(!el)return;
+    el.textContent=s.s+': '+s.t+' — '+s.d+' ('+s.m+'min)';
+  });
+}
 </script>
 </body>
 </html>

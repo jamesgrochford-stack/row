@@ -145,7 +145,8 @@ select.inp{cursor:pointer;appearance:none;-webkit-appearance:none;background-ima
 <script>
 const SB_URL_N='https://ymksoxojvrbrmpdzfjxf.supabase.co';
 const SB_KEY_N='sb_publishable_sozYCEAdWzVt1Tni_EbPCA_gdw6JdvN';
-let sbN=null;
+let sbN=window.supabase?window.supabase.createClient(SB_URL_N,SB_KEY_N):null;
+const sbNDirty=new Set();
 
 function ls(k,d){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):d}catch{return d}}
 function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
@@ -156,6 +157,7 @@ function gel(id){return document.getElementById(id)}
 function syncDot(id,st){const el=gel(id);if(el){el.className='sync-dot'+(st?' '+st:'');}}
 function sbPush(key,val,dotId){
   lss(key,val);
+  sbNDirty.add(key);
   if(!sbN){if(dotId)syncDot(dotId,'');return;}
   sbN.from('app_state').upsert({key,data:val,updated_at:new Date().toISOString()},{onConflict:'key'})
     .then(()=>{if(dotId)syncDot(dotId,'ok');})
@@ -309,16 +311,15 @@ function toggleSupp(id){
 
 renderSupps();
 
-// ── Supabase init ─────────────────────────────────────────────────────────────
-(function sbNutInit(){
-  if(!window.supabase)return;
-  sbN=window.supabase.createClient(SB_URL_N,SB_KEY_N);
+// ── Supabase data fetch ────────────────────────────────────────────────────────
+(function sbNutFetch(){
+  if(!sbN)return;
   const keys=[POSTRAIN_KEY,MEALS_KEY,PROTEIN_KEY,SUPPS_KEY];
   for(let i=1;i<=13;i++)keys.push('jm_protein_'+dkOff(-i));
   sbN.from('app_state').select('key,data').in('key',keys)
     .then(res=>{
       if(res&&res.data){
-        res.data.forEach(row=>localStorage.setItem(row.key,JSON.stringify(row.data)));
+        res.data.forEach(row=>{if(!sbNDirty.has(row.key))localStorage.setItem(row.key,JSON.stringify(row.data));});
         renderPostrain();renderMeals();renderProtein();renderSupps();
       }
     }).catch(()=>{});
