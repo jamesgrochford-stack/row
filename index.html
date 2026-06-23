@@ -524,7 +524,7 @@ function saveGarmin(){
     savedAt: new Date().toISOString()
   };
   var k=garminKey();
-  lsSet(k,data); sbPush(k,data,'garminDot'); renderGarmin();
+  lsSet(k,data); renderGarmin(); sbPush(k,data,'garminDot');
 }
 
 /* ── Schedule ── */
@@ -552,7 +552,7 @@ function addWater(litres){
   var k=waterKey();
   var data=lsGet(k,{ml:0});
   data.ml=Math.max(0,(data.ml||0)+(litres*1000));
-  lsSet(k,data); sbPush(k,data,'waterDot'); renderWater();
+  lsSet(k,data); renderWater(); sbPush(k,data,'waterDot');
 }
 
 /* ── Habits ── */
@@ -629,8 +629,7 @@ function toggleYdayHabit(id){
   var k=ydayHabitsKey();
   var data=lsGet(k,{});
   data[id]=!data[id];
-  lsSet(k,data); sbPush(k,data,'habitsDot');
-  renderYdayModal(); renderHabits();
+  lsSet(k,data); renderYdayModal(); renderHabits(); sbPush(k,data,'habitsDot');
 }
 function closeYdayModal(e){ if(e.target===gel('ydayModal')) gel('ydayModal').classList.remove('open'); }
 function closeYdayModalBtn(){ gel('ydayModal').classList.remove('open'); }

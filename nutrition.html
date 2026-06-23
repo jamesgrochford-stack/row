@@ -202,8 +202,8 @@ function renderPostrain(){
 function togglePostrain(id){
   const data=ls(POSTRAIN_KEY,{});
   data[id]=!data[id];
+  lss(POSTRAIN_KEY,data);renderPostrain();
   sbPush(POSTRAIN_KEY,data,'postrainDot');
-  renderPostrain();
 }
 
 renderPostrain();
@@ -235,16 +235,16 @@ function addMeal(){
   const time=gel('mealTime').value;
   const meals=ls(MEALS_KEY,[]);
   meals.push({name,protein,time,ts:Date.now()});
-  sbPush(MEALS_KEY,meals,'mealDot');
   gel('mealName').value='';
-  renderMeals();
+  lss(MEALS_KEY,meals);renderMeals();
+  sbPush(MEALS_KEY,meals,'mealDot');
 }
 
 function delMeal(i){
   const meals=ls(MEALS_KEY,[]);
   meals.splice(i,1);
+  lss(MEALS_KEY,meals);renderMeals();
   sbPush(MEALS_KEY,meals,'mealDot');
-  renderMeals();
 }
 
 gel('mealName').addEventListener('keydown',e=>{if(e.key==='Enter')addMeal();});
@@ -257,8 +257,8 @@ const DOT_BG={high:'#6ee7b7',medium:'#fbbf24',low:'#ff8a8a'};
 const BTN_CLASS_MAP={high:'high',medium:'med',low:'low'};
 
 function setProtein(level){
+  lss(PROTEIN_KEY,level);renderProtein();
   sbPush(PROTEIN_KEY,level,'proteinDot');
-  renderProtein();
 }
 
 function renderProtein(){
@@ -305,8 +305,8 @@ function renderSupps(){
 function toggleSupp(id){
   const data=ls(SUPPS_KEY,{});
   data[id]=!data[id];
+  lss(SUPPS_KEY,data);renderSupps();
   sbPush(SUPPS_KEY,data,'suppDot');
-  renderSupps();
 }
 
 renderSupps();

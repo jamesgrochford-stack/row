@@ -454,14 +454,28 @@ function getAllTopics(sid){const subj=SUBJECTS_OS.find(s=>s.id===sid);return [..
 function toggleTopic(sid,idx){
   const data=getTopicData(sid);const topics=getAllTopics(sid);const topic=topics[idx];if(!topic)return;
   const t=data[topic]||{};
-  if(t.covered){data[topic]={covered:false}}else{const today=dk();data[topic]={covered:true,coveredDate:today,reviewCount:0,nextReview:addDays(today,SR_INTERVALS[0])};}
+  const nowCovered=!t.covered;
+  if(nowCovered){const today=dk();data[topic]={covered:true,coveredDate:today,reviewCount:0,nextReview:addDays(today,SR_INTERVALS[0])};}
+  else{data[topic]={covered:false};}
+  // Instant checkbox DOM update — independent of whether refreshOSCard runs
+  const rows=document.querySelectorAll('#topiclist-'+sid+' .topic-row');
+  if(rows[idx]){const chk=rows[idx].querySelector('.topic-chk');if(chk){if(nowCovered){chk.classList.add('checked');chk.textContent='✓';}else{chk.classList.remove('checked');chk.textContent='';}}}
   saveTopicData(sid,data);refreshOSCard(sid);
 }
 function reviewTopic(sid,idx){
   const data=getTopicData(sid);const topics=getAllTopics(sid);const topic=topics[idx];
   if(!topic||!data[topic]||!data[topic].covered)return;
   const t=data[topic];const newCount=Math.min((t.reviewCount||0)+1,SR_INTERVALS.length-1);const today=dk();
-  data[topic]={...t,reviewCount:newCount,nextReview:addDays(today,SR_INTERVALS[newCount])};
+  const nextDate=addDays(today,SR_INTERVALS[newCount]);
+  data[topic]={...t,reviewCount:newCount,nextReview:nextDate};
+  // Instant DOM update — remove Done button and update SR badge
+  const rows=document.querySelectorAll('#topiclist-'+sid+' .topic-row');
+  if(rows[idx]){
+    const srEl=rows[idx].querySelector('.topic-sr');const doneBtn=rows[idx].querySelector('.sr-done-btn');
+    const dl=daysUntil(nextDate);
+    if(srEl){srEl.className='topic-sr ok';srEl.textContent='in '+dl+'d';}
+    if(doneBtn)doneBtn.remove();
+  }
   saveTopicData(sid,data);refreshOSCard(sid);
 }
 function addCustomTopic(sid){
@@ -474,7 +488,12 @@ function delCustomTopic(sid,idx){
   if(idx<customStart)return;const customIdx=idx-customStart;const arr=getCustomTopics(sid);arr.splice(customIdx,1);
   saveCustomTopics(sid,arr);const data=getTopicData(sid);delete data[topics[idx]];saveTopicData(sid,data);refreshOSCard(sid);
 }
-function setConf(sid,level){const conf=ls('jm_conf',{});conf[sid]=level;lss('jm_conf',conf);sbPushS('jm_conf',conf);refreshOSCard(sid)}
+function setConf(sid,level){
+  const conf=ls('jm_conf',{});conf[sid]=level;
+  // Instant dot update in header (visible whether card is open or closed)
+  const dot=document.getElementById('sos-dot-'+sid);if(dot)dot.className='sos-dot'+(level?' '+level:'');
+  lss('jm_conf',conf);sbPushS('jm_conf',conf);refreshOSCard(sid);
+}
 function addResult(sid){
   const dateEl=document.getElementById('rdate-'+sid),scoreEl=document.getElementById('rscore-'+sid),notesEl=document.getElementById('rnotes-'+sid);
   if(!dateEl||!scoreEl)return;const score=scoreEl.value.trim();if(!score)return;
@@ -581,8 +600,9 @@ function undoStreak(id){
   if(s.last!==today)return;
   s.count=Math.max(0,s.count-1);
   if(s.count===0){s.last=null;}else{const y=new Date();y.setDate(y.getDate()-1);s.last=dk(y);}
-  data[id]=s;lss(SK,data);sbPushS(SK,data);
+  data[id]=s;
   const el=$(STREAK_ELS[id]);if(el)el.textContent=s.count;
+  lss(SK,data);sbPushS(SK,data);
 }
 function renderStreaks(){
   $('sDuolingo').textContent=getStreak('duolingo');
@@ -926,7 +946,10 @@ renderPlanPanel();
         res.data.forEach(row=>{
           if(!sbDirty.has(row.key)){localStorage.setItem(row.key,JSON.stringify(row.data));}
         });
-        renderPoints();initSOS();renderStreaks();renderAM();renderStudyChart();renderStudySessions();
+        renderPoints();
+        const anySOSOpen=SUBJECTS_OS.some(s=>{const b=document.getElementById('sos-body-'+s.id);return b&&b.classList.contains('open');});
+        if(!anySOSOpen)initSOS();
+        renderStreaks();renderAM();renderStudyChart();renderStudySessions();
         if(!Array.from(sbDirty).some(k=>k.startsWith('jm_plan_done_')))renderPlanPanel();
       }
     }).catch(()=>{});

@@ -342,7 +342,6 @@ function addLog(){
   var logs=lsGet(LOG_KEY,[]);
   logs.unshift({id:Date.now(),ex:ex,wt:wt,reps:reps,sets:sets,notes:notes,date:new Date().toISOString()});
   lsSet(LOG_KEY,logs);
-  sbPush(logs);
   gel('logEx').value='';
   gel('logWt').value='';
   gel('logReps').value='';
@@ -350,14 +349,15 @@ function addLog(){
   gel('logNotes').value='';
   renderLog();
   renderWeeklyVolume();
+  sbPush(logs);
 }
 
 function delLog(id){
   if(!confirm('Delete this entry?')) return;
   var logs=lsGet(LOG_KEY,[]).filter(function(l){ return l.id!==id; });
   lsSet(LOG_KEY,logs);
-  sbPush(logs);
   renderLog();
+  sbPush(logs);
 }
 
 function renderLog(){
