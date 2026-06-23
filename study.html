@@ -922,23 +922,28 @@ function renderIrish(){
     const opacity=blocked?'0.38':'1';
     const reqNote=s.requires.length?' · needs '+s.requires.join(', '):'';
     const doneNote=isDone?' · <span style="color:var(--green)">done</span>':'';
-    return`<div class="irish-row" style="opacity:${opacity}">
+    const markBtn=`<button class="irish-btn${isDone?' done':''}" id="irish-mark-${s.id}" onclick="markIrishDone('${s.id}')" ${(blocked||isDone)?'disabled':''}>${isDone?'✓ Done':'Mark Done'}</button>`;
+    const undoBtn=isDone?`<button class="irish-btn" id="irish-undo-${s.id}" onclick="undoIrish('${s.id}')" style="margin-left:4px;background:none;border-color:rgba(255,255,255,.12);color:var(--t3)">−</button>`:'';
+    return`<div class="irish-row" id="irish-row-${s.id}" style="opacity:${opacity}">
       <div style="flex:1;min-width:0">
         <div style="font-size:13px;font-weight:600;color:var(--t1)">${s.label}</div>
         <div style="font-size:11px;color:var(--t3);margin-top:2px">${s.dur} min${reqNote}${doneNote}</div>
       </div>
-      <button class="irish-btn${isDone?' done':''}" onclick="markIrishDone('${s.id}')" ${(blocked||isDone)?'disabled':''}>${isDone?'✓ Done':'Mark Done'}</button>
+      <div style="display:flex;align-items:center;flex-shrink:0">${markBtn}${undoBtn}</div>
     </div>`;
   }).join('');
 }
 function markIrishDone(id){
   const done=ls(IRISH_KEY,{});
   done[id]=true;
-  // DOM first
-  const rows=document.querySelectorAll('#irish-sessions-list .irish-row');
-  const idx=IRISH_SESSIONS.findIndex(s=>s.id===id);
-  if(rows[idx]){const btn=rows[idx].querySelector('.irish-btn');if(btn){btn.classList.add('done');btn.textContent='✓ Done';btn.disabled=true;}}
-  lss(IRISH_KEY,done);sbPushS(IRISH_KEY,done);renderIrish();
+  lss(IRISH_KEY,done);sbPushS(IRISH_KEY,done);
+  renderIrish();
+}
+function undoIrish(id){
+  const done=ls(IRISH_KEY,{});
+  delete done[id];
+  lss(IRISH_KEY,done);sbPushS(IRISH_KEY,done);
+  renderIrish();
 }
 renderIrish();
 
