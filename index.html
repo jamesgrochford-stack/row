@@ -16,106 +16,116 @@
   --font:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
-html,body{background:var(--bg);color:var(--t1);font-family:var(--font);font-size:15px;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+html,body{background:var(--bg);color:var(--t1);font-family:var(--font);font-size:15px;-webkit-font-smoothing:antialiased;min-height:100vh}
 body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
 .wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
 
-/* Day banner */
-.day-banner{border-radius:var(--r);padding:18px 16px;display:flex;align-items:center;gap:14px}
-.day-banner.training-eve{background:linear-gradient(135deg,rgba(110,231,183,.12),rgba(125,211,252,.06));border:1px solid rgba(110,231,183,.2)}
-.day-banner.training-morn{background:linear-gradient(135deg,rgba(251,191,36,.1),rgba(251,146,60,.06));border:1px solid rgba(251,191,36,.2)}
-.day-banner.free{background:linear-gradient(135deg,rgba(125,211,252,.08),rgba(167,139,250,.05));border:1px solid rgba(125,211,252,.15)}
-.day-banner.match{background:linear-gradient(135deg,rgba(251,191,36,.15),rgba(251,191,36,.05));border:1px solid rgba(251,191,36,.3)}
-.day-banner.recovery{background:linear-gradient(135deg,rgba(167,139,250,.1),rgba(110,231,183,.04));border:1px solid rgba(167,139,250,.2)}
-.d-emoji{font-size:40px;flex-shrink:0;line-height:1}
-.d-info{flex:1;min-width:0}
-.d-name{font-size:19px;font-weight:800;letter-spacing:-.01em;margin-bottom:2px}
-.d-date{font-size:11px;color:var(--t3);font-family:var(--mono);letter-spacing:.06em;margin-bottom:4px}
-.d-desc{font-size:13px;color:var(--t2)}
-.d-wake{text-align:right;flex-shrink:0}
-.d-wake-lbl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.1em}
-.d-wake-t{font-size:24px;font-weight:800;font-family:var(--mono);color:var(--green)}
+/* ── Day banner ── */
+.day-banner{border-radius:var(--r);background:var(--s);border:1px solid var(--b);display:flex;overflow:hidden}
+.banner-bar{width:5px;flex-shrink:0}
+.banner-body{padding:0 0 14px;flex:1;overflow:hidden}
+.banner-illus-bg{text-align:center;padding:20px 16px 16px;margin-bottom:10px;transition:background .4s}
+.banner-illus-bg .ni-emoji{font-size:68px;line-height:1;user-select:none;display:block;filter:drop-shadow(0 4px 24px rgba(255,255,255,.12))}
+.banner-text{padding:0 16px}
+.banner-daytype{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;margin-bottom:5px}
+.banner-name{font-size:28px;font-weight:900;color:var(--t1);line-height:1;margin-bottom:6px}
+.banner-sub{font-size:12px;color:var(--t3);line-height:1.4}
 
-/* Cards */
+/* ── Journal ── */
+.journal-ta{width:100%;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:10px 12px;color:var(--t1);font-family:var(--font);font-size:14px;line-height:1.5;resize:none;outline:none;min-height:42px;overflow:hidden;transition:border-color .15s;display:block}
+.journal-ta:focus{border-color:var(--b2)}
+
+/* ── Card ── */
 .card{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:16px}
 .card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .card-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
 .badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:var(--s2);color:var(--t2)}
 
-/* Garmin tiles */
-.g-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
-.g-tile{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:10px 8px;text-align:center}
-.g-val{font-size:22px;font-weight:700;font-family:var(--mono);min-height:28px;display:flex;align-items:center;justify-content:center}
-.g-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-top:3px}
-.g-tile.sleep .g-val{color:var(--purple)}
-.g-tile.hrv .g-val{color:var(--green)}
-.g-tile.rhr .g-val{color:var(--blue)}
-.g-tile.dur .g-val{color:var(--yellow);font-size:15px}
-.g-tile.bed .g-val,.g-tile.wkt .g-val{font-size:14px;color:var(--t2)}
-.g-form{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.fg{display:flex;flex-direction:column;gap:4px}
-.fl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3)}
-.fi{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:8px 10px;color:var(--t1);font-family:var(--mono);font-size:14px;font-weight:600;width:100%;-webkit-appearance:none}
-.fi:focus{outline:none;border-color:var(--b2)}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t1);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
-.btn:hover{background:var(--s2)}
-.btn-green{background:rgba(110,231,183,.1);border-color:rgba(110,231,183,.22);color:var(--green)}
+/* ── Garmin ── */
+.gm-hero{background:var(--bg2);border:1px solid rgba(110,231,183,.2);border-radius:var(--rs);padding:14px 16px;margin-bottom:8px}
+.gm-hero-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--green);margin-bottom:6px}
+.gm-hero-val{font-size:42px;font-weight:900;font-family:var(--mono);color:var(--green);line-height:1}
+.gm-hero-unit{font-size:18px;font-weight:600;color:rgba(110,231,183,.5)}
+.gm-hero-bar{height:5px;background:rgba(255,255,255,.07);border-radius:999px;margin-top:10px;overflow:hidden}
+.gm-hero-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--green));transition:width .5s ease}
+.garmin-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.garmin-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.gm{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:11px 12px}
+.gm-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:4px}
+.gm-val{font-size:20px;font-weight:800;font-family:var(--mono);line-height:1}
+.gm-unit{font-size:11px;font-weight:600;color:var(--t3)}
+.garmin-inputs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px}
+.gi{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:6px 8px;color:var(--t1);font-size:13px;font-family:var(--mono);width:100%;text-align:center;-webkit-appearance:none}
+.gi:focus{outline:none;border-color:var(--b2)}
+.gi-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);text-align:center;margin-top:4px}
+.garmin-ts{font-size:10px;color:var(--t4);margin-top:8px;text-align:right}
 
-/* Schedule */
-.sched-list{display:flex;flex-direction:column;gap:5px}
-.sched-row{display:flex;gap:10px;align-items:flex-start;padding:9px 11px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--b)}
-.sched-row.hl{border-color:rgba(110,231,183,.22)}
-.sched-row.hl .sched-time{color:var(--green)}
-.sched-row.hl .sched-tx{color:var(--t1);font-weight:600}
-.sched-row.past{opacity:.38}
-.sched-time{font-size:11px;font-family:var(--mono);font-weight:600;color:var(--t3);white-space:nowrap;min-width:48px;padding-top:1px}
-.sched-tx{font-size:13px;color:var(--t2);line-height:1.4}
+/* ── Schedule ── */
+.sched-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.week-btn{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);border:1px solid rgba(125,211,252,.25);background:rgba(125,211,252,.06);border-radius:999px;padding:4px 10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.week-panel{display:none;margin-bottom:12px;border-radius:var(--rs);overflow:hidden;border:1px solid var(--b)}
+.week-panel.open{display:block}
+.week-row{display:flex;gap:8px;padding:9px 12px;border-bottom:1px solid var(--b);align-items:flex-start}
+.week-row:last-child{border-bottom:none}
+.week-day{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);width:32px;flex-shrink:0;padding-top:1px}
+.week-day.today{color:var(--green)}
+.week-items{display:flex;flex-direction:column;gap:3px;flex:1}
+.week-item{font-size:11px;color:var(--t2);display:flex;gap:6px}
+.week-time{color:var(--t4);font-family:var(--mono);font-size:10px;flex-shrink:0;width:36px}
+.timeline{display:flex;flex-direction:column;gap:4px}
+.ti{display:flex;flex-direction:column;border-radius:var(--rs);overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ti-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs)}
+.ti.open .ti-row{border-radius:var(--rs) var(--rs) 0 0;border-bottom-color:transparent}
+.ti-time{font-size:11px;font-family:var(--mono);color:var(--t4);width:38px;flex-shrink:0}
+.ti-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ti-label{font-size:13px;font-weight:600;color:var(--t2);flex:1}
+.ti-arrow{font-size:12px;color:var(--t4);transition:transform .2s;flex-shrink:0}
+.ti.open .ti-arrow{transform:rotate(90deg)}
+.ti-detail{display:none;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--b);border-top:none;border-radius:0 0 var(--rs) var(--rs);font-size:12px;color:var(--t3);line-height:1.6}
+.ti.open .ti-detail{display:block}
 
-/* Habits — hardcoded HTML, toggled by JS */
-.habit-list{display:flex;flex-direction:column;gap:5px}
-.habit{display:flex;align-items:center;gap:10px;padding:10px 11px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;transition:background .15s}
-.habit.done{background:rgba(110,231,183,.05);border-color:rgba(110,231,183,.18)}
-.hchk{width:20px;height:20px;border-radius:6px;border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;transition:all .15s;color:#000}
-.habit.done .hchk{background:var(--green);border-color:var(--green)}
-.hico{font-size:16px;flex-shrink:0}
-.hlbl{flex:1;font-size:13px;color:var(--t2);transition:color .15s}
-.habit.done .hlbl{color:var(--t1)}
-.hstr{font-size:11px;font-family:var(--mono);font-weight:600;color:var(--t3);background:var(--s);padding:2px 7px;border-radius:999px;flex-shrink:0}
-.habit.done .hstr{color:var(--yellow)}
-.hprog{height:5px;background:var(--b);border-radius:999px;overflow:hidden;margin-top:12px}
-.hprog-fill{height:100%;background:var(--green);border-radius:999px;transition:width .4s}
+/* ── Water ── */
+.water-hero{text-align:center;padding:10px 0 6px}
+.water-ml{font-size:52px;font-weight:900;font-family:var(--mono);color:var(--blue);line-height:1}
+.water-ml-unit{font-size:22px;font-weight:700;color:rgba(125,211,252,.6)}
+.water-of{font-size:12px;color:var(--t3);margin-top:5px}
+.water-bar-row{display:flex;align-items:center;gap:10px;margin:12px 0}
+.water-bar{flex:1;height:8px;background:var(--b);border-radius:999px;overflow:hidden}
+.water-bar-fill{height:100%;border-radius:999px;background:var(--blue);transition:width .5s ease}
+.water-pct{font-size:12px;font-weight:700;font-family:var(--mono);color:var(--blue);width:38px;text-align:right;flex-shrink:0}
+.water-btns{display:flex;gap:6px;flex-wrap:wrap}
+.wbtn{flex:1;min-width:0;padding:8px 6px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t2);font-size:12px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .1s;text-align:center}
+.wbtn:hover{background:var(--s2)}
 
-/* Water */
-.water-row{display:flex;align-items:center;gap:14px;margin-bottom:12px}
-.w-ring-wrap{position:relative;width:80px;height:80px;flex-shrink:0}
-.w-ring-wrap svg{width:80px;height:80px;transform:rotate(-90deg)}
-.w-track{fill:none;stroke:var(--b);stroke-width:6}
-.w-fill{fill:none;stroke:var(--blue);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .5s ease}
-.w-txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.w-ml{font-size:14px;font-weight:700;font-family:var(--mono);color:var(--blue);line-height:1}
-.w-u{font-size:8px;color:var(--t3);font-weight:600;text-transform:uppercase}
-.w-info{flex:1}
-.w-pct{font-size:28px;font-weight:800;line-height:1}
-.w-tgt{font-size:12px;color:var(--t3);margin-top:3px}
-.w-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.wbtn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;background:rgba(125,211,252,.07);border:1px solid rgba(125,211,252,.14);border-radius:var(--rs);cursor:pointer;color:var(--blue);font-family:var(--font);font-size:10px;font-weight:700;-webkit-tap-highlight-color:transparent;transition:background .15s}
-.wbtn:active{opacity:.65}
-.wbv{font-size:15px;font-family:var(--mono)}
-.w-reset{font-size:11px;padding:5px 10px;margin-top:8px}
+/* ── Habits ── */
+.yday-btn{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);border:1px solid var(--b);background:var(--s);border-radius:999px;padding:4px 9px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.habits-list{display:flex;flex-direction:column;gap:4px}
+.habit{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .1s;user-select:none;-webkit-user-select:none}
+.habit:hover{background:rgba(255,255,255,.06)}
+.hcheck{width:20px;height:20px;border-radius:6px;border:2px solid var(--b2);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;transition:all .15s}
+.habit.done .hcheck{background:var(--green);border-color:var(--green);color:#050506}
+.hinfo{flex:1;min-width:0}
+.hname{font-size:13px;font-weight:600;color:var(--t2);transition:color .15s}
+.habit.done .hname{color:var(--t1)}
+.hstreak{font-size:10px;color:var(--t4);margin-top:1px}
+.habit.done .hstreak{color:var(--green)}
 
-/* Todos */
-.todo-add{display:flex;gap:8px;margin-bottom:10px}
-.todo-in{flex:1;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:9px 12px;color:var(--t1);font-family:var(--font);font-size:14px;-webkit-appearance:none}
-.todo-in:focus{outline:none;border-color:var(--b2)}
-.todo-list{display:flex;flex-direction:column;gap:5px}
-.todo-row{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs)}
-.tchk{width:18px;height:18px;border-radius:50%;border:2px solid var(--b2);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .15s;color:#000}
-.todo-row.done .tchk{background:var(--green);border-color:var(--green)}
-.ttxt{flex:1;font-size:13px;color:var(--t2);cursor:pointer}
-.todo-row.done .ttxt{text-decoration:line-through;color:var(--t4)}
-.tdel{background:none;border:none;color:var(--t4);cursor:pointer;font-size:18px;padding:0 2px;-webkit-tap-highlight-color:transparent;line-height:1}
+/* ── Modal ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-sheet{background:#0f0f11;border:1px solid var(--b2);border-radius:20px 20px 0 0;width:100%;max-width:600px;padding:0 0 max(24px,env(safe-area-inset-bottom));max-height:85vh;overflow-y:auto}
+.modal-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 12px;border-bottom:1px solid var(--b);position:sticky;top:0;background:#0f0f11;z-index:1}
+.modal-title{font-size:13px;font-weight:700;color:var(--t1)}
+.modal-close{background:none;border:none;color:var(--t3);font-size:24px;cursor:pointer;padding:0;line-height:1;-webkit-tap-highlight-color:transparent}
+.modal-body{padding:12px 16px}
+.modal-date{font-size:11px;color:var(--t4);margin-bottom:10px}
 
-/* Bottom nav */
+/* ── Sync dot ── */
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--t4);display:inline-block;margin-left:6px;vertical-align:middle;transition:background .3s}
+.sync-dot.synced{background:var(--green)}
+.sync-dot.syncing{background:var(--yellow)}
+
+/* ── Nav ── */
 .bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(5,5,6,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--b);padding:6px max(0px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(0px,env(safe-area-inset-left));z-index:100}
 .ntab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;text-decoration:none;color:var(--t4);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;-webkit-tap-highlight-color:transparent;transition:color .15s}
 .ntab .ni{font-size:20px;line-height:1}
@@ -125,233 +135,274 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 <body>
 <div class="wrap">
 
-  <!-- Day Banner — populated by JS -->
+  <!-- Day banner -->
   <div class="day-banner" id="dayBanner">
-    <div class="d-emoji" id="dEmoji">⚽</div>
-    <div class="d-info">
-      <div class="d-name" id="dName">Evening Training Day</div>
-      <div class="d-date" id="dDate"></div>
-      <div class="d-desc" id="dDesc">Club training 18:00–19:30</div>
-    </div>
-    <div class="d-wake">
-      <div class="d-wake-lbl">Wake</div>
-      <div class="d-wake-t" id="dWake">07:30</div>
+    <div class="banner-bar" id="bannerBar"></div>
+    <div class="banner-body">
+      <div class="banner-illus-bg" id="bannerIllusBg">
+        <span id="bannerIllus" class="ni-emoji"></span>
+      </div>
+      <div class="banner-text">
+        <div class="banner-daytype" id="dayType"></div>
+        <div class="banner-name" id="dayName"></div>
+        <div class="banner-sub" id="daySub"></div>
+      </div>
     </div>
   </div>
 
-  <!-- Garmin -->
+  <!-- Garmin card -->
   <div class="card">
     <div class="card-hd">
-      <span class="card-title">⌚ Garmin</span>
-      <button class="btn" id="gBtn" onclick="toggleGarmin()">Edit</button>
+      <span class="card-title">⌚ Garmin <span class="sync-dot" id="garminDot"></span></span>
+      <span id="garminStatus" style="font-size:10px;color:var(--t4)"></span>
     </div>
-    <div id="gDisplay">
-      <div class="g-grid">
-        <div class="g-tile sleep"><div class="g-val" id="gSleep">—</div><div class="g-lbl">Sleep</div></div>
-        <div class="g-tile hrv"><div class="g-val" id="gHrv">—</div><div class="g-lbl">HRV ms</div></div>
-        <div class="g-tile rhr"><div class="g-val" id="gRhr">—</div><div class="g-lbl">RHR bpm</div></div>
-        <div class="g-tile bed"><div class="g-val" id="gBed">—</div><div class="g-lbl">Bedtime</div></div>
-        <div class="g-tile wkt"><div class="g-val" id="gWake">—</div><div class="g-lbl">Wake</div></div>
-        <div class="g-tile dur"><div class="g-val" id="gDur">—</div><div class="g-lbl">Duration</div></div>
+    <div class="gm-hero">
+      <div class="gm-hero-lbl">Body Battery</div>
+      <div class="gm-hero-val" id="gvBattery">—<span class="gm-hero-unit">/100</span></div>
+      <div class="gm-hero-bar"><div class="gm-hero-fill" id="batteryFill" style="width:0%"></div></div>
+    </div>
+    <div class="garmin-grid">
+      <div class="gm">
+        <div class="gm-label">Sleep Score</div>
+        <div class="gm-val" style="color:var(--purple)" id="gvSleep">—</div>
+      </div>
+      <div class="gm">
+        <div class="gm-label">RHR</div>
+        <div class="gm-val" style="color:var(--blue)" id="gvRHR">—<span class="gm-unit"> bpm</span></div>
+      </div>
+      <div class="gm">
+        <div class="gm-label">Stress</div>
+        <div class="gm-val" style="color:var(--orange)" id="gvStress">—</div>
       </div>
     </div>
-    <div id="gForm" style="display:none">
-      <div class="g-form">
-        <div class="fg"><label class="fl">Sleep Score</label><input class="fi" id="fSleep" type="number" placeholder="85"></div>
-        <div class="fg"><label class="fl">HRV (ms)</label><input class="fi" id="fHrv" type="number" placeholder="65"></div>
-        <div class="fg"><label class="fl">RHR (bpm)</label><input class="fi" id="fRhr" type="number" placeholder="48"></div>
-        <div class="fg"><label class="fl">Bedtime</label><input class="fi" id="fBed" type="time"></div>
-        <div class="fg"><label class="fl">Wake Time</label><input class="fi" id="fWake" type="time"></div>
-        <div class="fg"><label class="fl">Duration</label><input class="fi" id="fDur" type="text" placeholder="8h 20m"></div>
+    <div class="garmin-grid-2">
+      <div class="gm">
+        <div class="gm-label">Bedtime</div>
+        <div class="gm-val" style="font-size:16px" id="gvBed">—</div>
       </div>
-      <button class="btn btn-green" style="width:100%;margin-top:10px" onclick="saveGarmin()">Save</button>
+      <div class="gm">
+        <div class="gm-label">Wake Time</div>
+        <div class="gm-val" style="font-size:16px" id="gvWake">—</div>
+      </div>
+    </div>
+    <div class="garmin-inputs">
+      <div>
+        <input class="gi" id="giBattery" type="number" inputmode="numeric" min="0" max="100" placeholder="—" oninput="saveGarmin()">
+        <div class="gi-lbl">Battery</div>
+      </div>
+      <div>
+        <input class="gi" id="giSleep" type="number" inputmode="numeric" min="0" max="100" placeholder="—" oninput="saveGarmin()">
+        <div class="gi-lbl">Sleep</div>
+      </div>
+      <div>
+        <input class="gi" id="giRHR" type="number" inputmode="numeric" min="30" max="120" placeholder="—" oninput="saveGarmin()">
+        <div class="gi-lbl">RHR</div>
+      </div>
+      <div>
+        <input class="gi" id="giStress" type="number" inputmode="numeric" min="0" max="100" placeholder="—" oninput="saveGarmin()">
+        <div class="gi-lbl">Stress</div>
+      </div>
+      <div>
+        <input class="gi" id="giBed" type="text" placeholder="22:00" oninput="saveGarmin()" maxlength="5">
+        <div class="gi-lbl">Bedtime</div>
+      </div>
+      <div>
+        <input class="gi" id="giWake" type="text" placeholder="06:15" oninput="saveGarmin()" maxlength="5">
+        <div class="gi-lbl">Wake</div>
+      </div>
+    </div>
+    <div class="garmin-ts" id="garminTs"></div>
+    <div id="batteryChartWrap" style="display:none;margin-top:12px">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px">Recovery Trend — last 7 days</div>
+      <canvas id="batteryChart" height="70"></canvas>
     </div>
   </div>
 
-  <!-- Schedule — hardcoded per day type, shown via JS display:none -->
+  <!-- Schedule card -->
   <div class="card">
-    <div class="card-hd"><span class="card-title">📅 Today's Schedule</span></div>
-
-    <!-- Monday: Evening Training -->
-    <div class="sched-list" id="sched-1">
-      <div class="sched-row"><div class="sched-time">07:30</div><div class="sched-tx">Wake up · morning skincare · SPF</div></div>
-      <div class="sched-row"><div class="sched-time">09:00</div><div class="sched-tx">Study block — Chemistry / Physics</div></div>
-      <div class="sched-row"><div class="sched-time">12:00</div><div class="sched-tx">Lunch</div></div>
-      <div class="sched-row"><div class="sched-time">13:00</div><div class="sched-tx">Study block 2 or rest</div></div>
-      <div class="sched-row"><div class="sched-time">17:30</div><div class="sched-tx">Pre-training meal (carbs)</div></div>
-      <div class="sched-row hl"><div class="sched-time">18:00</div><div class="sched-tx">Club training — Treaty United U20s</div></div>
-      <div class="sched-row hl"><div class="sched-time">19:30</div><div class="sched-tx">Training ends · post-training nutrition (30 min window)</div></div>
-      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
-      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    <div class="sched-hd">
+      <span class="card-title">📅 Today's Schedule</span>
+      <button class="week-btn" onclick="toggleWeek()">Week View</button>
+    </div>
+    <div class="week-panel" id="weekPanel">
+      <div class="week-row"><div class="week-day" id="wdMon">MON</div><div class="week-items"><div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div><div class="week-item"><span class="week-time">09:00</span><span>Study block 1</span></div><div class="week-item"><span class="week-time">11:30</span><span>Study block 2</span></div><div class="week-item"><span class="week-time">18:00</span><span>Club training (Limerick)</span></div><div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdTue">TUE</div><div class="week-items"><div class="week-item"><span class="week-time">06:15</span><span>Wake, leave for Limerick</span></div><div class="week-item"><span class="week-time">07:30</span><span>Club training</span></div><div class="week-item"><span class="week-time">09:30</span><span>Home, post-training nutrition</span></div><div class="week-item"><span class="week-time">10:00</span><span>Study blocks</span></div><div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdWed">WED</div><div class="week-items"><div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div><div class="week-item"><span class="week-time">08:30</span><span>Gym session</span></div><div class="week-item"><span class="week-time">10:30</span><span>Study blocks</span></div><div class="week-item"><span class="week-time">22:30</span><span>Bed</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdThu">THU</div><div class="week-items"><div class="week-item"><span class="week-time">06:15</span><span>Wake, leave for Limerick</span></div><div class="week-item"><span class="week-time">07:30</span><span>Club training</span></div><div class="week-item"><span class="week-time">09:30</span><span>Home, post-training nutrition</span></div><div class="week-item"><span class="week-time">10:00</span><span>Study blocks</span></div><div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdFri">FRI</div><div class="week-items"><div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div><div class="week-item"><span class="week-time">09:00</span><span>Study block 1</span></div><div class="week-item"><span class="week-time">11:30</span><span>Study block 2</span></div><div class="week-item"><span class="week-time">22:30</span><span>Bed</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdSat">SAT</div><div class="week-items"><div class="week-item"><span class="week-time">08:00</span><span>Wake, morning routine</span></div><div class="week-item"><span class="week-time"></span><span>Match preparation &amp; travel</span></div><div class="week-item"><span class="week-time"></span><span>Match ⚽</span></div><div class="week-item"><span class="week-time"></span><span>Post-match nutrition</span></div></div></div>
+      <div class="week-row"><div class="week-day" id="wdSun">SUN</div><div class="week-items"><div class="week-item"><span class="week-time">07:30</span><span>Wake, morning routine</span></div><div class="week-item"><span class="week-time">09:00</span><span>Gym power session</span></div><div class="week-item"><span class="week-time">11:00</span><span>Pool, steam, sauna</span></div><div class="week-item"><span class="week-time">13:00</span><span>Home, lunch</span></div><div class="week-item"><span class="week-time">22:00</span><span>Bed</span></div></div></div>
     </div>
 
-    <!-- Tuesday: Morning Training -->
-    <div class="sched-list" id="sched-2" style="display:none">
-      <div class="sched-row"><div class="sched-time">06:15</div><div class="sched-tx">Wake up · quick breakfast + kit</div></div>
-      <div class="sched-row hl"><div class="sched-time">07:30</div><div class="sched-tx">Club training — Treaty United U20s</div></div>
-      <div class="sched-row"><div class="sched-time">09:00</div><div class="sched-tx">Training ends</div></div>
-      <div class="sched-row hl"><div class="sched-time">09:30</div><div class="sched-tx">Post-training nutrition (30 min window)</div></div>
-      <div class="sched-row"><div class="sched-time">11:00</div><div class="sched-tx">Study block — Maths / Applied Maths</div></div>
-      <div class="sched-row"><div class="sched-time">14:00</div><div class="sched-tx">Lunch</div></div>
-      <div class="sched-row"><div class="sched-time">15:00</div><div class="sched-tx">Study block 2 or rest</div></div>
-      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
-      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    <div class="timeline" id="schedMon" style="display:none">
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake up, morning routine and skincare.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">09:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div><div class="ti-detail">09:00 – 11:00 · Focused study session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">11:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Break</span><span class="ti-arrow">›</span></div><div class="ti-detail">Short rest break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">11:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div><div class="ti-detail">11:30 – 13:00 · Continued study.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lunch break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">14:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Free time / individual session</span><span class="ti-arrow">›</span></div><div class="ti-detail">Free time or individual football session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">17:30</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Leave for Limerick</span><span class="ti-arrow">›</span></div><div class="ti-detail">Drive to Limerick for evening training.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">18:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Club training</span><span class="ti-arrow">›</span></div><div class="ti-detail">18:00 – 19:30 · Treaty United training session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">20:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Home — post-training nutrition</span><span class="ti-arrow">›</span></div><div class="ti-detail">Protein milk + yoghurt.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div><div class="ti-detail">Phone off. Wind down for sleep.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
 
-    <!-- Wednesday: Free Day -->
-    <div class="sched-list" id="sched-3" style="display:none">
-      <div class="sched-row"><div class="sched-time">07:30</div><div class="sched-tx">Wake up · morning skincare · SPF</div></div>
-      <div class="sched-row"><div class="sched-time">09:00</div><div class="sched-tx">Study block — Irish / English</div></div>
-      <div class="sched-row"><div class="sched-time">12:00</div><div class="sched-tx">Lunch</div></div>
-      <div class="sched-row hl"><div class="sched-time">14:00</div><div class="sched-tx">Gym — Wednesday programme</div></div>
-      <div class="sched-row hl"><div class="sched-time">15:30</div><div class="sched-tx">Post-gym nutrition (30 min window)</div></div>
-      <div class="sched-row"><div class="sched-time">16:00</div><div class="sched-tx">Study block 2</div></div>
-      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
-      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    <div class="timeline" id="schedTue" style="display:none">
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">06:15</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; get ready</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake up, get ready quickly for early departure.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">06:45</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Leave for Limerick</span><span class="ti-arrow">›</span></div><div class="ti-detail">Drive to Limerick for morning training.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Club training</span><span class="ti-arrow">›</span></div><div class="ti-detail">07:30 – 09:00 · Treaty United morning session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">09:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Home — post-training nutrition</span><span class="ti-arrow">›</span></div><div class="ti-detail">Protein milk + yoghurt. Critical recovery window.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">10:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div><div class="ti-detail">10:00 – 12:00 · Focused study session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">12:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lunch break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div><div class="ti-detail">13:00 – 14:30 · Continued study.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">14:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Individual session or rest</span><span class="ti-arrow">›</span></div><div class="ti-detail">Optional individual football work or rest.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">16:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div><div class="ti-detail">Downtime. Relax and recharge.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">19:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Evening routine begins</span><span class="ti-arrow">›</span></div><div class="ti-detail">Evening skincare, journal, wind down.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div><div class="ti-detail">Phone off.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
 
-    <!-- Thursday: Morning Training -->
-    <div class="sched-list" id="sched-4" style="display:none">
-      <div class="sched-row"><div class="sched-time">06:15</div><div class="sched-tx">Wake up · quick breakfast + kit</div></div>
-      <div class="sched-row hl"><div class="sched-time">07:30</div><div class="sched-tx">Club training — Treaty United U20s</div></div>
-      <div class="sched-row"><div class="sched-time">09:00</div><div class="sched-tx">Training ends</div></div>
-      <div class="sched-row hl"><div class="sched-time">09:30</div><div class="sched-tx">Post-training nutrition (30 min window)</div></div>
-      <div class="sched-row"><div class="sched-time">11:00</div><div class="sched-tx">Study block — Physics / Chemistry</div></div>
-      <div class="sched-row"><div class="sched-time">14:00</div><div class="sched-tx">Lunch</div></div>
-      <div class="sched-row"><div class="sched-time">15:00</div><div class="sched-tx">Study block 2 or rest</div></div>
-      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
-      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    <div class="timeline" id="schedWed" style="display:none">
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake, skincare, morning routine.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">08:30</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Gym session</span><span class="ti-arrow">›</span></div><div class="ti-detail">08:30 – 10:00 · Wednesday strength session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">10:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div><div class="ti-detail">10:30 – 12:30 · Focused study session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">12:30</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lunch break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div><div class="ti-detail">13:30 – 15:00 · Continued study.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">15:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div><div class="ti-detail">Relax. No training commitments.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div><div class="ti-detail">Phone off.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
 
-    <!-- Friday: Free Day -->
-    <div class="sched-list" id="sched-5" style="display:none">
-      <div class="sched-row"><div class="sched-time">07:30</div><div class="sched-tx">Wake up · morning skincare · SPF</div></div>
-      <div class="sched-row"><div class="sched-time">09:00</div><div class="sched-tx">Study block — Accounting / Maths</div></div>
-      <div class="sched-row"><div class="sched-time">12:00</div><div class="sched-tx">Lunch</div></div>
-      <div class="sched-row"><div class="sched-time">13:00</div><div class="sched-tx">Study block 2</div></div>
-      <div class="sched-row"><div class="sched-time">16:00</div><div class="sched-tx">Individual football skills / rest</div></div>
-      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
-      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    <div class="timeline" id="schedThu" style="display:none">
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">06:15</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; get ready</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake up, get ready for early departure.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">06:45</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Leave for Limerick</span><span class="ti-arrow">›</span></div><div class="ti-detail">Drive to Limerick for morning training.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Club training</span><span class="ti-arrow">›</span></div><div class="ti-detail">07:30 – 09:00 · Treaty United morning session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">09:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Home — post-training nutrition</span><span class="ti-arrow">›</span></div><div class="ti-detail">Protein milk + yoghurt.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">10:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div><div class="ti-detail">10:00 – 12:00 · Focused study session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">12:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lunch break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div><div class="ti-detail">13:00 – 14:30 · Continued study.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">14:30</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Individual session or rest</span><span class="ti-arrow">›</span></div><div class="ti-detail">Optional individual football work or rest.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">16:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div><div class="ti-detail">Downtime.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">19:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Evening routine begins</span><span class="ti-arrow">›</span></div><div class="ti-detail">Evening skincare, journal, wind down.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div><div class="ti-detail">Phone off.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
 
-    <!-- Saturday: Match Day -->
-    <div class="sched-list" id="sched-6" style="display:none">
-      <div class="sched-row"><div class="sched-time">07:00</div><div class="sched-tx">Wake up</div></div>
-      <div class="sched-row"><div class="sched-time">07:30</div><div class="sched-tx">Breakfast — 3h pre-match (carbs focus)</div></div>
-      <div class="sched-row hl"><div class="sched-time">09:00</div><div class="sched-tx">3-Action Rule mental rehearsal</div></div>
-      <div class="sched-row"><div class="sched-time">09:30</div><div class="sched-tx">Dynamic warm-up + activation</div></div>
-      <div class="sched-row"><div class="sched-time">10:30</div><div class="sched-tx">Pre-match team warm-up</div></div>
-      <div class="sched-row hl"><div class="sched-time">11:00</div><div class="sched-tx">Match — Treaty United U20s</div></div>
-      <div class="sched-row hl"><div class="sched-time">12:30</div><div class="sched-tx">Post-match nutrition (30 min window)</div></div>
-      <div class="sched-row"><div class="sched-time">14:00</div><div class="sched-tx">Recovery + stretch</div></div>
-      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
+    <div class="timeline" id="schedFri" style="display:none">
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake, skincare, morning routine.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">09:00</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 1</span><span class="ti-arrow">›</span></div><div class="ti-detail">09:00 – 11:00 · Focused study session.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">11:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Break</span><span class="ti-arrow">›</span></div><div class="ti-detail">Short rest break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">11:30</span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Study block 2</span><span class="ti-arrow">›</span></div><div class="ti-detail">11:30 – 13:00 · Continued study.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lunch break.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">14:00</span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Free time / individual session</span><span class="ti-arrow">›</span></div><div class="ti-detail">Free time or optional individual football work.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">21:30</span><span class="ti-dot" style="background:var(--red)"></span><span class="ti-label">Phone down</span><span class="ti-arrow">›</span></div><div class="ti-detail">Phone off.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
 
-    <!-- Sunday: Recovery Day -->
-    <div class="sched-list" id="sched-0" style="display:none">
-      <div class="sched-row"><div class="sched-time">08:00</div><div class="sched-tx">Wake up · morning skincare · SPF</div></div>
-      <div class="sched-row"><div class="sched-time">08:30</div><div class="sched-tx">Breakfast</div></div>
-      <div class="sched-row hl"><div class="sched-time">10:00</div><div class="sched-tx">Gym — Sunday programme</div></div>
-      <div class="sched-row hl"><div class="sched-time">11:30</div><div class="sched-tx">Post-gym nutrition (30 min window)</div></div>
-      <div class="sched-row"><div class="sched-time">12:00</div><div class="sched-tx">Foam roll + stretch</div></div>
-      <div class="sched-row"><div class="sched-time">14:00</div><div class="sched-tx">Study block or rest</div></div>
-      <div class="sched-row"><div class="sched-time">18:00</div><div class="sched-tx">Dinner</div></div>
-      <div class="sched-row hl"><div class="sched-time">21:30</div><div class="sched-tx">Phone down · journal · evening skincare · retainer</div></div>
-      <div class="sched-row"><div class="sched-time">22:00</div><div class="sched-tx">Bed</div></div>
+    <div class="timeline" id="schedSat" style="display:none">
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">08:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake, morning routine.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--purple)"></span><span class="ti-label">Light study or rest</span><span class="ti-arrow">›</span></div><div class="ti-detail">Keep the mind active but don't overload before match.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Match preparation</span><span class="ti-arrow">›</span></div><div class="ti-detail">Kit, warm-up routine, pre-match meal, focus.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Travel to match</span><span class="ti-arrow">›</span></div><div class="ti-detail">Drive to venue.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Match ⚽</span><span class="ti-arrow">›</span></div><div class="ti-detail">Game day. Lock in.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--green)"></span><span class="ti-label">Post-match nutrition</span><span class="ti-arrow">›</span></div><div class="ti-detail">Protein + carb refuel immediately after the match.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time"></span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Home</span><span class="ti-arrow">›</span></div><div class="ti-detail">Travel home and rest.</div></div>
+    </div>
+
+    <div class="timeline" id="schedSun" style="display:none">
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">07:30</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Wake &amp; morning routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Wake, morning routine.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">09:00</span><span class="ti-dot" style="background:var(--orange)"></span><span class="ti-label">Gym — power session</span><span class="ti-arrow">›</span></div><div class="ti-detail">Sunday power session. Speed trap bar DL, single-leg work, Copenhagen plank.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">11:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Pool, steam, sauna</span><span class="ti-arrow">›</span></div><div class="ti-detail">Recovery — swim, steam room, sauna.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">13:00</span><span class="ti-dot" style="background:var(--yellow)"></span><span class="ti-label">Home — lunch</span><span class="ti-arrow">›</span></div><div class="ti-detail">Proper recovery meal.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">14:00</span><span class="ti-dot" style="background:var(--t4)"></span><span class="ti-label">Free time</span><span class="ti-arrow">›</span></div><div class="ti-detail">Rest and recharge for the week ahead.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">19:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Evening routine</span><span class="ti-arrow">›</span></div><div class="ti-detail">Evening skincare, journal, prepare for the week.</div></div>
+      <div class="ti" onclick="toggleItem(this)"><div class="ti-row"><span class="ti-time">22:00</span><span class="ti-dot" style="background:var(--blue)"></span><span class="ti-label">Bed</span><span class="ti-arrow">›</span></div><div class="ti-detail">Lights out.</div></div>
     </div>
   </div>
 
-  <!-- Habits — hardcoded HTML, state toggled by JS -->
-  <div class="card">
-    <div class="card-hd">
-      <span class="card-title">✅ Daily Habits</span>
-      <span class="badge" id="hBadge">0 / 8</span>
-    </div>
-    <div class="habit-list">
-      <div class="habit" id="h-am-skin" onclick="toggleHabit('am-skin')">
-        <div class="hchk" id="hc-am-skin"></div>
-        <span class="hico">🌅</span><span class="hlbl">Morning skincare</span>
-        <span class="hstr" id="hs-am-skin">—</span>
-      </div>
-      <div class="habit" id="h-pm-skin" onclick="toggleHabit('pm-skin')">
-        <div class="hchk" id="hc-pm-skin"></div>
-        <span class="hico">🌙</span><span class="hlbl">Evening skincare</span>
-        <span class="hstr" id="hs-pm-skin">—</span>
-      </div>
-      <div class="habit" id="h-retainer" onclick="toggleHabit('retainer')">
-        <div class="hchk" id="hc-retainer"></div>
-        <span class="hico">🦷</span><span class="hlbl">Retainer</span>
-        <span class="hstr" id="hs-retainer">—</span>
-      </div>
-      <div class="habit" id="h-spf" onclick="toggleHabit('spf')">
-        <div class="hchk" id="hc-spf"></div>
-        <span class="hico">☀️</span><span class="hlbl">SPF applied</span>
-        <span class="hstr" id="hs-spf">—</span>
-      </div>
-      <div class="habit" id="h-journal" onclick="toggleHabit('journal')">
-        <div class="hchk" id="hc-journal"></div>
-        <span class="hico">📓</span><span class="hlbl">Journal entry</span>
-        <span class="hstr" id="hs-journal">—</span>
-      </div>
-      <div class="habit" id="h-phone" onclick="toggleHabit('phone')">
-        <div class="hchk" id="hc-phone"></div>
-        <span class="hico">📵</span><span class="hlbl">Phone down by 21:30</span>
-        <span class="hstr" id="hs-phone">—</span>
-      </div>
-      <div class="habit" id="h-water" onclick="toggleHabit('water')">
-        <div class="hchk" id="hc-water"></div>
-        <span class="hico">💧</span><span class="hlbl">Water 2.5L</span>
-        <span class="hstr" id="hs-water">—</span>
-      </div>
-      <div class="habit" id="h-nutrition" onclick="toggleHabit('nutrition')">
-        <div class="hchk" id="hc-nutrition"></div>
-        <span class="hico">🥗</span><span class="hlbl">Post-training nutrition</span>
-        <span class="hstr" id="hs-nutrition">—</span>
-      </div>
-    </div>
-    <div class="hprog"><div class="hprog-fill" id="hProg" style="width:0%"></div></div>
-  </div>
-
-  <!-- Water -->
+  <!-- Water card -->
   <div class="card">
     <div class="card-hd">
-      <span class="card-title">💧 Hydration</span>
-      <span class="badge" id="wBadge">0 ml</span>
+      <span class="card-title">💧 Water <span class="sync-dot" id="waterDot"></span></span>
+      <span style="font-size:11px;color:var(--t3)" id="waterTargetLabel">Target: 2.5L</span>
     </div>
-    <div class="water-row">
-      <div class="w-ring-wrap">
-        <svg viewBox="0 0 80 80">
-          <circle class="w-track" cx="40" cy="40" r="33"/>
-          <circle class="w-fill" cx="40" cy="40" r="33" id="wRing" stroke-dasharray="207.3" stroke-dashoffset="207.3"/>
-        </svg>
-        <div class="w-txt"><div class="w-ml" id="wAmt">0</div><div class="w-u">ml</div></div>
-      </div>
-      <div class="w-info">
-        <div class="w-pct" id="wPct">0%</div>
-        <div class="w-tgt" id="wTgt">Target: — L</div>
-        <button class="btn w-reset" onclick="resetWater()">Reset</button>
+    <div class="water-hero">
+      <div style="font-size:48px;font-weight:900;font-family:var(--mono);color:var(--blue);line-height:1">
+        <span id="waterL">0.0</span><span style="font-size:22px;font-weight:700;color:rgba(125,211,252,.6)">L</span>
+        <span style="font-size:20px;font-weight:600;color:var(--t4)"> of </span>
+        <span id="waterTgtL" style="font-size:30px;color:rgba(125,211,252,.5)">2.0</span><span style="font-size:20px;font-weight:700;color:rgba(125,211,252,.35)">L today</span>
       </div>
     </div>
-    <div class="w-btns">
-      <button class="wbtn" onclick="addWater(250)"><span class="wbv">+250</span><span>glass</span></button>
-      <button class="wbtn" onclick="addWater(500)"><span class="wbv">+500</span><span>bottle</span></button>
-      <button class="wbtn" onclick="addWater(750)"><span class="wbv">+750</span><span>large</span></button>
+    <div class="water-bar-row">
+      <div class="water-bar"><div class="water-bar-fill" id="waterBarFill" style="width:0%"></div></div>
+      <span class="water-pct" id="waterPct">0%</span>
+    </div>
+    <div class="water-btns">
+      <button class="wbtn" onclick="addWater(0.25)">+0.25L</button>
+      <button class="wbtn" onclick="addWater(0.5)">+0.5L</button>
+      <button class="wbtn" onclick="addWater(0.75)">+0.75L</button>
+      <button class="wbtn" onclick="addWater(-0.25)" style="color:var(--t4)">−0.25L</button>
     </div>
   </div>
 
-  <!-- Todos -->
+  <!-- Habits card -->
   <div class="card">
     <div class="card-hd">
-      <span class="card-title">📋 To-Do</span>
-      <span class="badge" id="tBadge">0 / 0</span>
+      <span class="card-title">✅ Habits <span class="sync-dot" id="habitsDot"></span></span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="yday-btn" onclick="openYdayModal()">Yesterday</button>
+        <span class="badge" id="habitsBadge">0 / 8</span>
+      </div>
     </div>
-    <div class="todo-add">
-      <input class="todo-in" id="tIn" placeholder="Add task…" onkeydown="if(event.key==='Enter')addTodo()">
-      <button class="btn btn-green" onclick="addTodo()">+</button>
+    <div class="habits-list">
+      <div class="habit" id="h-am-skin" onclick="toggleHabit('am-skin')"><div class="hcheck" id="hc-am-skin"></div><div class="hinfo"><div class="hname">🌅 Morning skincare</div><div class="hstreak" id="hs-am-skin"></div></div></div>
+      <div class="habit" id="h-pm-skin" onclick="toggleHabit('pm-skin')"><div class="hcheck" id="hc-pm-skin"></div><div class="hinfo"><div class="hname">🌙 Evening skincare</div><div class="hstreak" id="hs-pm-skin"></div></div></div>
+      <div class="habit" id="h-retainer" onclick="toggleHabit('retainer')"><div class="hcheck" id="hc-retainer"></div><div class="hinfo"><div class="hname">🦷 Retainer</div><div class="hstreak" id="hs-retainer"></div></div></div>
+      <div class="habit" id="h-spf" onclick="toggleHabit('spf')"><div class="hcheck" id="hc-spf"></div><div class="hinfo"><div class="hname">☀️ SPF applied</div><div class="hstreak" id="hs-spf"></div></div></div>
+      <div class="habit" id="h-journal" onclick="toggleHabit('journal')"><div class="hcheck" id="hc-journal"></div><div class="hinfo"><div class="hname">📓 Journal entry</div><div class="hstreak" id="hs-journal"></div></div></div>
+      <div class="habit" id="h-phone" onclick="toggleHabit('phone')"><div class="hcheck" id="hc-phone"></div><div class="hinfo"><div class="hname">📵 Phone down by 21:30</div><div class="hstreak" id="hs-phone"></div></div></div>
+      <div class="habit" id="h-water" onclick="toggleHabit('water')"><div class="hcheck" id="hc-water"></div><div class="hinfo"><div class="hname">💧 Water target hit</div><div class="hstreak" id="hs-water"></div></div></div>
+      <div class="habit" id="h-nutrition" onclick="toggleHabit('nutrition')"><div class="hcheck" id="hc-nutrition"></div><div class="hinfo"><div class="hname">🥗 Post-training nutrition</div><div class="hstreak" id="hs-nutrition"></div></div></div>
     </div>
-    <div class="todo-list" id="tList"></div>
+    <div style="margin-top:14px">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:7px">14-day completion</div>
+      <canvas id="habitChart" height="80"></canvas>
+    </div>
   </div>
 
+  <!-- Journal card -->
+  <div class="card">
+    <div class="card-hd">
+      <span class="card-title">📝 Today's Note <span class="sync-dot" id="journalDot"></span></span>
+    </div>
+    <textarea id="journalText" class="journal-ta" placeholder="How's the day going…" oninput="autoResizeJournal(this)" onblur="saveJournal()"></textarea>
+    <div id="ydayJournal" style="display:none;margin-top:10px;padding:8px 10px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--b)">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t4);margin-bottom:4px">Yesterday</div>
+      <div id="ydayJournalText" style="font-size:12px;color:var(--t4);line-height:1.5"></div>
+    </div>
+  </div>
+
+  <!-- Goals link -->
+  <a href="goals.html" style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--s);border:1px solid var(--b);border-radius:var(--rs);text-decoration:none">
+    <span style="font-size:12px;font-weight:600;color:var(--t2)">🎯 Goals &amp; Milestones</span>
+    <span style="font-size:13px;color:var(--t3)">›</span>
+  </a>
+
+</div>
+
+<!-- Yesterday habits modal -->
+<div class="modal-overlay" id="ydayModal" onclick="closeYdayModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-hd">
+      <span class="modal-title">Yesterday's Habits</span>
+      <button class="modal-close" onclick="closeYdayModalBtn()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-date" id="ydayDateLabel"></div>
+      <div class="habits-list" id="ydayList"></div>
+    </div>
+  </div>
 </div>
 
 <nav class="bnav">
@@ -359,193 +410,365 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
   <a href="football.html" class="ntab"><span class="ni">⚽</span><span>Football</span></a>
   <a href="study.html" class="ntab"><span class="ni">📚</span><span>Study</span></a>
   <a href="gym.html" class="ntab"><span class="ni">🏋️</span><span>Gym</span></a>
-  <a href="goals.html" class="ntab"><span class="ni">🎯</span><span>Goals</span></a>
+  <a href="nutrition.html" class="ntab"><span class="ni">🥗</span><span>Nutrition</span></a>
   <a href="finance.html" class="ntab"><span class="ni">💰</span><span>Finance</span></a>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ── Utils ────────────────────────────────────────────────────────────────────
-function el(id) { return document.getElementById(id); }
-function todayKey() {
-  var d = new Date();
-  return d.getFullYear() + '-' + ('0'+(d.getMonth()+1)).slice(-2) + '-' + ('0'+d.getDate()).slice(-2);
-}
-function dateKey(d) {
-  return d.getFullYear() + '-' + ('0'+(d.getMonth()+1)).slice(-2) + '-' + ('0'+d.getDate()).slice(-2);
-}
-function lsGet(k, def) { try { var v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : def; } catch(e) { return def; } }
-function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+var SB_URL = 'https://ymksoxojvrbrmpdzfjxf.supabase.co';
+var SB_KEY = 'sb_publishable_sozYCEAdWzVt1Tni_EbPCA_gdw6JdvN';
+var sb = null, lastSync = {};
 
-// ── Day setup ────────────────────────────────────────────────────────────────
-var NOW = new Date();
-var DOW = NOW.getDay(); // 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat
-var TODAY = todayKey();
+var HABIT_IDS = ['am-skin','pm-skin','retainer','spf','journal','phone','water','nutrition'];
+var HABIT_LABELS = {'am-skin':'🌅 Morning skincare','pm-skin':'🌙 Evening skincare','retainer':'🦷 Retainer','spf':'☀️ SPF applied','journal':'📓 Journal entry','phone':'📵 Phone down by 21:30','water':'💧 Water target hit','nutrition':'🥗 Post-training nutrition'};
 
-var DAY_CFG = {
-  0: { name:'Recovery Day',         emoji:'🧘', wake:'08:00', desc:'Gym session · foam roll · rest',        cls:'recovery',     water:2000 },
-  1: { name:'Evening Training Day', emoji:'⚽', wake:'07:30', desc:'Club training 18:00–19:30',             cls:'training-eve', water:2500 },
-  2: { name:'Morning Training Day', emoji:'🌅', wake:'06:15', desc:'Club training 07:30–09:00',             cls:'training-morn',water:2500 },
-  3: { name:'Free Day',             emoji:'📖', wake:'07:30', desc:'Study blocks · gym session',            cls:'free',         water:2000 },
-  4: { name:'Morning Training Day', emoji:'🌅', wake:'06:15', desc:'Club training 07:30–09:00',             cls:'training-morn',water:2500 },
-  5: { name:'Free Day',             emoji:'📚', wake:'07:30', desc:'Study · individual football optional',  cls:'free',         water:2000 },
-  6: { name:'Match Day',            emoji:'🏆', wake:'07:00', desc:'Pre-match prep · Treaty United U20s',  cls:'match',        water:2500 }
+var DAY_NAMES    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var DAY_TYPES    = ['Recovery Day','Evening Training Day','Morning Training Day','Free Day','Morning Training Day','Free Day','Match Day'];
+var BANNER_COLORS= {0:'#a78bfa',1:'#7DD3FC',2:'#7DD3FC',3:'#6ee7b7',4:'#7DD3FC',5:'#6ee7b7',6:'#fb923c'};
+var BANNER_ILLUS = {0:'🌊',1:'🌙',2:'🌅',3:'🏔️',4:'🌅',5:'🌄',6:'⚽'};
+var BANNER_GRADS = {
+  0:'linear-gradient(160deg,rgba(60,10,100,.55),rgba(40,5,80,.2))',
+  1:'linear-gradient(160deg,rgba(10,15,60,.65),rgba(15,20,80,.3))',
+  2:'linear-gradient(160deg,rgba(7,30,75,.6),rgba(7,28,64,.2))',
+  3:'linear-gradient(160deg,rgba(5,60,40,.55),rgba(3,40,25,.2))',
+  4:'linear-gradient(160deg,rgba(7,30,75,.6),rgba(7,28,64,.2))',
+  5:'linear-gradient(160deg,rgba(5,60,40,.55),rgba(3,40,25,.2))',
+  6:'linear-gradient(160deg,rgba(110,45,5,.6),rgba(80,30,3,.25))',
 };
-var D = DAY_CFG[DOW];
-var WATER_TARGET = D.water;
-var HABIT_KEY = 'jm_habits_' + TODAY;
-var WATER_KEY  = 'jm_water_'  + TODAY;
-var GARMIN_KEY = 'jm_garmin_' + TODAY;
-var HABIT_IDS  = ['am-skin','pm-skin','retainer','spf','journal','phone','water','nutrition'];
+var WAKE_TIMES   = {0:'07:30',1:'07:30',2:'06:15',3:'07:30',4:'06:15',5:'07:30',6:'08:00'};
+var KEY_EVENTS   = {
+  0:'Gym 09:00 · Pool & recovery 11:00',
+  1:'Club training 18:00–19:30 · Leave 17:30',
+  2:'Club training 07:30–09:00 · Leave 06:45',
+  3:'Gym session 08:30',
+  4:'Club training 07:30–09:00 · Leave 06:45',
+  5:'Free day · rest or individual session',
+  6:'Match day ⚽'
+};
+var WATER_TARGETS= {0:2,1:2.5,2:2.5,3:2,4:2.5,5:2,6:2.5};
+var SCHED_IDS    = {0:'schedSun',1:'schedMon',2:'schedTue',3:'schedWed',4:'schedThu',5:'schedFri',6:'schedSat'};
+var WEEK_DOW_IDS = {0:'wdSun',1:'wdMon',2:'wdTue',3:'wdWed',4:'wdThu',5:'wdFri',6:'wdSat'};
 
-// ── Day banner ───────────────────────────────────────────────────────────────
-(function() {
-  var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  var MONS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  el('dayBanner').className = 'day-banner ' + D.cls;
-  el('dEmoji').textContent  = D.emoji;
-  el('dName').textContent   = D.name;
-  el('dDesc').textContent   = D.desc;
-  el('dWake').textContent   = D.wake;
-  el('dDate').textContent   = DAYS[DOW] + ' · ' + NOW.getDate() + ' ' + MONS[NOW.getMonth()] + ' ' + NOW.getFullYear();
-})();
+function gel(id){ return document.getElementById(id); }
+function lsGet(k,d){ try{ var v=localStorage.getItem(k); return v!==null?JSON.parse(v):d; }catch(e){ return d; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+function dateKey(d){ d=d||new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+function todayDow(){ return new Date().getDay(); }
+function setSyncDot(id,state){ var dot=gel(id); if(!dot) return; dot.className='sync-dot'+(state?' '+state:''); }
 
-// ── Schedule — show correct day block, dim past items ────────────────────────
-(function() {
-  // Hide all, show today's
-  for (var d = 0; d <= 6; d++) {
-    var s = el('sched-' + d);
-    if (s) s.style.display = (d === DOW) ? '' : 'none';
-  }
-  // Dim past rows
-  var nowMins = NOW.getHours() * 60 + NOW.getMinutes();
-  var todaySched = el('sched-' + DOW);
-  if (todaySched) {
-    var rows = todaySched.querySelectorAll('.sched-row');
-    for (var i = 0; i < rows.length; i++) {
-      var timeEl = rows[i].querySelector('.sched-time');
-      if (timeEl) {
-        var parts = timeEl.textContent.split(':');
-        var rowMins = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
-        if (rowMins < nowMins) rows[i].classList.add('past');
-      }
-    }
-  }
-})();
-
-// ── Garmin ───────────────────────────────────────────────────────────────────
-function loadGarmin() {
-  var d = lsGet(GARMIN_KEY, null);
-  if (!d) return;
-  el('gSleep').textContent = d.sleep || '—';
-  el('gHrv').textContent   = d.hrv   || '—';
-  el('gRhr').textContent   = d.rhr   || '—';
-  el('gBed').textContent   = d.bed   || '—';
-  el('gWake').textContent  = d.wake  || '—';
-  el('gDur').textContent   = d.dur   || '—';
+/* ── Day banner ── */
+function initDayBanner(){
+  var dow=todayDow();
+  var color=BANNER_COLORS[dow];
+  gel('bannerBar').style.background=color;
+  gel('dayType').textContent=DAY_TYPES[dow];
+  gel('dayType').style.color=color;
+  gel('dayName').textContent=DAY_NAMES[dow];
+  gel('daySub').textContent='Wake '+WAKE_TIMES[dow]+' · '+KEY_EVENTS[dow];
+  var ilEl=gel('bannerIllus'); if(ilEl) ilEl.textContent=BANNER_ILLUS[dow]||'📅';
+  var bgEl=gel('bannerIllusBg'); if(bgEl) bgEl.style.background=BANNER_GRADS[dow]||'';
+  // show schedule
+  for(var k in SCHED_IDS){ var el=gel(SCHED_IDS[k]); if(el) el.style.display='none'; }
+  var sel=gel(SCHED_IDS[dow]); if(sel) sel.style.display='flex';
+  var wel=gel(WEEK_DOW_IDS[dow]); if(wel) wel.classList.add('today');
 }
-function toggleGarmin() {
-  var f = el('gForm'), open = f.style.display !== 'none';
-  f.style.display = open ? 'none' : 'block';
-  el('gBtn').textContent = open ? 'Edit' : 'Cancel';
-  if (!open) {
-    var d = lsGet(GARMIN_KEY, {});
-    el('fSleep').value = d.sleep || ''; el('fHrv').value = d.hrv || '';
-    el('fRhr').value   = d.rhr   || ''; el('fBed').value = d.bed || '';
-    el('fWake').value  = d.wake  || ''; el('fDur').value = d.dur || '';
-  }
-}
-function saveGarmin() {
-  lsSet(GARMIN_KEY, { sleep:el('fSleep').value, hrv:el('fHrv').value, rhr:el('fRhr').value,
-                      bed:el('fBed').value,   wake:el('fWake').value, dur:el('fDur').value });
-  loadGarmin(); toggleGarmin();
-}
-loadGarmin();
 
-// ── Habits ───────────────────────────────────────────────────────────────────
-function habitStreak(id) {
-  var streak = 0;
-  var d = new Date(NOW);
-  d.setDate(d.getDate() - 1);
-  for (var i = 0; i < 180; i++) {
-    var rec = lsGet('jm_habits_' + dateKey(d), {});
-    if (rec[id]) { streak++; d.setDate(d.getDate() - 1); } else { break; }
+/* ── Garmin ── */
+function garminKey(){ return 'jm_garmin_'+dateKey(); }
+
+function renderGarmin(){
+  var data=lsGet(garminKey(),{});
+  // Battery hero
+  var bat=data.battery;
+  gel('gvBattery').innerHTML=(bat!==undefined?bat:'—')+'<span class="gm-hero-unit">/100</span>';
+  gel('batteryFill').style.width=(bat!==undefined?Math.min(100,bat):0)+'%';
+  // Grid
+  gel('gvSleep').textContent=data.sleep!==undefined?data.sleep:'—';
+  gel('gvRHR').innerHTML=(data.rhr!==undefined?data.rhr:'—')+'<span class="gm-unit"> bpm</span>';
+  gel('gvStress').textContent=data.stress!==undefined?data.stress:'—';
+  gel('gvBed').textContent=data.bed||'—';
+  gel('gvWake').textContent=data.wake||'—';
+  // Inputs
+  if(bat!==undefined) gel('giBattery').value=bat;
+  if(data.sleep!==undefined) gel('giSleep').value=data.sleep;
+  if(data.rhr!==undefined) gel('giRHR').value=data.rhr;
+  if(data.stress!==undefined) gel('giStress').value=data.stress;
+  if(data.bed) gel('giBed').value=data.bed;
+  if(data.wake) gel('giWake').value=data.wake;
+  // Timestamp
+  if(data.savedAt){
+    var t=new Date(data.savedAt);
+    var sk=t.getFullYear()+'-'+('0'+(t.getMonth()+1)).slice(-2)+'-'+('0'+t.getDate()).slice(-2);
+    var yd=new Date(); yd.setDate(yd.getDate()-1);
+    var yk=dateKey(yd);
+    var when=sk===dateKey()?'today':(sk===yk?'yesterday':sk);
+    gel('garminTs').textContent='Last updated: '+when;
+  } else {
+    gel('garminTs').textContent='No data entered yet';
+  }
+  renderBatteryChart();
+}
+
+function saveGarmin(){
+  var data={
+    battery: gel('giBattery').value!==''?parseFloat(gel('giBattery').value):undefined,
+    sleep:   gel('giSleep').value!==''?parseFloat(gel('giSleep').value):undefined,
+    rhr:     gel('giRHR').value!==''?parseFloat(gel('giRHR').value):undefined,
+    stress:  gel('giStress').value!==''?parseFloat(gel('giStress').value):undefined,
+    bed:     gel('giBed').value||undefined,
+    wake:    gel('giWake').value||undefined,
+    savedAt: new Date().toISOString()
+  };
+  var k=garminKey();
+  lsSet(k,data); sbPush(k,data,'garminDot'); renderGarmin();
+}
+
+/* ── Schedule ── */
+function toggleItem(el){ el.classList.toggle('open'); }
+function toggleWeek(){ gel('weekPanel').classList.toggle('open'); }
+
+/* ── Water ── */
+function waterKey(){ return 'jm_water_'+dateKey(); }
+function getWaterTarget(){ return WATER_TARGETS[todayDow()]||2; }
+
+function renderWater(){
+  var data=lsGet(waterKey(),{ml:0});
+  var ml=data.ml||0;
+  var target=getWaterTarget();
+  var targetMl=target*1000;
+  var pct=Math.min(100,Math.round(ml/targetMl*100));
+  var lEl=gel('waterL'); if(lEl) lEl.textContent=(ml/1000).toFixed(1);
+  var tEl=gel('waterTgtL'); if(tEl) tEl.textContent=target.toFixed(1);
+  gel('waterBarFill').style.width=pct+'%';
+  gel('waterPct').textContent=pct+'%';
+  gel('waterTargetLabel').textContent='Target: '+target+'L';
+}
+
+function addWater(litres){
+  var k=waterKey();
+  var data=lsGet(k,{ml:0});
+  data.ml=Math.max(0,(data.ml||0)+(litres*1000));
+  lsSet(k,data); sbPush(k,data,'waterDot'); renderWater();
+}
+
+/* ── Habits ── */
+function habitsKey(d){ return 'jm_habits_'+dateKey(d); }
+
+function hStreak(id){
+  var streak=0;
+  var d=new Date();
+  for(var i=1;i<=365;i++){
+    d.setDate(d.getDate()-1);
+    var prev=lsGet(habitsKey(new Date(d)),null);
+    if(prev&&prev[id]){ streak++; } else { break; }
   }
   return streak;
 }
-function refreshHabits() {
-  var data = lsGet(HABIT_KEY, {});
-  var done = 0;
-  for (var i = 0; i < HABIT_IDS.length; i++) {
-    var id  = HABIT_IDS[i];
-    var ok  = !!data[id];
-    var str = habitStreak(id);
-    if (ok) done++;
-    var row = el('h-' + id);
-    var chk = el('hc-' + id);
-    var stEl = el('hs-' + id);
-    if (row)  { if (ok) row.classList.add('done'); else row.classList.remove('done'); }
-    if (chk)  { chk.textContent = ok ? '✓' : ''; }
-    if (stEl) { stEl.textContent = str > 0 ? ('🔥' + str) : '—'; }
-  }
-  el('hBadge').textContent = done + ' / ' + HABIT_IDS.length;
-  el('hProg').style.width  = Math.round(done / HABIT_IDS.length * 100) + '%';
-}
-function toggleHabit(id) {
-  var data = lsGet(HABIT_KEY, {});
-  data[id] = !data[id];
-  lsSet(HABIT_KEY, data);
-  refreshHabits();
-}
-refreshHabits();
 
-// ── Water ────────────────────────────────────────────────────────────────────
-function refreshWater() {
-  var ml  = lsGet(WATER_KEY, 0);
-  var pct = Math.min(1, ml / WATER_TARGET);
-  el('wAmt').textContent   = ml;
-  el('wPct').textContent   = Math.round(pct * 100) + '%';
-  el('wTgt').textContent   = 'Target: ' + (WATER_TARGET / 1000).toFixed(1) + 'L';
-  el('wBadge').textContent = (ml / 1000).toFixed(2) + 'L / ' + (WATER_TARGET / 1000).toFixed(1) + 'L';
-  el('wRing').style.strokeDashoffset = 207.3 * (1 - pct);
-  if (ml >= WATER_TARGET) {
-    var h = lsGet(HABIT_KEY, {});
-    if (!h.water) { h.water = true; lsSet(HABIT_KEY, h); refreshHabits(); }
+function renderHabits(){
+  var data=lsGet(habitsKey(),{});
+  var done=0;
+  for(var i=0;i<HABIT_IDS.length;i++){
+    var id=HABIT_IDS[i];
+    var checked=!!data[id];
+    if(checked) done++;
+    var hel=gel('h-'+id), cel=gel('hc-'+id), sel=gel('hs-'+id);
+    if(hel){ if(checked) hel.classList.add('done'); else hel.classList.remove('done'); }
+    if(cel){ cel.textContent=checked?'✓':''; }
+    if(sel){ var s=hStreak(id); sel.textContent=s>0?'🔥 '+s+' day streak':'Start your streak today'; }
   }
+  gel('habitsBadge').textContent=done+' / 8';
 }
-function addWater(ml)  { lsSet(WATER_KEY, lsGet(WATER_KEY, 0) + ml); refreshWater(); }
-function resetWater()  { if (confirm('Reset water to 0?')) { lsSet(WATER_KEY, 0); refreshWater(); } }
-refreshWater();
 
-// ── Todos ────────────────────────────────────────────────────────────────────
-var TODO_KEY = 'jm_todos';
-function refreshTodos() {
-  var todos = lsGet(TODO_KEY, []);
-  var done  = todos.filter(function(t){ return t.done; }).length;
-  el('tBadge').textContent = done + ' / ' + todos.length;
-  if (!todos.length) {
-    el('tList').innerHTML = '<div style="color:var(--t3);font-size:13px;text-align:center;padding:14px">No tasks — add one above</div>';
-    return;
-  }
-  var html = '';
-  for (var i = 0; i < todos.length; i++) {
-    var t = todos[i];
-    html += '<div class="todo-row' + (t.done ? ' done' : '') + '">' +
-      '<div class="tchk" onclick="toggleTodo(' + i + ')">' + (t.done ? '✓' : '') + '</div>' +
-      '<span class="ttxt" onclick="toggleTodo(' + i + ')">' + t.text + '</span>' +
-      '<button class="tdel" onclick="delTodo(' + i + ')">×</button></div>';
-  }
-  el('tList').innerHTML = html;
+function toggleHabit(id){
+  var k=habitsKey();
+  var data=lsGet(k,{});
+  data[id]=!data[id];
+  lsSet(k,data); sbPush(k,data,'habitsDot'); renderHabits(); renderHabitChart();
 }
-function addTodo() {
-  var inp = el('tIn'), tx = inp.value.trim();
-  if (!tx) return;
-  var t = lsGet(TODO_KEY, []);
-  t.unshift({ text: tx, done: false });
-  lsSet(TODO_KEY, t); inp.value = ''; refreshTodos();
+
+/* ── Yesterday modal ── */
+function ydayDateObj(){ var d=new Date(); d.setDate(d.getDate()-1); return d; }
+function ydayHabitsKey(){ return habitsKey(ydayDateObj()); }
+
+function openYdayModal(){
+  var d=ydayDateObj();
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  gel('ydayDateLabel').textContent=DAY_NAMES[d.getDay()]+' '+d.getDate()+' '+months[d.getMonth()];
+  renderYdayModal();
+  gel('ydayModal').classList.add('open');
 }
-function toggleTodo(i) { var t = lsGet(TODO_KEY, []); t[i].done = !t[i].done; lsSet(TODO_KEY, t); refreshTodos(); }
-function delTodo(i)    { var t = lsGet(TODO_KEY, []); t.splice(i, 1);          lsSet(TODO_KEY, t); refreshTodos(); }
-refreshTodos();
+function renderYdayModal(){
+  var data=lsGet(ydayHabitsKey(),{});
+  var html='';
+  for(var i=0;i<HABIT_IDS.length;i++){
+    var id=HABIT_IDS[i];
+    var checked=!!data[id];
+    html+='<div class="habit'+(checked?' done':'')+'" onclick="toggleYdayHabit(\''+id+'\')">'+
+      '<div class="hcheck">'+(checked?'✓':'')+'</div>'+
+      '<div class="hinfo"><div class="hname">'+HABIT_LABELS[id]+'</div></div>'+
+    '</div>';
+  }
+  gel('ydayList').innerHTML=html;
+}
+function toggleYdayHabit(id){
+  var k=ydayHabitsKey();
+  var data=lsGet(k,{});
+  data[id]=!data[id];
+  lsSet(k,data); sbPush(k,data,'habitsDot');
+  renderYdayModal(); renderHabits();
+}
+function closeYdayModal(e){ if(e.target===gel('ydayModal')) gel('ydayModal').classList.remove('open'); }
+function closeYdayModalBtn(){ gel('ydayModal').classList.remove('open'); }
+
+/* ── Journal ── */
+function journalKey(d){ return 'jm_journal_'+dateKey(d); }
+function autoResizeJournal(el){ el.style.height='auto'; el.style.height=el.scrollHeight+'px'; }
+function saveJournal(){
+  var text=gel('journalText').value;
+  var k=journalKey();
+  var data={text:text,savedAt:new Date().toISOString()};
+  lsSet(k,data); sbPush(k,data,'journalDot');
+}
+function renderJournal(){
+  var data=lsGet(journalKey(),{});
+  var ta=gel('journalText');
+  if(ta&&data.text){ta.value=data.text;autoResizeJournal(ta);}
+  var yd=new Date();yd.setDate(yd.getDate()-1);
+  var ydData=lsGet(journalKey(yd),{});
+  var ydSec=gel('ydayJournal'),ydTxt=gel('ydayJournalText');
+  if(ydData.text&&ydSec&&ydTxt){ydSec.style.display='block';ydTxt.textContent=ydData.text;}
+}
+
+/* ── Habit chart ── */
+var habitChartInst=null;
+function renderHabitChart(){
+  var canvas=gel('habitChart');
+  if(!canvas||!window.Chart)return;
+  var labels=[],counts=[],colors=[];
+  var now=new Date();
+  var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for(var i=13;i>=0;i--){
+    var d=new Date(now);d.setDate(d.getDate()-i);
+    var data=lsGet(habitsKey(d),{});
+    var done=0;
+    for(var j=0;j<HABIT_IDS.length;j++){if(data[HABIT_IDS[j]])done++;}
+    labels.push(d.getDate()+' '+mo[d.getMonth()]);
+    counts.push(done);
+    if(done===8)colors.push('rgba(110,231,183,.85)');
+    else if(done>=5)colors.push('rgba(251,191,36,.85)');
+    else colors.push('rgba(255,138,138,.75)');
+  }
+  if(habitChartInst)habitChartInst.destroy();
+  habitChartInst=new Chart(canvas.getContext('2d'),{
+    type:'bar',
+    data:{labels:labels,datasets:[{data:counts,backgroundColor:colors,borderRadius:3,borderSkipped:false}]},
+    options:{
+      responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.raw+'/8 habits';}}}},
+      scales:{
+        x:{ticks:{color:'rgba(255,255,255,.3)',font:{size:8},maxRotation:45},grid:{display:false}},
+        y:{min:0,max:8,ticks:{color:'rgba(255,255,255,.3)',font:{size:9},stepSize:2},grid:{color:'rgba(255,255,255,.05)'}}
+      }
+    }
+  });
+}
+
+/* ── Battery trend chart ── */
+var batteryChartInst=null;
+function renderBatteryChart(){
+  var wrap=gel('batteryChartWrap');
+  var canvas=gel('batteryChart');
+  if(!wrap||!canvas||!window.Chart)return;
+  var labels=[],vals=[],hasData=0;
+  var now=new Date();
+  var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for(var i=6;i>=0;i--){
+    var d=new Date(now);d.setDate(d.getDate()-i);
+    var data=lsGet('jm_garmin_'+dateKey(d),{});
+    labels.push(d.getDate()+' '+mo[d.getMonth()]);
+    if(data.battery!==undefined){vals.push(data.battery);hasData++;}
+    else vals.push(null);
+  }
+  if(hasData<2){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  if(batteryChartInst)batteryChartInst.destroy();
+  batteryChartInst=new Chart(canvas.getContext('2d'),{
+    type:'line',
+    data:{labels:labels,datasets:[{
+      data:vals,
+      borderColor:'rgba(110,231,183,.8)',
+      backgroundColor:'rgba(110,231,183,.07)',
+      borderWidth:2,
+      pointBackgroundColor:'#6ee7b7',
+      pointRadius:4,
+      spanGaps:true,
+      fill:true,
+      tension:.35
+    }]},
+    options:{
+      responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return 'Battery: '+(ctx.raw!==null?ctx.raw:'–')+'/100';}}}},
+      scales:{
+        x:{ticks:{color:'rgba(255,255,255,.3)',font:{size:9}},grid:{display:false}},
+        y:{min:0,max:100,ticks:{color:'rgba(255,255,255,.3)',font:{size:9},stepSize:25},grid:{color:'rgba(255,255,255,.05)'}}
+      }
+    }
+  });
+}
+
+/* ── Supabase ── */
+function sbPush(key,val,dotId){
+  if(!sb) return;
+  var json=JSON.stringify(val); lastSync[key]=json;
+  setSyncDot(dotId,'syncing');
+  sb.from('app_state').upsert({key:key,data:val,updated_at:new Date().toISOString()},{onConflict:'key'})
+    .then(function(){ setSyncDot(dotId,'synced'); setTimeout(function(){ setSyncDot(dotId,''); },2000); })
+    .catch(function(){ setSyncDot(dotId,''); });
+}
+
+(function sbInit(){
+  if(!window.supabase) return;
+  sb=window.supabase.createClient(SB_URL,SB_KEY);
+  var today=dateKey();
+  var syncKeys=[garminKey(),'jm_habits_'+today,'jm_water_'+today,journalKey()];
+  var ydJObj=new Date();ydJObj.setDate(ydJObj.getDate()-1);syncKeys.push(journalKey(ydJObj));
+  for(var ih=1;ih<=13;ih++){var hd=new Date();hd.setDate(hd.getDate()-ih);syncKeys.push('jm_habits_'+dateKey(hd));}
+  sb.from('app_state').select('key,data').in('key',syncKeys)
+    .then(function(res){
+      if(res&&res.data){
+        res.data.forEach(function(row){
+          localStorage.setItem(row.key,JSON.stringify(row.data));
+          lastSync[row.key]=JSON.stringify(row.data);
+        });
+        renderGarmin(); renderHabits(); renderWater(); renderHabitChart(); renderJournal();
+      }
+      setSyncDot('garminDot','synced'); setSyncDot('habitsDot','synced'); setSyncDot('waterDot','synced');
+      setTimeout(function(){ setSyncDot('garminDot',''); setSyncDot('habitsDot',''); setSyncDot('waterDot',''); },2000);
+    }).catch(function(){});
+  sb.channel('jm_today_ch_'+Date.now())
+    .on('postgres_changes',{event:'*',schema:'public',table:'app_state'},function(payload){
+      if(!payload.new||!payload.new.key) return;
+      var key=payload.new.key;
+      if(syncKeys.indexOf(key)===-1) return;
+      var json=JSON.stringify(payload.new.data);
+      if(json===lastSync[key]) return;
+      lastSync[key]=json;
+      localStorage.setItem(key,json);
+      if(key===garminKey()) renderGarmin();
+      else if(key==='jm_habits_'+today) renderHabits();
+      else if(key==='jm_water_'+today) renderWater();
+    }).subscribe();
+})();
+
+initDayBanner();
+renderGarmin();
+renderHabits();
+renderWater();
+renderHabitChart();
+renderJournal();
 </script>
 </body>
 </html>

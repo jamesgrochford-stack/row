@@ -16,59 +16,64 @@
   --font:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
-html,body{background:var(--bg);color:var(--t1);font-family:var(--font);font-size:15px;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+html,body{background:var(--bg);color:var(--t1);font-family:var(--font);font-size:15px;-webkit-font-smoothing:antialiased;min-height:100vh}
 body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
 .wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
 
-/* Red warning banner */
-.warn-banner{border-radius:var(--r);padding:14px 16px;background:rgba(255,138,138,.08);border:2px solid rgba(255,138,138,.4);display:flex;align-items:center;gap:12px}
-.warn-icon{font-size:22px;flex-shrink:0}
-.warn-txt{}
-.warn-title{font-size:14px;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.03em}
+.warn{border-radius:var(--r);padding:14px 16px;background:rgba(255,138,138,.09);border:2px solid rgba(255,138,138,.45);display:flex;align-items:center;gap:12px}
+.warn-title{font-size:14px;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.04em}
 .warn-sub{font-size:12px;color:rgba(255,138,138,.75);margin-top:3px}
 
-/* Cards */
 .card{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:16px}
 .card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .card-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
 .badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;background:var(--s2);color:var(--t2)}
 
-/* Key lifts grid */
 .lifts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.lift-tile{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:12px}
-.lift-name{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:5px}
+.lift{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:12px 14px}
+.lift-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:5px}
 .lift-val{font-size:22px;font-weight:800;font-family:var(--mono);color:var(--t1);line-height:1}
-.lift-tile.untested .lift-val{font-size:14px;color:var(--t4)}
+.lift-unit{font-size:13px;font-weight:600;color:var(--t3)}
+.lift.untested .lift-val{font-size:13px;font-weight:500;color:var(--t4);letter-spacing:0}
+.lift-row{display:flex;align-items:flex-end;justify-content:space-between;gap:6px}
+.pb-btn{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 8px;border-radius:6px;border:1px solid var(--b);background:var(--s);color:var(--t4);cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap;flex-shrink:0}
+.lift-prev{font-size:9px;color:var(--t4);margin-top:3px;font-family:var(--mono)}
+.lift-form{display:none;margin-top:8px;flex-direction:column;gap:6px}
+.lift-form.open{display:flex}
+.lift-input{background:var(--bg);border:1px solid var(--b2);border-radius:var(--rs);padding:7px 10px;color:var(--t1);font-size:14px;font-family:var(--mono);width:100%;outline:none}
+.lift-form-btns{display:flex;gap:6px}
+.lift-save-btn{flex:1;padding:7px;border-radius:var(--rs);border:1px solid rgba(110,231,183,.3);background:rgba(110,231,183,.09);color:var(--green);font-size:12px;font-weight:700;cursor:pointer}
+.lift-cancel-btn{padding:7px 12px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t3);font-size:12px;cursor:pointer}
 
-/* Session cards side by side */
-.sessions-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sess-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .sess-card{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:12px}
-.sess-day{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:10px}
-.sess-list{display:flex;flex-direction:column;gap:4px}
-.sess-item{display:flex;align-items:flex-start;gap:7px;font-size:12px}
-.sess-name{flex:1;color:var(--t2);line-height:1.35}
-.sess-sets{font-size:10px;font-family:var(--mono);font-weight:600;color:var(--t3);white-space:nowrap;padding-top:1px;flex-shrink:0}
+.sess-day{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--b)}
+.sess-list{display:flex;flex-direction:column;gap:5px}
+.sess-ex{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;font-size:12px;line-height:1.3}
+.sess-ex-name{color:var(--t2);flex:1}
+.sess-ex-sets{color:var(--t3);font-family:var(--mono);font-size:10px;white-space:nowrap;padding-top:1px;flex-shrink:0}
 
-/* Workout logger */
 .log-form{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.log-form-row{grid-column:1/-1}
+.log-form-full{grid-column:1/-1}
+.fl{display:block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:4px}
 .fi{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:9px 12px;color:var(--t1);font-family:var(--font);font-size:14px;width:100%;-webkit-appearance:none}
 .fi:focus{outline:none;border-color:var(--b2)}
-.fl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:4px;display:block}
-.btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t1);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s;width:100%}
-.btn:hover{background:var(--s2)}
-.btn-green{background:rgba(110,231,183,.1);border-color:rgba(110,231,183,.22);color:var(--green)}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;padding:10px;border-radius:var(--rs);border:1px solid var(--b);background:var(--s);color:var(--t1);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
+.btn-green{background:rgba(110,231,183,.09);border-color:rgba(110,231,183,.25);color:var(--green)}
 
-/* Log history */
+.log-empty{font-size:13px;color:var(--t3);text-align:center;padding:18px 0}
 .log-entry{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);margin-bottom:6px}
-.log-body{flex:1;min-width:0}
-.log-exname{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.log-detail{font-size:12px;font-family:var(--mono);color:var(--t3)}
-.log-date{font-size:10px;color:var(--t4);margin-top:2px}
-.log-del{background:none;border:none;color:var(--t4);cursor:pointer;font-size:20px;padding:0;-webkit-tap-highlight-color:transparent;line-height:1;flex-shrink:0}
-.empty{font-size:13px;color:var(--t3);text-align:center;padding:16px 0}
+.log-info{flex:1;min-width:0}
+.log-ex-name{font-size:14px;font-weight:700;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log-detail{font-size:12px;font-family:var(--mono);color:var(--t3);margin-top:2px}
+.log-notes{font-size:11px;color:var(--t4);margin-top:2px}
+.log-date-lbl{font-size:10px;color:var(--t4);margin-top:3px}
+.log-del{background:none;border:none;color:var(--t4);font-size:20px;cursor:pointer;padding:0 0 0 4px;-webkit-tap-highlight-color:transparent;line-height:1;flex-shrink:0}
 
-/* Bottom nav */
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--t4);display:inline-block;margin-left:6px;vertical-align:middle;transition:background .3s}
+.sync-dot.synced{background:var(--green)}
+.sync-dot.syncing{background:var(--yellow)}
+
 .bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(5,5,6,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--b);padding:6px max(0px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(0px,env(safe-area-inset-left));z-index:100}
 .ntab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;text-decoration:none;color:var(--t4);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;-webkit-tap-highlight-color:transparent;transition:color .15s}
 .ntab .ni{font-size:20px;line-height:1}
@@ -78,85 +83,79 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 <body>
 <div class="wrap">
 
-  <!-- ⚠️ Hamstring Warning -->
-  <div class="warn-banner">
-    <div class="warn-icon">🔴</div>
-    <div class="warn-txt">
+  <div class="warn">
+    <span style="font-size:24px;flex-shrink:0">⚠️</span>
+    <div>
       <div class="warn-title">Left Hamstring Imbalance</div>
       <div class="warn-sub">10% deficit — prioritise unilateral work every session</div>
     </div>
   </div>
 
-  <!-- Key Lifts -->
   <div class="card">
     <div class="card-hd"><span class="card-title">🏋️ Key Lifts</span></div>
-    <div class="lifts-grid">
-      <div class="lift-tile"><div class="lift-name">Squat</div><div class="lift-val">97.5<span style="font-size:13px;color:var(--t3)"> kg</span></div></div>
-      <div class="lift-tile"><div class="lift-name">Bench press</div><div class="lift-val">72.5<span style="font-size:13px;color:var(--t3)"> kg</span></div></div>
-      <div class="lift-tile"><div class="lift-name">Pull-ups</div><div class="lift-val">+5<span style="font-size:13px;color:var(--t3)"> kg</span></div></div>
-      <div class="lift-tile untested"><div class="lift-name">Trap bar</div><div class="lift-val">not yet tested</div></div>
-    </div>
+    <div class="lifts-grid" id="liftsGrid"></div>
   </div>
 
-  <!-- Programme -->
   <div class="card">
     <div class="card-hd"><span class="card-title">📋 Programme</span></div>
-    <div class="sessions-grid">
-      <!-- Wednesday -->
+    <div class="sess-grid">
       <div class="sess-card">
         <div class="sess-day">Wednesday</div>
         <div class="sess-list">
-          <div class="sess-item"><span class="sess-name">Squat / trap bar DL</span><span class="sess-sets">3–4×3</span></div>
-          <div class="sess-item"><span class="sess-name">Bulgarian split squat</span><span class="sess-sets">2–3×5</span></div>
-          <div class="sess-item"><span class="sess-name">RDL / Nordics</span><span class="sess-sets">2–3×4–6</span></div>
-          <div class="sess-item"><span class="sess-name">Bench press</span><span class="sess-sets">3×5</span></div>
-          <div class="sess-item"><span class="sess-name">Pull-ups</span><span class="sess-sets">3×5</span></div>
-          <div class="sess-item"><span class="sess-name">Copenhagen plank</span><span class="sess-sets">3×20s</span></div>
-          <div class="sess-item"><span class="sess-name">Pallof press</span><span class="sess-sets">3×10</span></div>
-          <div class="sess-item"><span class="sess-name">Box jumps</span><span class="sess-sets">3×3</span></div>
-          <div class="sess-item"><span class="sess-name">Pogos</span><span class="sess-sets">3×3</span></div>
-          <div class="sess-item"><span class="sess-name">Accelerations</span><span class="sess-sets">3×10m 3×20m 2×30m</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Squat / Trap bar deadlift</span><span class="sess-ex-sets">3–4×3</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Bulgarian split squat</span><span class="sess-ex-sets">2–3×5</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">RDL / Nordics</span><span class="sess-ex-sets">2–3×4–6</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Bench press</span><span class="sess-ex-sets">3×5</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Pull-ups</span><span class="sess-ex-sets">3×5</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Copenhagen plank</span><span class="sess-ex-sets">3×20–30s</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Pallof press</span><span class="sess-ex-sets">3×10</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Box jumps</span><span class="sess-ex-sets">3×3</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Pogos</span><span class="sess-ex-sets">3×3</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Accelerations</span><span class="sess-ex-sets">3×10m 3×20m 2×30m</span></div>
         </div>
       </div>
-      <!-- Sunday -->
       <div class="sess-card">
         <div class="sess-day">Sunday</div>
         <div class="sess-list">
-          <div class="sess-item"><span class="sess-name">Speed trap bar DL</span><span class="sess-sets">5×2</span></div>
-          <div class="sess-item"><span class="sess-name">Single-leg hip thrust</span><span class="sess-sets">3×5</span></div>
-          <div class="sess-item"><span class="sess-name">Copenhagen plank</span><span class="sess-sets">3×20–30s</span></div>
-          <div class="sess-item"><span class="sess-name">Single-arm landmine press</span><span class="sess-sets">3×5</span></div>
-          <div class="sess-item"><span class="sess-name">Bent-over row</span><span class="sess-sets">3×5</span></div>
-          <div class="sess-item"><span class="sess-name">Hip flexor KB hold</span><span class="sess-sets">3×20–30s</span></div>
-          <div class="sess-item"><span class="sess-name">Isometric calf raise</span><span class="sess-sets">3×30–45s</span></div>
-          <div class="sess-item"><span class="sess-name">Tibialis raises</span><span class="sess-sets">3×12–15</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Speed trap bar DL</span><span class="sess-ex-sets">5×2</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Single-leg hip thrust</span><span class="sess-ex-sets">3×5</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Copenhagen plank</span><span class="sess-ex-sets">3×20–30s</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Single-arm landmine press</span><span class="sess-ex-sets">3×5</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Bent-over row</span><span class="sess-ex-sets">3×5</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Hip flexor KB hold</span><span class="sess-ex-sets">3×20–30s</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Isometric calf raise</span><span class="sess-ex-sets">3×30–45s</span></div>
+          <div class="sess-ex"><span class="sess-ex-name">Tibialis raises</span><span class="sess-ex-sets">3×12–15</span></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Workout Logger -->
+  <div id="strengthChartWrap" class="card" style="display:none">
+    <div class="card-hd"><span class="card-title">📈 Strength Progress</span></div>
+    <canvas id="strengthChart" height="140"></canvas>
+  </div>
+
   <div class="card">
     <div class="card-hd">
-      <span class="card-title">📝 Workout Log</span>
+      <span class="card-title">📝 Workout Log <span class="sync-dot" id="syncDot"></span></span>
       <span class="badge" id="logBadge">0 entries</span>
     </div>
     <div class="log-form">
-      <div style="grid-column:1/-1">
+      <div class="log-form-full">
         <label class="fl">Exercise</label>
-        <input class="fi" id="logEx" type="text" placeholder="e.g. Squat">
+        <input class="fi" id="logEx" type="text" placeholder="e.g. Squat" autocomplete="off">
       </div>
       <div>
         <label class="fl">Weight (kg)</label>
-        <input class="fi" id="logWt" type="number" step="0.5" min="0" placeholder="0">
+        <input class="fi" id="logWt" type="number" inputmode="decimal" step="0.5" min="0" placeholder="0">
       </div>
       <div>
         <label class="fl">Reps</label>
-        <input class="fi" id="logReps" type="number" min="1" placeholder="0">
+        <input class="fi" id="logReps" type="number" inputmode="numeric" min="1" placeholder="0">
       </div>
       <div>
         <label class="fl">Sets</label>
-        <input class="fi" id="logSets" type="number" min="1" placeholder="0">
+        <input class="fi" id="logSets" type="number" inputmode="numeric" min="1" placeholder="0">
       </div>
       <div>
         <label class="fl">Notes (optional)</label>
@@ -167,6 +166,11 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
     <div id="logList"></div>
   </div>
 
+  <div class="card">
+    <div class="card-hd"><span class="card-title">📊 Weekly Volume</span></div>
+    <div id="weekVol"></div>
+  </div>
+
 </div>
 
 <nav class="bnav">
@@ -174,72 +178,249 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
   <a href="football.html" class="ntab"><span class="ni">⚽</span><span>Football</span></a>
   <a href="study.html" class="ntab"><span class="ni">📚</span><span>Study</span></a>
   <a href="gym.html" class="ntab active"><span class="ni">🏋️</span><span>Gym</span></a>
-  <a href="goals.html" class="ntab"><span class="ni">🎯</span><span>Goals</span></a>
+  <a href="nutrition.html" class="ntab"><span class="ni">🥗</span><span>Nutrition</span></a>
   <a href="finance.html" class="ntab"><span class="ni">💰</span><span>Finance</span></a>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-function el(id) { return document.getElementById(id); }
-function lsGet(k, def) { try { var v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : def; } catch(e) { return def; } }
-function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
-function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-function fmtDate(iso) {
-  var d = new Date(iso);
-  return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();
+// ── Key Lifts / PBs ──────────────────────────────────────────────────────────
+var LIFTS_DEF=[
+  {id:'squat',    name:'Squat',       defaultVal:'97.5', unit:' kg'},
+  {id:'bench',    name:'Bench Press', defaultVal:'72.5', unit:' kg'},
+  {id:'pullups',  name:'Pull-ups',    defaultVal:'+5',   unit:' kg'},
+  {id:'trapbar',  name:'Trap Bar',    defaultVal:null,   unit:' kg'},
+];
+function getPBs(){return JSON.parse(localStorage.getItem('jm_pbs')||'{}');}
+function savePBs(d){localStorage.setItem('jm_pbs',JSON.stringify(d));}
+function toggleLiftForm(id){
+  var f=document.getElementById('lf-'+id);
+  if(!f)return;
+  var isOpen=f.classList.contains('open');
+  if(!isOpen){f.classList.add('open');var inp=document.getElementById('li-'+id);if(inp)inp.focus();}
+  else f.classList.remove('open');
+}
+function confirmPB(id){
+  var inp=document.getElementById('li-'+id);
+  if(!inp)return;
+  var val=inp.value.trim();
+  if(!val){inp.focus();return;}
+  var pbs=getPBs();
+  if(!pbs[id])pbs[id]=[];
+  pbs[id].unshift({val:val,date:new Date().toISOString().slice(0,10)});
+  savePBs(pbs);
+  inp.value='';
+  renderLifts();
+  renderStrengthChart();
+}
+function renderLifts(){
+  var pbs=getPBs();
+  document.getElementById('liftsGrid').innerHTML=LIFTS_DEF.map(function(l){
+    var history=pbs[l.id]||[];
+    var current=history.length?history[0]:null;
+    var previous=history.length>1?history[1]:null;
+    var displayVal=current?(current.val+l.unit):(l.defaultVal?l.defaultVal+l.unit:'Not yet tested');
+    var isUntested=!current&&!l.defaultVal;
+    var prevText=previous?('Prev: '+previous.val+l.unit+' · '+previous.date):(current?('First: '+current.date):'');
+    return'<div class="lift'+(isUntested?' untested':'')+'">'+
+      '<div class="lift-name">'+l.name+'</div>'+
+      '<div class="lift-row">'+
+        '<div class="lift-val">'+(isUntested?'Not tested':(current?current.val:(l.defaultVal||'—')))+(!isUntested?'<span class="lift-unit">'+l.unit+'</span>':'')+'</div>'+
+        '<button class="pb-btn" onclick="toggleLiftForm(\''+l.id+'\')">Update PB</button>'+
+      '</div>'+
+      (prevText?'<div class="lift-prev">'+prevText+'</div>':'')+
+      '<div class="lift-form" id="lf-'+l.id+'">'+
+        '<input class="lift-input" id="li-'+l.id+'" type="text" placeholder="New PB e.g. 100" onkeydown="if(event.key===\'Enter\')confirmPB(\''+l.id+'\')">'+
+        '<div class="lift-form-btns">'+
+          '<button class="lift-save-btn" onclick="confirmPB(\''+l.id+'\')">Save PB</button>'+
+          '<button class="lift-cancel-btn" onclick="toggleLiftForm(\''+l.id+'\')">Cancel</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+renderLifts();
+
+// ── Strength chart ───────────────────────────────────────────────────────────
+var strengthChartInst=null;
+function renderStrengthChart(){
+  var wrap=document.getElementById('strengthChartWrap');
+  var canvas=document.getElementById('strengthChart');
+  if(!wrap||!canvas||!window.Chart)return;
+  var pbs=getPBs();
+  var liftsToShow=['squat','bench','pullups'];
+  var liftNames=['Squat','Bench','Pull-ups'];
+  var liftColors=['rgba(125,211,252,.9)','rgba(110,231,183,.9)','rgba(251,191,36,.9)'];
+  var allDates={};
+  liftsToShow.forEach(function(id){(pbs[id]||[]).forEach(function(e){allDates[e.date]=1;});});
+  var sortedDates=Object.keys(allDates).sort();
+  if(sortedDates.length<2){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  var datasets=liftsToShow.map(function(id,i){
+    var history=(pbs[id]||[]).slice().reverse();
+    var dataMap={};history.forEach(function(e){dataMap[e.date]=parseFloat(e.val)||null;});
+    var data=sortedDates.map(function(d){return dataMap[d]!==undefined?dataMap[d]:null;});
+    return{label:liftNames[i],data:data,borderColor:liftColors[i],backgroundColor:'transparent',borderWidth:2,pointBackgroundColor:liftColors[i],pointRadius:4,spanGaps:true,tension:.3};
+  });
+  if(strengthChartInst)strengthChartInst.destroy();
+  strengthChartInst=new Chart(canvas.getContext('2d'),{
+    type:'line',
+    data:{labels:sortedDates,datasets:datasets},
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{display:true,labels:{color:'rgba(255,255,255,.6)',font:{size:10},boxWidth:12}},
+        tooltip:{callbacks:{label:function(ctx){return ctx.dataset.label+': '+(ctx.raw!==null?ctx.raw+'kg':'–');}}}
+      },
+      scales:{
+        x:{ticks:{color:'rgba(255,255,255,.3)',font:{size:9},maxRotation:30},grid:{display:false}},
+        y:{ticks:{color:'rgba(255,255,255,.3)',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}}
+      }
+    }
+  });
 }
 
+// ── Weekly volume ─────────────────────────────────────────────────────────────
+function renderWeeklyVolume(){
+  var el=document.getElementById('weekVol');
+  if(!el)return;
+  var logs=lsGet(LOG_KEY,[]);
+  var now=new Date();
+  var ws=new Date(now);ws.setDate(now.getDate()-now.getDay());ws.setHours(0,0,0,0);
+  var wedSets=0,sunSets=0;
+  logs.forEach(function(l){
+    var d=new Date(l.date);
+    if(d<ws)return;
+    var sets=l.sets||1;
+    if(d.getDay()===3)wedSets+=sets;
+    else if(d.getDay()===0)sunSets+=sets;
+  });
+  el.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+
+    '<div style="background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:14px;text-align:center">'+
+      '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px">Wednesday</div>'+
+      '<div style="font-size:38px;font-weight:800;font-family:var(--mono);color:var(--blue)">'+wedSets+'</div>'+
+      '<div style="font-size:10px;color:var(--t3);margin-top:3px">sets logged</div>'+
+    '</div>'+
+    '<div style="background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:14px;text-align:center">'+
+      '<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:6px">Sunday</div>'+
+      '<div style="font-size:38px;font-weight:800;font-family:var(--mono);color:var(--purple)">'+sunSets+'</div>'+
+      '<div style="font-size:10px;color:var(--t3);margin-top:3px">sets logged</div>'+
+    '</div>'+
+  '</div>';
+}
+
+var SB_URL = 'https://ymksoxojvrbrmpdzfjxf.supabase.co';
+var SB_KEY = 'sb_publishable_sozYCEAdWzVt1Tni_EbPCA_gdw6JdvN';
 var LOG_KEY = 'jm_gym_log';
+var sb = null, lastSyncJson = '';
 
-function addLog() {
-  var ex    = el('logEx').value.trim();
-  var wt    = parseFloat(el('logWt').value) || 0;
-  var reps  = parseInt(el('logReps').value, 10) || 0;
-  var sets  = parseInt(el('logSets').value, 10) || 0;
-  var notes = el('logNotes').value.trim();
-  if (!ex) { el('logEx').focus(); return; }
-  var logs = lsGet(LOG_KEY, []);
-  logs.unshift({ ex: ex, wt: wt, reps: reps, sets: sets, notes: notes, date: new Date().toISOString() });
-  lsSet(LOG_KEY, logs);
-  el('logEx').value = ''; el('logWt').value = ''; el('logReps').value = ''; el('logSets').value = ''; el('logNotes').value = '';
+function gel(id){ return document.getElementById(id); }
+function lsGet(k,d){ try{ var v=localStorage.getItem(k); return v!==null?JSON.parse(v):d; }catch(e){ return d; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+function esc(s){ var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function setSyncDot(state){ var dot=gel('syncDot'); dot.className='sync-dot'+(state?' '+state:''); }
+
+function sbPush(val){
+  if(!sb) return;
+  var json=JSON.stringify(val);
+  lastSyncJson=json;
+  setSyncDot('syncing');
+  sb.from('app_state').upsert({key:LOG_KEY,data:val,updated_at:new Date().toISOString()},{onConflict:'key'})
+    .then(function(){ setSyncDot('synced'); setTimeout(function(){ setSyncDot(''); },2000); })
+    .catch(function(){ setSyncDot(''); });
+}
+
+function addLog(){
+  var ex=gel('logEx').value.trim();
+  var wt=parseFloat(gel('logWt').value)||0;
+  var reps=parseInt(gel('logReps').value)||0;
+  var sets=parseInt(gel('logSets').value)||0;
+  var notes=gel('logNotes').value.trim();
+  if(!ex){ gel('logEx').focus(); return; }
+  var logs=lsGet(LOG_KEY,[]);
+  logs.unshift({id:Date.now(),ex:ex,wt:wt,reps:reps,sets:sets,notes:notes,date:new Date().toISOString()});
+  lsSet(LOG_KEY,logs);
+  sbPush(logs);
+  gel('logEx').value='';
+  gel('logWt').value='';
+  gel('logReps').value='';
+  gel('logSets').value='';
+  gel('logNotes').value='';
+  renderLog();
+  renderWeeklyVolume();
+}
+
+function delLog(id){
+  if(!confirm('Delete this entry?')) return;
+  var logs=lsGet(LOG_KEY,[]).filter(function(l){ return l.id!==id; });
+  lsSet(LOG_KEY,logs);
+  sbPush(logs);
   renderLog();
 }
 
-function delLog(i) {
-  if (!confirm('Delete this entry?')) return;
-  var logs = lsGet(LOG_KEY, []);
-  logs.splice(i, 1);
-  lsSet(LOG_KEY, logs);
-  renderLog();
-}
-
-function renderLog() {
-  var logs = lsGet(LOG_KEY, []);
-  el('logBadge').textContent = logs.length + ' entr' + (logs.length === 1 ? 'y' : 'ies');
-  if (!logs.length) {
-    el('logList').innerHTML = '<div class="empty">No entries yet — log a set above</div>';
+function renderLog(){
+  var logs=lsGet(LOG_KEY,[]);
+  gel('logBadge').textContent=logs.length+(logs.length===1?' entry':' entries');
+  if(!logs.length){
+    gel('logList').innerHTML='<div class="log-empty">No entries yet — log a set above</div>';
     return;
   }
-  var html = '';
-  for (var i = 0; i < logs.length; i++) {
-    var l = logs[i];
-    var detail = '';
-    if (l.wt)   detail += l.wt + 'kg';
-    if (l.sets) detail += (detail ? ' · ' : '') + l.sets + ' sets';
-    if (l.reps) detail += (detail ? ' · ' : '') + l.reps + ' reps';
-    html += '<div class="log-entry">' +
-      '<div class="log-body">' +
-        '<div class="log-exname">' + esc(l.ex) + '</div>' +
-        (detail ? '<div class="log-detail">' + detail + '</div>' : '') +
-        (l.notes ? '<div class="log-detail" style="color:var(--t4)">' + esc(l.notes) + '</div>' : '') +
-        '<div class="log-date">' + fmtDate(l.date) + '</div>' +
-      '</div>' +
-      '<button class="log-del" onclick="delLog(' + i + ')">×</button>' +
+  var html='';
+  for(var i=0;i<logs.length;i++){
+    var l=logs[i];
+    var parts=[];
+    if(l.wt) parts.push(l.wt+'kg');
+    if(l.sets) parts.push(l.sets+' sets');
+    if(l.reps) parts.push(l.reps+' reps');
+    var d=new Date(l.date);
+    var ds=('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();
+    html+='<div class="log-entry">'+
+      '<div class="log-info">'+
+        '<div class="log-ex-name">'+esc(l.ex)+'</div>'+
+        (parts.length?'<div class="log-detail">'+parts.join(' · ')+'</div>':'')+
+        (l.notes?'<div class="log-notes">'+esc(l.notes)+'</div>':'')+
+        '<div class="log-date-lbl">'+ds+'</div>'+
+      '</div>'+
+      '<button class="log-del" onclick="delLog('+l.id+')">×</button>'+
     '</div>';
   }
-  el('logList').innerHTML = html;
+  gel('logList').innerHTML=html;
 }
 
+(function(){
+  if(!window.supabase) return;
+  sb=window.supabase.createClient(SB_URL,SB_KEY);
+  sb.from('app_state').select('data').eq('key',LOG_KEY).maybeSingle()
+    .then(function(res){
+      if(res&&res.data&&res.data.data){
+        var remote=res.data.data;
+        var local=lsGet(LOG_KEY,[]);
+        if(remote.length>=local.length){
+          lsSet(LOG_KEY,remote);
+          lastSyncJson=JSON.stringify(remote);
+          renderLog();
+        }
+      }
+      setSyncDot('synced');
+      setTimeout(function(){ setSyncDot(''); },2000);
+    }).catch(function(){});
+  sb.channel('jm_gym_ch_'+Date.now())
+    .on('postgres_changes',{event:'*',schema:'public',table:'app_state',filter:'key=eq.'+LOG_KEY},function(payload){
+      if(!payload.new||!payload.new.data) return;
+      var json=JSON.stringify(payload.new.data);
+      if(json===lastSyncJson) return;
+      lastSyncJson=json;
+      lsSet(LOG_KEY,payload.new.data);
+      renderLog();
+      setSyncDot('synced');
+      setTimeout(function(){ setSyncDot(''); },2000);
+    }).subscribe();
+})();
+
 renderLog();
+renderStrengthChart();
+renderWeeklyVolume();
 </script>
 </body>
 </html>

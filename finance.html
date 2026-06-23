@@ -200,7 +200,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
   <a href="football.html" class="ntab"><span class="ni">⚽</span><span>Football</span></a>
   <a href="study.html" class="ntab"><span class="ni">📚</span><span>Study</span></a>
   <a href="gym.html" class="ntab"><span class="ni">🏋️</span><span>Gym</span></a>
-  <a href="goals.html" class="ntab"><span class="ni">🎯</span><span>Goals</span></a>
+  <a href="nutrition.html" class="ntab"><span class="ni">🥗</span><span>Nutrition</span></a>
   <a href="finance.html" class="ntab active"><span class="ni">💰</span><span>Finance</span></a>
 </nav>
 
@@ -265,7 +265,7 @@ function renderSubs(){
   const today=new Date().getDate();
   $('subList').innerHTML=SUBS.map(s=>{
     const daysLeft=s.dayOfMonth>=today?s.dayOfMonth-today:s.dayOfMonth+(new Date(new Date().getFullYear(),new Date().getMonth()+1,0).getDate()-today);
-    const soon=daysLeft<=5;
+    const soon=daysLeft<7;
     return`<div class="sub-item">
       <span class="sub-icon">${s.icon}</span>
       <div class="sub-body">
