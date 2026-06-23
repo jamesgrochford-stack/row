@@ -785,9 +785,9 @@ function buildPlanSessionCard(s,idx,isDone){
   const col=SUBJ_COLORS[s.color]||'#888';const lbl=planBadgeLabel(s.type);
   const bg=col+'1a';const cls=isDone?' done':'';
   const doneBtn=isDone
-    ?`<button class="plan-done-btn done" onclick="togglePlanDone(${idx})">✓ Done</button>`
-    :`<button class="plan-done-btn" onclick="togglePlanDone(${idx})">Mark Done</button>`;
-  return`<div class="plan-session-card${cls}" style="border-left-color:${col}">
+    ?`<button class="plan-done-btn done" id="pbtn-${idx}" onclick="togglePlanDone(${idx})">✓ Done</button>`
+    :`<button class="plan-done-btn" id="pbtn-${idx}" onclick="togglePlanDone(${idx})">Mark Done</button>`;
+  return`<div class="plan-session-card${cls}" id="pcard-${idx}" style="border-left-color:${col}">
     <div class="plan-session-hd">
       <span class="plan-subj-name" style="color:${col}">${esc(s.subject)}</span>
       <span class="plan-type-badge" style="background:${bg};color:${col}">${lbl}</span>
@@ -802,7 +802,21 @@ function buildPlanSessionCard(s,idx,isDone){
 }
 
 function togglePlanDone(idx){
-  const key=getPlanDoneKey();const d=ls(key,{});d[idx]=!d[idx];lss(key,d);sbPushS(key,d);renderPlanPanel();
+  const key=getPlanDoneKey();
+  const d=ls(key,{});
+  const nowDone=!d[idx];
+  d[idx]=nowDone;
+  // Instant visual update — no re-render
+  const card=document.getElementById('pcard-'+idx);
+  const btn=document.getElementById('pbtn-'+idx);
+  if(card){if(nowDone)card.classList.add('done');else card.classList.remove('done');}
+  if(btn){
+    if(nowDone){btn.classList.add('done');btn.textContent='✓ Done';}
+    else{btn.classList.remove('done');btn.textContent='Mark Done';}
+  }
+  // Background save
+  lss(key,d);
+  sbPushS(key,d);
 }
 function togglePlanDetail(idx){const el=document.getElementById('pdet-'+idx);if(el)el.classList.toggle('expanded')}
 

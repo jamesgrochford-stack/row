@@ -588,7 +588,17 @@ function toggleHabit(id){
   var k=habitsKey();
   var data=lsGet(k,{});
   data[id]=!data[id];
-  lsSet(k,data); sbPush(k,data,'habitsDot'); renderHabits(); renderHabitChart();
+  var checked=data[id];
+  // Instant visual update
+  var hel=gel('h-'+id), cel=gel('hc-'+id);
+  if(hel){if(checked)hel.classList.add('done');else hel.classList.remove('done');}
+  if(cel){cel.textContent=checked?'✓':'';}
+  // Recount badge from DOM
+  var done=0;
+  for(var i=0;i<HABIT_IDS.length;i++){var el=gel('h-'+HABIT_IDS[i]);if(el&&el.classList.contains('done'))done++;}
+  gel('habitsBadge').textContent=done+' / 8';
+  // Background save
+  lsSet(k,data); sbPush(k,data,'habitsDot'); renderHabitChart();
 }
 
 /* ── Yesterday modal ── */
