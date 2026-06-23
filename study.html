@@ -179,10 +179,33 @@ select.fi{cursor:pointer}
 .ntab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;text-decoration:none;color:var(--t4);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;-webkit-tap-highlight-color:transparent;transition:color .15s}
 .ntab .ni{font-size:20px;line-height:1}
 .ntab.active{color:var(--t1)}
+
+/* ── Page header ── */
+.pg-hd{display:flex;align-items:flex-start;justify-content:space-between;padding:4px 2px 12px}
+.pg-hd-title{font-size:28px;font-weight:800;color:var(--t1);line-height:1}
+.pg-hd-week{font-size:12px;color:var(--t3);margin-top:4px}
+.pg-hd-date{font-size:12px;color:var(--t3);text-align:right}
+/* ── Irish floating sessions ── */
+.irish-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.irish-row:last-child{border-bottom:none}
+.irish-btn{font-size:11px;font-weight:600;padding:5px 12px;border-radius:999px;border:1px solid var(--b2);background:var(--s);color:var(--t3);cursor:pointer;flex-shrink:0}
+.irish-btn.done{background:rgba(110,231,183,.1);border-color:rgba(110,231,183,.3);color:var(--green)}
+/* ── AAC projects ── */
+.aac-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.aac-row:last-child{margin-bottom:0}
 </style>
 </head>
 <body>
 <div class="bento">
+
+  <!-- Page header -->
+  <div class="pg-hd">
+    <div>
+      <div class="pg-hd-title">Study</div>
+      <div class="pg-hd-week" id="hdr-week">—</div>
+    </div>
+    <div class="pg-hd-date" id="hdr-date">—</div>
+  </div>
 
   <!-- 1. Today's Study Panel (dominant) -->
   <div class="card" id="today-plan">
@@ -203,7 +226,25 @@ select.fi{cursor:pointer}
     <div id="plan-week-strip"></div>
   </div>
 
-  <!-- 3. Streaks (compact row) -->
+  <!-- 2. Weekly Completion Summary -->
+  <div class="card">
+    <div class="card-hd" style="margin-bottom:10px">
+      <span class="card-title">📊 This Week</span>
+      <span class="badge" id="week-done-badge">—</span>
+    </div>
+    <div id="week-summary-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px"></div>
+  </div>
+
+  <!-- 3. Irish Floating Sessions -->
+  <div class="card">
+    <div class="card-hd" style="margin-bottom:4px">
+      <span class="card-title">🇮🇪 Irish — Floating Sessions</span>
+    </div>
+    <div style="font-size:11px;color:var(--t4);margin-bottom:12px">Schedule these into any free Friday slot</div>
+    <div id="irish-sessions-list"></div>
+  </div>
+
+  <!-- 4. Streaks (compact row) -->
   <div class="card">
     <div class="card-hd" style="margin-bottom:10px"><span class="card-title">🔥 Streaks</span><span style="font-size:11px;color:var(--t4)">tap to log · − to undo</span></div>
     <div class="streak-grid">
@@ -266,45 +307,13 @@ select.fi{cursor:pointer}
     <div id="sosCards"></div>
   </div>
 
-  <!-- 7. Study Session Logger -->
-  <div class="card">
-    <div class="card-hd">
-      <span class="card-title">📝 Study Sessions</span>
-      <span class="badge" id="studyCount">0 sessions</span>
+  <!-- AAC Projects -->
+  <div class="card" id="aac-card" style="background:var(--bg2)">
+    <div class="card-hd" style="margin-bottom:12px">
+      <span class="card-title">🔬 AAC Projects — Summer Priority</span>
+      <span class="badge" id="aac-badge">—</span>
     </div>
-    <div class="form-grid" style="margin-bottom:8px">
-      <div class="fg">
-        <label class="fl">Subject</label>
-        <select class="fi" id="ssSubj">
-          <option>Maths HL</option><option>Irish HL</option><option>Physics HL</option>
-          <option>Chemistry HL</option><option>PE HL</option><option>Accounting HL</option>
-          <option>Applied Maths</option><option>English HL</option><option>French HL</option>
-        </select>
-      </div>
-      <div class="fg">
-        <label class="fl">Type</label>
-        <select class="fi" id="ssType">
-          <option value="video">Video</option><option value="anki">Anki</option>
-          <option value="paper">Past Paper</option><option value="notes">Notes</option>
-          <option value="exam-q">Exam Qs</option>
-        </select>
-      </div>
-    </div>
-    <div class="fg" style="margin-bottom:10px">
-      <label class="fl">Duration (min)</label>
-      <input class="fi" id="ssDur" type="number" placeholder="45">
-    </div>
-    <button class="btn btn-green btn-full" style="margin-top:0" onclick="addStudySession()">Log Session</button>
-    <div id="studyLog" style="margin-top:12px"></div>
-  </div>
-
-  <!-- 8. Study time chart -->
-  <div class="card">
-    <div class="card-hd">
-      <span class="card-title">📊 Study Time — This Week</span>
-      <span class="badge" id="weekTotalBadge">0 min</span>
-    </div>
-    <canvas id="studyChart" height="120"></canvas>
+    <div id="aac-list"></div>
   </div>
 
 </div>
@@ -319,7 +328,6 @@ select.fi{cursor:pointer}
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 // ── Supabase — init client eagerly so writes never race ───────────────────────
 const SB_URL_S='https://ymksoxojvrbrmpdzfjxf.supabase.co';
@@ -393,40 +401,38 @@ function renderPoints(){
         <span class="pts-subj" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.name}</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-        <select onchange="setGrade(${i},this.value)" style="background:var(--bg2);border:1px solid var(--b);border-radius:6px;color:var(--t1);font-size:12px;padding:4px 6px;font-family:var(--mono);cursor:pointer;-webkit-appearance:none">${opts}</select>
+        <select id="ptssel-${i}" oninput="recalcPts()" style="background:var(--bg2);border:1px solid var(--b);border-radius:6px;color:var(--t1);font-size:12px;padding:4px 6px;font-family:var(--mono);cursor:pointer;-webkit-appearance:none">${opts}</select>
         <span class="pts-val" id="ptsval-${i}" style="min-width:40px;text-align:right">${s.pts}${bonusHtml}</span>
       </div>
     </div>`;
   }).join('');
 }
 const OS_TO_SUBJ_IDX={chem:3,phys:2,acc:5,am:6,maths:0,irish:1,pe:4,eng:7,french:8};
-function setGrade(i,grade){
-  const grades=getGrades();
-  grades[i]=grade;
-  // DOM-first — no ptsOpen guard; elements exist in DOM even when panel is hidden
-  const {effective,top6,total}=calcTop6(grades);
-  const totalEl=$('ptsTotal');if(totalEl)totalEl.textContent=total;
+function recalcPts(){
+  const g=SUBJECTS.map((_,i)=>{const sel=document.getElementById('ptssel-'+i);return sel?sel.value:getGrades()[i];});
+  const items=g.map((grade,i)=>{const p=GRADE_PTS[grade]||0;const bonus=(SUBJECTS[i].mathsBonus&&p===100)?25:0;return{p:p+bonus,pts:p,bonus,i};});
+  const sorted=[...items].sort((a,b)=>b.p-a.p);
+  const top6=new Set(sorted.slice(0,6).map(s=>s.i));
+  const total=sorted.slice(0,6).reduce((a,s)=>a+s.p,0);
+  const totalEl=document.getElementById('ptsTotal');if(totalEl)totalEl.textContent=total;
   const gap=TARGET-total;
-  const gapEl=$('ptsGap');
-  if(gapEl){gapEl.textContent=gap>0?`Gap: ${gap} pts to 625`:'🎉 625 reached!';gapEl.style.color=gap<=0?'var(--green)':'var(--red)';}
-  const progEl=$('ptsProg');if(progEl)progEl.style.width=Math.min(100,total/TARGET*100)+'%';
-  effective.forEach((s,j)=>{
-    const row=document.getElementById('ptsrow-'+j);if(!row)return;
-    row.style.opacity=top6.has(j)?'1':'0.38';
-    const chk=document.getElementById('ptschk-'+j);if(chk)chk.style.color=top6.has(j)?'var(--green)':'transparent';
-    const val=document.getElementById('ptsval-'+j);
-    if(val)val.innerHTML=s.pts+(s.bonus?` <span style="color:var(--green);font-size:10px">+${s.bonus}</span>`:'');
+  const gapEl=document.getElementById('ptsGap');
+  if(gapEl){gapEl.textContent=gap>0?'Gap: '+gap+' pts to 625':'🎉 625 reached!';gapEl.style.color=gap<=0?'var(--green)':'var(--red)';}
+  const progEl=document.getElementById('ptsProg');if(progEl)progEl.style.width=Math.min(100,total/TARGET*100)+'%';
+  items.forEach(({pts,bonus,i})=>{
+    const counted=top6.has(i);
+    const row=document.getElementById('ptsrow-'+i);if(row)row.style.opacity=counted?'1':'0.38';
+    const chk=document.getElementById('ptschk-'+i);if(chk)chk.style.color=counted?'var(--green)':'transparent';
+    const val=document.getElementById('ptsval-'+i);
+    if(val)val.innerHTML=pts+(bonus?' <span style="color:var(--green);font-size:10px">+'+bonus+'</span>':'');
   });
-  // Background save after DOM update
-  saveGrades(grades);
-  // Sync osbadge in subject OS header
+  lss('jm_pts_grades',g);
+  lss('jm_pts',SUBJECTS.map((s,idx)=>({name:s.name,pts:GRADE_PTS[g[idx]],mathsBonus:s.mathsBonus||false})));
+  sbPushS('jm_pts_grades',g);
   for(const[sid,sidx] of Object.entries(OS_TO_SUBJ_IDX)){
-    if(sidx!==i)continue;
-    const el=document.getElementById('osbadge-'+sid);if(!el)continue;
-    const pts=GRADE_PTS[grade]||0;
-    const bonus=(SUBJECTS[i]&&SUBJECTS[i].mathsBonus&&pts===100)?25:0;
-    el.textContent=grade+'·'+(pts+bonus)+'p';
-    break;
+    const badge=document.getElementById('osbadge-'+sid);if(!badge)continue;
+    const p=GRADE_PTS[g[sidx]]||0;const bonus=(SUBJECTS[sidx]&&SUBJECTS[sidx].mathsBonus&&p===100)?25:0;
+    badge.textContent=g[sidx]+'·'+(p+bonus)+'p';
   }
 }
 
@@ -434,13 +440,13 @@ function setGrade(i,grade){
 const SR_INTERVALS=[1,3,7,14,30];
 const SUBJECTS_OS=[
   {id:'chem',name:'Chemistry HL',link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
-   topics:['Ch11 — Moles (consolidation)','Ch12 — Behaviour of Gases','Ch13 — Stoichiometry','Ch14 — Solutions & Concentration','Ch15 — Rates of Reaction','Ch16 — Acids & Bases','Ch17 — Volumetric Analysis (Acid-Base)','Ch18 — pH & Titration Curves','Ch19 — Oxidation & Reduction','Ch20 — Electrochemistry','Ch21 — Chemical Equilibrium (6th yr)','Ch22–27 — Organic Chemistry (6th yr)','Ch28–30 — Context chapters (6th yr)']},
+   topics:['Atomic structure','Electronic configuration','Periodic table trends','Chemical bonding','Shapes of molecules VSEPR','Intermolecular forces','Stoichiometry and moles','Gas laws','Thermochemistry','Rates of reaction','Chemical equilibrium','Acids and bases','Oxidation and reduction','Electrochemistry','Organic chemistry','Polymers','Environmental chemistry','Industrial chemistry','Volumetric analysis','Water chemistry']},
   {id:'phys',name:'Physics HL',link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
-   topics:['Light & Sound L1 — Waves','Light & Sound L2 — Reflection','Light & Sound L3 — Refraction 1','Light & Sound L4 — Refraction 2','Light & Sound L5 — Interference & Diffraction','Light & Sound L6 — Properties of Light','Light & Sound L7 — Sound','Light & Sound L8 — Doppler Effect','Light & Sound L9 — Standing Waves','Mechanics L1 — Horizontal Linear Motion','Mechanics L2 — Motion under Gravity','Mechanics L3 — Scalars & Vectors','Mechanics L4 — Momentum & Newton\'s Laws','Mechanics L5 — Work, Energy & Power','Mechanics L6 — Circular Motion','Mechanics L7 — Pressure','Mechanics L8 — Gravity','Mechanics L9 — Gravitational Circular Motion','Electricity L1 — Charges','Electricity L2 — Coulomb\'s Law','Electricity L3 — Electric Fields','Electricity L4 — Current Electricity','Electricity L5 — Conduction in Materials','Electricity L6 — Resistance','Electricity L7 — Effects of Electric Current','Electricity L8 — Magnetism','Electricity L9 — Electromagnetic Induction','Heat L1 — Measuring Temperature','Heat L2 — Specific Heat Capacity','Heat L3 — Specific Latent Heat','Heat L4 — Transmission of Heat','Modern Physics L1 — Thermionic Emission','Modern Physics L2 — Photoelectric Emission','Modern Physics L3 — X-rays','Modern Physics L4 — Structure of Atom','Modern Physics L5 — Radioactivity 1','Modern Physics L6 — Radioactivity 2','Modern Physics L7 — Nuclear Energy Calculations','Modern Physics L8 — Fission & Fusion','Modern Physics L9 — Particle Physics 1','Modern Physics L10 — Particle Physics 2']},
+   topics:['Measurement and units','Linear motion','Newton\'s laws and forces','Momentum and collisions','Work energy and power','Circular motion','Gravity and planetary motion','Simple harmonic motion','Waves','Sound','Light reflection and refraction','Lenses and mirrors','Interference and diffraction','Electrostatics','Electric fields and potential','Current electricity','Capacitors','Magnetic fields','Electromagnetic induction','AC circuits and transformers','Particle physics','Nuclear physics','Radioactivity','The electron','Semiconductors','Relativity']},
   {id:'acc',name:'Accounting HL',link:'https://www.examinations.ie/schools/sec-exam-papers/',linkText:'LC Past Papers (SEC)',
-   topics:['Depreciation','Revaluation of Fixed Assets','Suspense Accounts','Control Accounts','Club Accounts','Service Firms','Q1 Sole Trader Final Accounts','Q1 Company Final Accounts','Q5 Interpretation of Accounts','Q9 Budgeting','Q8 Marginal Costing','Cash Flow Statements (6th yr)','Published Accounts (6th yr)','Farm Accounts (6th yr)','Incomplete Records (6th yr)','Manufacturing Final Accounts (6th yr)']},
+   topics:['Double entry bookkeeping','Trial balance','Final accounts sole trader','Final accounts partnership','Final accounts company','Club accounts','Farm accounts','Service firm accounts','Tabular statement','Cash flow statement','Interpretation of accounts','Budgeting','Break-even analysis','Marginal costing','Standard costing and variance','Depreciation methods','Control accounts','Bank reconciliation','VAT and payroll','Government and national accounts']},
   {id:'am',name:'Applied Maths HL',link:null,linkText:null,
-   topics:['Ch1 L1 — Horizontal UAM','Ch1 L2 — Vertical UAM (Free-fall)','Ch1 L3 — Successive Times & Distances','Ch1 L4 — Catch-up Problems','Ch1 L5 — Bodies Moving in Opposite Directions','Ch1 L6 — Velocity-Time Graphs','Ch1 L7 — Dimensional Analysis','Ch2 L1 — Basic Vectors','Ch2 L2 — Components & Dot Product','Ch2 L3 — i and j Vectors','Ch3 L1 — Equations in x and y','Ch3 L2 — Range & Max Height','Ch3 L3 — Finding Angles','Ch3 L4 — i and j Vector Approach','Ch3 L5 — Projectiles & Elasticity','Ch4 L1 — The Four Forces','Ch4 L2 — Connected Particles','Ch4 L3 — Pulleys','Ch6 L1 — Work and Energy','Ch6 L2 — Conservation Laws','Ch7 L1 — Equations of Circular Motion','Ch7 L2 — Horizontal Circular Motion','Ch7 L3 — Vertical Circular Motion','Ch8 L1 — Direct Collisions','Ch8 L2 — More than One Collision','Ch8 L3 — Collisions with Strings','Ch8 L4 — Oblique Collisions']},
+   topics:['Ch1 Horizontal UAM','Ch1 Vertical UAM free fall','Ch1 Successive times and distances','Ch1 Catch-up problems','Ch1 Bodies moving in opposite directions','Ch1 Velocity-time graphs','Ch1 Dimensional analysis','Ch2 Basic vectors','Ch2 Components and dot product','Ch2 i and j vectors','Ch3 Applying equations in x and y','Ch3 Proving general rules','Ch3 Finding angles','Ch3 i and j vector approach','Ch3 Projectiles and elasticity','Ch4 Newton\'s laws L1','Ch4 Newton\'s laws L2','Ch4 Pulleys','Ch6 Work and energy L1','Ch6 Work and energy L2','Ch7 Circular motion L1','Ch7 Circular motion L2','Ch7 Circular motion L3','Ch8 Collisions L1','Ch8 Collisions L2','Ch8 Collisions L3','Ch8 Oblique collisions']},
   {id:'maths',name:'Maths HL',link:null,linkText:null,topics:[]},
   {id:'irish',name:'Irish HL',link:null,linkText:null,topics:[]},
   {id:'pe',name:'PE HL',link:null,linkText:null,topics:[]},
@@ -648,45 +654,6 @@ function adjAM(delta){
 }
 renderAM();
 
-// ── Study sessions ────────────────────────────────────────────────────────────
-const SSKEY='jm_study_sessions';
-function addStudySession(){
-  const subj=$('ssSubj').value,type=$('ssType').value,dur=$('ssDur').value;
-  if(!dur){alert('Enter duration');return;}
-  const sessions=ls(SSKEY,[]);sessions.unshift({subj,type,dur:+dur,date:dk(),ts:Date.now()});
-  lss(SSKEY,sessions);sbPushS(SSKEY,sessions);$('ssDur').value='';
-  bumpStreak('study');renderStudySessions();renderStudyChart();
-}
-function renderStudySessions(){
-  const sessions=ls(SSKEY,[]);
-  $('studyCount').textContent=sessions.length+' sessions';
-  if(!sessions.length){$('studyLog').innerHTML='<div style="color:var(--t3);font-size:13px;text-align:center;padding:12px">No sessions yet</div>';return;}
-  $('studyLog').innerHTML=sessions.slice(0,8).map(s=>`<div class="log-item"><div class="log-hd"><span class="log-type ${s.type}">${s.type}</span><span class="log-dur">${s.dur} min</span></div><div class="log-subj">${s.subj}</div><div class="log-date">${s.date}</div></div>`).join('');
-}
-renderStudySessions();
-
-// ── Study time chart ──────────────────────────────────────────────────────────
-let studyChartInst=null;
-function renderStudyChart(){
-  const canvas=$('studyChart');if(!canvas||!window.Chart)return;
-  const sessions=ls(SSKEY,[]);const now=new Date();
-  const ws=new Date(now);ws.setDate(ws.getDate()-ws.getDay());ws.setHours(0,0,0,0);
-  const thisWeek=sessions.filter(s=>s.ts>=ws.getTime());
-  const subjectNames=SUBJECTS.map(s=>s.name);const minBySubj={};subjectNames.forEach(n=>minBySubj[n]=0);
-  let total=0;thisWeek.forEach(s=>{if(minBySubj[s.subj]!==undefined){minBySubj[s.subj]+=s.dur;total+=s.dur;}});
-  $('weekTotalBadge').textContent=total+' min';
-  const shortNames=subjectNames.map(n=>n.replace(' HL','').replace('Applied ','AM '));
-  const data=subjectNames.map(n=>minBySubj[n]);
-  const palette=['rgba(125,211,252,.8)','rgba(167,139,250,.8)','rgba(110,231,183,.8)','rgba(255,138,138,.8)','rgba(251,191,36,.8)','rgba(251,146,60,.8)','rgba(125,211,252,.55)','rgba(167,139,250,.55)','rgba(110,231,183,.55)'];
-  if(studyChartInst)studyChartInst.destroy();
-  studyChartInst=new Chart(canvas.getContext('2d'),{
-    type:'bar',data:{labels:shortNames,datasets:[{data,backgroundColor:palette,borderRadius:4,borderSkipped:false}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>ctx.raw+' min'}}},
-    scales:{x:{ticks:{color:'rgba(255,255,255,.3)',font:{size:9},maxRotation:30},grid:{display:false}},y:{min:0,ticks:{color:'rgba(255,255,255,.3)',font:{size:9}},grid:{color:'rgba(255,255,255,.05)'}}}}
-  });
-}
-renderStudyChart();
-
 // ── Today's Study Panel ───────────────────────────────────────────────────────
 const SUMMER_START_D=new Date(2026,5,23);
 const SUMMER_END_D=new Date(2026,7,29);
@@ -846,9 +813,9 @@ function togglePlanDone(idx){
     if(nowDone){btn.classList.add('done');btn.textContent='✓ Done';}
     else{btn.classList.remove('done');btn.textContent='Mark Done';}
   }
-  // Background save
   lss(key,d);
   sbPushS(key,d);
+  renderWeekSummary();
 }
 function togglePlanDetail(idx){const el=document.getElementById('pdet-'+idx);if(el)el.classList.toggle('expanded')}
 
@@ -936,12 +903,112 @@ function renderPlanPanel(){
 }
 renderPlanPanel();
 
+// ── Irish floating sessions ───────────────────────────────────────────────────
+const IRISH_KEY='jm_irish_sessions';
+const IRISH_SESSIONS=[
+  {id:'s1',label:'S1 Essay phrases and topic selection',dur:50,requires:[]},
+  {id:'s2',label:'S2 First timed essay',dur:60,requires:['s1']},
+  {id:'s3',label:'S3 Reading comprehension',dur:55,requires:[]},
+  {id:'s4',label:'S4 Prose exam technique',dur:50,requires:[]},
+  {id:'s5',label:'S5 Poetry exam technique',dur:50,requires:[]},
+  {id:'s6',label:'S6 Second essay and consolidation',dur:60,requires:['s1','s3']},
+];
+function renderIrish(){
+  const el=document.getElementById('irish-sessions-list');if(!el)return;
+  const done=ls(IRISH_KEY,{});
+  el.innerHTML=IRISH_SESSIONS.map(s=>{
+    const isDone=!!done[s.id];
+    const blocked=s.requires.some(r=>!done[r]);
+    const opacity=blocked?'0.38':'1';
+    const reqNote=s.requires.length?' · needs '+s.requires.join(', '):'';
+    const doneNote=isDone?' · <span style="color:var(--green)">done</span>':'';
+    return`<div class="irish-row" style="opacity:${opacity}">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:600;color:var(--t1)">${s.label}</div>
+        <div style="font-size:11px;color:var(--t3);margin-top:2px">${s.dur} min${reqNote}${doneNote}</div>
+      </div>
+      <button class="irish-btn${isDone?' done':''}" onclick="markIrishDone('${s.id}')" ${(blocked||isDone)?'disabled':''}>${isDone?'✓ Done':'Mark Done'}</button>
+    </div>`;
+  }).join('');
+}
+function markIrishDone(id){
+  const done=ls(IRISH_KEY,{});
+  done[id]=true;
+  // DOM first
+  const rows=document.querySelectorAll('#irish-sessions-list .irish-row');
+  const idx=IRISH_SESSIONS.findIndex(s=>s.id===id);
+  if(rows[idx]){const btn=rows[idx].querySelector('.irish-btn');if(btn){btn.classList.add('done');btn.textContent='✓ Done';btn.disabled=true;}}
+  lss(IRISH_KEY,done);sbPushS(IRISH_KEY,done);renderIrish();
+}
+renderIrish();
+
+// ── AAC Projects ──────────────────────────────────────────────────────────────
+const AAC_KEY='jm_aac_projects';
+const AAC_ITEMS=[{id:'phys',label:'Physics in Practice'},{id:'chem',label:'Chemistry Investigation'}];
+const AAC_STATUS_OPTS=['Not Started','Topic Selected','Research Started','Draft Complete'];
+function renderAAC(){
+  const el=document.getElementById('aac-list');if(!el)return;
+  const data=ls(AAC_KEY,{});
+  el.innerHTML=AAC_ITEMS.map(item=>{
+    const status=data[item.id]||'Not Started';
+    const opts=AAC_STATUS_OPTS.map(o=>`<option${o===status?' selected':''}>${o}</option>`).join('');
+    return`<div class="aac-row">
+      <div style="flex:1;font-size:13px;font-weight:600;color:var(--t1)">${item.label}</div>
+      <select style="background:var(--bg);border:1px solid var(--b);border-radius:6px;color:var(--t1);font-size:12px;padding:5px 8px;font-family:var(--font);cursor:pointer;-webkit-appearance:none" onchange="setAACStatus('${item.id}',this.value)">${opts}</select>
+    </div>`;
+  }).join('');
+  const allStarted=AAC_ITEMS.every(item=>(data[item.id]||'Not Started')!=='Not Started');
+  const card=document.getElementById('aac-card');
+  if(card)card.style.borderColor=allStarted?'rgba(110,231,183,.3)':'rgba(255,255,255,.08)';
+  const badge=document.getElementById('aac-badge');
+  if(badge){const n=AAC_ITEMS.filter(item=>(data[item.id]||'Not Started')!=='Not Started').length;badge.textContent=n+' / '+AAC_ITEMS.length+' started';}
+}
+function setAACStatus(id,status){
+  const data=ls(AAC_KEY,{});data[id]=status;
+  lss(AAC_KEY,data);sbPushS(AAC_KEY,data);renderAAC();
+}
+renderAAC();
+
+// ── Weekly completion summary ─────────────────────────────────────────────────
+function renderWeekSummary(){
+  const grid=document.getElementById('week-summary-grid');if(!grid)return;
+  const now=new Date();
+  const todayDow=now.getDay();
+  const todayDowN=todayDow===0||todayDow===6?-1:todayDow-1;
+  const weekNum=getSummerWeekNum();
+  const weekPlan=schedule[weekNum]||{};
+  let totalSess=0,doneSess=0,html='';
+  PLAN_DAY_ORDER.forEach((day,i)=>{
+    const sessions=weekPlan[day]||[];
+    const dateStr=dk(getWeekDateForIdx(i));
+    const doneData=ls('jm_plan_done_'+dateStr,{});
+    const isPast=todayDowN>=0&&i<todayDowN;
+    const isToday=i===todayDowN;
+    totalSess+=sessions.length;
+    sessions.forEach((_,si)=>{if(doneData[si])doneSess++;});
+    const dots=sessions.map((s,si)=>{
+      const isDone=!!doneData[si];
+      const col=isDone?'var(--green)':isPast?'var(--red)':'rgba(255,255,255,.18)';
+      return`<div class="wsm-dot" style="background:${col}" title="${s.subject}"></div>`;
+    }).join('');
+    const border=isToday?'border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04)':'border:1px solid transparent';
+    const nameCol=isToday?'var(--t2)':'var(--t4)';
+    html+=`<div style="${border};border-radius:var(--rs);padding:8px 4px;text-align:center">
+      <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:${nameCol};margin-bottom:6px">${PLAN_DAY_NAMES[i].slice(0,3).toUpperCase()}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:3px;justify-content:center;min-height:12px">${dots||'<div style="font-size:8px;color:var(--t4)">—</div>'}</div>
+    </div>`;
+  });
+  grid.innerHTML=html;
+  const badge=document.getElementById('week-done-badge');
+  if(badge)badge.textContent=doneSess+' / '+totalSess;
+}
+renderWeekSummary();
+
 // ── Supabase data fetch (after all renders — dirtyKeys prevents overwrite) ────
 (function sbStudyFetch(){
   if(!sbS)return;
-  const keys=['jm_conf','jm_pts_grades',AMK,SK,SSKEY];
+  const keys=['jm_conf','jm_pts_grades',AMK,SK,IRISH_KEY,AAC_KEY];
   SUBJECTS_OS.forEach(s=>{keys.push('jm_topics_'+s.id);keys.push('jm_ctopics_'+s.id);keys.push('jm_results_'+s.id);});
-  // Load plan_done for all days of current week
   for(let i=0;i<5;i++){keys.push('jm_plan_done_'+dk(getWeekDateForIdx(i)));}
   sbS.from('app_state').select('key,data').in('key',keys)
     .then(res=>{
@@ -952,10 +1019,22 @@ renderPlanPanel();
         renderPoints();
         const anySOSOpen=SUBJECTS_OS.some(s=>{const b=document.getElementById('sos-body-'+s.id);return b&&b.classList.contains('open');});
         if(!anySOSOpen)initSOS();
-        renderStreaks();renderAM();renderStudyChart();renderStudySessions();
+        renderStreaks();renderAM();renderIrish();renderAAC();renderWeekSummary();
         if(!Array.from(sbDirty).some(k=>k.startsWith('jm_plan_done_')))renderPlanPanel();
       }
     }).catch(()=>{});
+})();
+
+// ── Page header ───────────────────────────────────────────────────────────────
+(function initHeader(){
+  const now=new Date();
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const dateEl=document.getElementById('hdr-date');
+  const weekEl=document.getElementById('hdr-week');
+  if(dateEl)dateEl.textContent=days[now.getDay()]+' '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+  const wn=getSummerWeekNum();
+  if(weekEl)weekEl.textContent=wn>=1&&wn<=10?'Week '+wn+' of 10 — Summer Plan':wn<1?'Summer Plan starts soon':'Summer Plan complete';
 })();
 </script>
 </body>
