@@ -401,22 +401,25 @@ function renderPoints(){
 }
 const OS_TO_SUBJ_IDX={chem:3,phys:2,acc:5,am:6,maths:0,irish:1,pe:4,eng:7,french:8};
 function setGrade(i,grade){
-  const grades=getGrades();grades[i]=grade;saveGrades(grades);
-  if(ptsOpen){
-    const {effective,top6,total}=calcTop6(grades);
-    $('ptsTotal').textContent=total;
-    const gap=TARGET-total;
-    $('ptsGap').textContent=gap>0?`Gap: ${gap} pts to 625`:'🎉 625 reached!';
-    $('ptsGap').style.color=gap<=0?'var(--green)':'var(--red)';
-    $('ptsProg').style.width=Math.min(100,total/TARGET*100)+'%';
-    effective.forEach((s,j)=>{
-      const row=document.getElementById('ptsrow-'+j);if(!row)return;
-      row.style.opacity=top6.has(j)?'1':'0.38';
-      const chk=document.getElementById('ptschk-'+j);if(chk)chk.style.color=top6.has(j)?'var(--green)':'transparent';
-      const val=document.getElementById('ptsval-'+j);
-      if(val)val.innerHTML=s.pts+(s.bonus?` <span style="color:var(--green);font-size:10px">+${s.bonus}</span>`:'');
-    });
-  }
+  const grades=getGrades();
+  grades[i]=grade;
+  // DOM-first — no ptsOpen guard; elements exist in DOM even when panel is hidden
+  const {effective,top6,total}=calcTop6(grades);
+  const totalEl=$('ptsTotal');if(totalEl)totalEl.textContent=total;
+  const gap=TARGET-total;
+  const gapEl=$('ptsGap');
+  if(gapEl){gapEl.textContent=gap>0?`Gap: ${gap} pts to 625`:'🎉 625 reached!';gapEl.style.color=gap<=0?'var(--green)':'var(--red)';}
+  const progEl=$('ptsProg');if(progEl)progEl.style.width=Math.min(100,total/TARGET*100)+'%';
+  effective.forEach((s,j)=>{
+    const row=document.getElementById('ptsrow-'+j);if(!row)return;
+    row.style.opacity=top6.has(j)?'1':'0.38';
+    const chk=document.getElementById('ptschk-'+j);if(chk)chk.style.color=top6.has(j)?'var(--green)':'transparent';
+    const val=document.getElementById('ptsval-'+j);
+    if(val)val.innerHTML=s.pts+(s.bonus?` <span style="color:var(--green);font-size:10px">+${s.bonus}</span>`:'');
+  });
+  // Background save after DOM update
+  saveGrades(grades);
+  // Sync osbadge in subject OS header
   for(const[sid,sidx] of Object.entries(OS_TO_SUBJ_IDX)){
     if(sidx!==i)continue;
     const el=document.getElementById('osbadge-'+sid);if(!el)continue;
