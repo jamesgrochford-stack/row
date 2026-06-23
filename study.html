@@ -82,6 +82,8 @@ select.fi{cursor:pointer}
 .streak-num{font-size:26px;font-weight:700;font-family:var(--mono);line-height:1}
 .streak-lbl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;font-weight:600}
 .streak-emoji{font-size:16px;margin-bottom:3px}
+.streak-undo{background:none;border:1px solid var(--b);border-radius:999px;color:var(--t4);font-size:10px;font-weight:700;padding:2px 8px;cursor:pointer;margin-top:6px;-webkit-tap-highlight-color:transparent;line-height:1;display:block}
+.streak-undo:active{background:var(--s2)}
 
 /* ── AM counter ── */
 .am-big{text-align:center;padding:12px 0 6px}
@@ -182,25 +184,7 @@ select.fi{cursor:pointer}
 <body>
 <div class="bento">
 
-  <!-- 1. AAC Critical -->
-  <div class="card" style="border-color:rgba(255,138,138,.3);background:rgba(255,138,138,.05)">
-    <div class="card-hd" style="margin-bottom:10px">
-      <span class="card-title" style="color:var(--red)">🚨 Critical — AAC Projects</span>
-      <span class="badge badge-red">40% of LC Grade</span>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:6px">
-      <div style="padding:10px;background:rgba(255,138,138,.08);border:1px solid rgba(255,138,138,.2);border-radius:var(--rs)">
-        <div style="font-size:13px;font-weight:700;color:var(--red)">⚠️ Physics AAC — Not Started</div>
-        <div style="font-size:12px;color:var(--t2);margin-top:3px">Assessed coursework · 40% of Physics HL grade · Summer priority</div>
-      </div>
-      <div style="padding:10px;background:rgba(255,138,138,.08);border:1px solid rgba(255,138,138,.2);border-radius:var(--rs)">
-        <div style="font-size:13px;font-weight:700;color:var(--red)">⚠️ Chemistry AAC — Not Started</div>
-        <div style="font-size:12px;color:var(--t2);margin-top:3px">Assessed coursework · 40% of Chemistry HL grade · Summer priority</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. Today's Study Panel (dominant) -->
+  <!-- 1. Today's Study Panel (dominant) -->
   <div class="card" id="today-plan">
     <div class="card-hd" style="margin-bottom:6px">
       <span class="card-title">📅 Today's Study</span>
@@ -221,11 +205,11 @@ select.fi{cursor:pointer}
 
   <!-- 3. Streaks (compact row) -->
   <div class="card">
-    <div class="card-hd" style="margin-bottom:10px"><span class="card-title">🔥 Streaks</span><span style="font-size:11px;color:var(--t4)">tap to log today</span></div>
+    <div class="card-hd" style="margin-bottom:10px"><span class="card-title">🔥 Streaks</span><span style="font-size:11px;color:var(--t4)">tap to log · − to undo</span></div>
     <div class="streak-grid">
-      <div class="streak-tile" onclick="bumpStreak('duolingo')"><div class="streak-emoji">🇫🇷</div><div class="streak-num" id="sDuolingo" style="color:var(--orange)">0</div><div class="streak-lbl">Duolingo</div></div>
-      <div class="streak-tile" onclick="bumpStreak('anki')"><div class="streak-emoji">🃏</div><div class="streak-num" id="sAnki" style="color:var(--purple)">0</div><div class="streak-lbl">Anki</div></div>
-      <div class="streak-tile" onclick="editStreak()"><div class="streak-emoji">📅</div><div class="streak-num" id="sStudy" style="color:var(--blue)">0</div><div class="streak-lbl">Study Days</div></div>
+      <div class="streak-tile" onclick="bumpStreak('duolingo')"><div class="streak-emoji">🇫🇷</div><div class="streak-num" id="sDuolingo" style="color:var(--orange)">0</div><div class="streak-lbl">Duolingo</div><button class="streak-undo" onclick="event.stopPropagation();undoStreak('duolingo')">−</button></div>
+      <div class="streak-tile" onclick="bumpStreak('anki')"><div class="streak-emoji">🃏</div><div class="streak-num" id="sAnki" style="color:var(--purple)">0</div><div class="streak-lbl">Anki</div><button class="streak-undo" onclick="event.stopPropagation();undoStreak('anki')">−</button></div>
+      <div class="streak-tile" onclick="bumpStreak('study')"><div class="streak-emoji">📅</div><div class="streak-num" id="sStudy" style="color:var(--blue)">0</div><div class="streak-lbl">Study Days</div><button class="streak-undo" onclick="event.stopPropagation();undoStreak('study')">−</button></div>
     </div>
   </div>
 
@@ -402,26 +386,40 @@ function renderPoints(){
   $('ptsList').innerHTML=effective.map((s,i)=>{
     const counted=top6.has(i);
     const bonusHtml=s.bonus?` <span style="color:var(--green);font-size:10px">+${s.bonus}</span>`:'';
-    const opts=GRADE_OPTS.map(g=>`<option value="${g}"${grades[i]===g?' selected':''}>${g} · ${GRADE_PTS[g]}pts</option>`).join('');
-    return`<div class="pts-row" style="${counted?'':'opacity:.38'}">
+    const opts=GRADE_OPTS.map(g=>`<option value="${g}"${grades[i]===g?' selected':''}>${g}</option>`).join('');
+    return`<div class="pts-row" id="ptsrow-${i}" style="${counted?'':'opacity:.38'}">
       <div style="display:flex;align-items:center;gap:6px;flex:1;min-width:0">
-        <span style="color:${counted?'var(--green)':'transparent'};font-size:11px;flex-shrink:0">✓</span>
+        <span id="ptschk-${i}" style="color:${counted?'var(--green)':'transparent'};font-size:11px;flex-shrink:0">✓</span>
         <span class="pts-subj" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.name}</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
         <select onchange="setGrade(${i},this.value)" style="background:var(--bg2);border:1px solid var(--b);border-radius:6px;color:var(--t1);font-size:12px;padding:4px 6px;font-family:var(--mono);cursor:pointer;-webkit-appearance:none">${opts}</select>
-        <span class="pts-val" style="min-width:40px;text-align:right">${s.pts}${bonusHtml}</span>
+        <span class="pts-val" id="ptsval-${i}" style="min-width:40px;text-align:right">${s.pts}${bonusHtml}</span>
       </div>
     </div>`;
   }).join('');
 }
 const OS_TO_SUBJ_IDX={chem:3,phys:2,acc:5,am:6,maths:0,irish:1,pe:4,eng:7,french:8};
 function setGrade(i,grade){
-  const grades=getGrades();grades[i]=grade;saveGrades(grades);renderPoints();
+  const grades=getGrades();grades[i]=grade;saveGrades(grades);
+  if(ptsOpen){
+    const {effective,top6,total}=calcTop6(grades);
+    $('ptsTotal').textContent=total;
+    const gap=TARGET-total;
+    $('ptsGap').textContent=gap>0?`Gap: ${gap} pts to 625`:'🎉 625 reached!';
+    $('ptsGap').style.color=gap<=0?'var(--green)':'var(--red)';
+    $('ptsProg').style.width=Math.min(100,total/TARGET*100)+'%';
+    effective.forEach((s,j)=>{
+      const row=document.getElementById('ptsrow-'+j);if(!row)return;
+      row.style.opacity=top6.has(j)?'1':'0.38';
+      const chk=document.getElementById('ptschk-'+j);if(chk)chk.style.color=top6.has(j)?'var(--green)':'transparent';
+      const val=document.getElementById('ptsval-'+j);
+      if(val)val.innerHTML=s.pts+(s.bonus?` <span style="color:var(--green);font-size:10px">+${s.bonus}</span>`:'');
+    });
+  }
   for(const[sid,sidx] of Object.entries(OS_TO_SUBJ_IDX)){
     if(sidx!==i)continue;
-    const el=document.getElementById('osbadge-'+sid);
-    if(!el)continue;
+    const el=document.getElementById('osbadge-'+sid);if(!el)continue;
     const pts=GRADE_PTS[grade]||0;
     const bonus=(SUBJECTS[i]&&SUBJECTS[i].mathsBonus&&pts===100)?25:0;
     el.textContent=grade+'·'+(pts+bonus)+'p';
@@ -569,15 +567,22 @@ function getStreak(id){
   const today=dk();if(s.last===today)return s.count;
   const d=new Date(s.last);d.setDate(d.getDate()+1);if(dk(d)===today)return s.count;return 0;
 }
+const STREAK_ELS={duolingo:'sDuolingo',anki:'sAnki',study:'sStudy'};
 function bumpStreak(id){
   const data=ls(SK,{});const today=dk();const s=data[id]||{count:0,last:null};
-  if(s.last===today){alert('Already logged today!');return;}
+  if(s.last===today)return;
   const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);
-  s.count=s.last===dk(yesterday)?s.count+1:1;s.last=today;data[id]=s;lss(SK,data);sbPushS(SK,data);renderStreaks();
+  s.count=s.last===dk(yesterday)?s.count+1:1;s.last=today;
+  const el=$(STREAK_ELS[id]);if(el)el.textContent=s.count;
+  data[id]=s;lss(SK,data);sbPushS(SK,data);
 }
-function editStreak(){
-  const n=prompt('Study day streak count:');if(n===null)return;
-  const data=ls(SK,{});data.study={count:+n||0,last:dk()};lss(SK,data);sbPushS(SK,data);renderStreaks();
+function undoStreak(id){
+  const data=ls(SK,{});const today=dk();const s=data[id]||{count:0,last:null};
+  if(s.last!==today)return;
+  s.count=Math.max(0,s.count-1);
+  if(s.count===0){s.last=null;}else{const y=new Date();y.setDate(y.getDate()-1);s.last=dk(y);}
+  data[id]=s;lss(SK,data);sbPushS(SK,data);
+  const el=$(STREAK_ELS[id]);if(el)el.textContent=s.count;
 }
 function renderStreaks(){
   $('sDuolingo').textContent=getStreak('duolingo');
@@ -598,8 +603,8 @@ const AM_CHAPTERS=[
   {name:'Ch7 — Circular Motion',lessons:3},
   {name:'Ch8 — Collisions',lessons:4},
 ];
-function renderAM(){
-  const n=ls(AMK,0);
+function renderAM(val){
+  const n=(val!==undefined)?val:ls(AMK,0);
   $('amCount').textContent=n;
   $('amBadge').textContent=n+' / '+AM_TARGET;
   $('amProg').style.width=Math.min(100,n/AM_TARGET*100)+'%';
@@ -613,7 +618,11 @@ function renderAM(){
   }
   $('amChapters').innerHTML=html;
 }
-function adjAM(delta){const n=Math.max(0,ls(AMK,0)+delta);lss(AMK,n);sbPushS(AMK,n);renderAM()}
+function adjAM(delta){
+  const n=Math.max(0,ls(AMK,0)+delta);
+  renderAM(n);
+  lss(AMK,n);sbPushS(AMK,n);
+}
 renderAM();
 
 // ── Study sessions ────────────────────────────────────────────────────────────
