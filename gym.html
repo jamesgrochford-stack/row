@@ -20,10 +20,6 @@ html,body{background:var(--bg);color:var(--t1);font-family:var(--font);font-size
 body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) calc(80px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
 .wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
 
-.warn{border-radius:var(--r);padding:14px 16px;background:rgba(255,138,138,.09);border:2px solid rgba(255,138,138,.45);display:flex;align-items:center;gap:12px}
-.warn-title{font-size:14px;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.04em}
-.warn-sub{font-size:12px;color:rgba(255,138,138,.75);margin-top:3px}
-
 .card{background:var(--s);border:1px solid var(--b);border-radius:var(--r);padding:16px}
 .card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .card-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
@@ -83,14 +79,6 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 <body>
 <div class="wrap">
 
-  <div class="warn">
-    <span style="font-size:24px;flex-shrink:0">⚠️</span>
-    <div>
-      <div class="warn-title">Left Hamstring Imbalance</div>
-      <div class="warn-sub">10% deficit — prioritise unilateral work every session</div>
-    </div>
-  </div>
-
   <div class="card">
     <div class="card-hd"><span class="card-title">🏋️ Key Lifts</span></div>
     <div class="lifts-grid" id="liftsGrid"></div>
@@ -141,7 +129,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
       <span class="badge" id="logBadge">0 entries</span>
     </div>
     <div class="log-form">
-      <div class="log-form-full">
+      <div class="log-form-full" id="logExWrap">
         <label class="fl">Exercise</label>
         <input class="fi" id="logEx" type="text" placeholder="e.g. Squat" autocomplete="off">
       </div>
@@ -313,6 +301,8 @@ function renderWeeklyVolume(){
 var SB_URL = 'https://ymksoxojvrbrmpdzfjxf.supabase.co';
 var SB_KEY = 'sb_publishable_sozYCEAdWzVt1Tni_EbPCA_gdw6JdvN';
 var LOG_KEY = 'jm_gym_log';
+var WED_EX=['Squat','Trap bar deadlift','Bulgarian split squat','RDL','Nordics','Bench press','Pull-ups','Copenhagen plank','Pallof press','Box jumps','Pogos','Accelerations'];
+var SUN_EX=['Speed trap bar deadlift','Single-leg hip thrust','Copenhagen plank','Single-arm landmine press','Bent-over row','Hip flexor KB hold','Isometric calf raise','Tibialis raises'];
 var sb = window.supabase ? window.supabase.createClient(SB_URL, SB_KEY) : null;
 var lastSyncJson = '';
 
@@ -332,6 +322,28 @@ function sbPush(val){
     .catch(function(){ setSyncDot(''); });
 }
 
+function logExSelChange(){
+  var sel=gel('logExSel'); var inp=gel('logEx'); if(!sel||!inp)return;
+  if(sel.value&&sel.value!=='__custom__') inp.value=sel.value;
+  else if(sel.value==='__custom__'){ inp.value=''; inp.focus(); }
+}
+function initLogExField(){
+  var dow=new Date().getDay();
+  var wrap=gel('logExWrap'); if(!wrap)return;
+  var exercises=dow===3?WED_EX:(dow===0?SUN_EX:null);
+  if(exercises){
+    wrap.innerHTML='<label class="fl">Exercise</label>'+
+      '<select class="fi" id="logExSel" onchange="logExSelChange()" style="margin-bottom:6px">'+
+        '<option value="">Select exercise…</option>'+
+        exercises.map(function(e){return'<option value="'+esc(e)+'">'+esc(e)+'</option>';}).join('')+
+        '<option value="__custom__">Other / custom…</option>'+
+      '</select>'+
+      '<input class="fi" id="logEx" type="text" placeholder="Or type a custom exercise" autocomplete="off">';
+  } else {
+    wrap.innerHTML='<label class="fl">Exercise</label>'+
+      '<input class="fi" id="logEx" type="text" placeholder="e.g. Squat" autocomplete="off">';
+  }
+}
 function addLog(){
   var ex=gel('logEx').value.trim();
   var wt=parseFloat(gel('logWt').value)||0;
@@ -343,6 +355,7 @@ function addLog(){
   logs.unshift({id:Date.now(),ex:ex,wt:wt,reps:reps,sets:sets,notes:notes,date:new Date().toISOString()});
   lsSet(LOG_KEY,logs);
   gel('logEx').value='';
+  var sel=gel('logExSel'); if(sel) sel.selectedIndex=0;
   gel('logWt').value='';
   gel('logReps').value='';
   gel('logSets').value='';
@@ -418,6 +431,7 @@ function renderLog(){
     }).subscribe();
 })();
 
+initLogExField();
 renderLog();
 renderStrengthChart();
 renderWeeklyVolume();
