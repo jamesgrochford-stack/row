@@ -23,7 +23,7 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 /* ── Day banner ── */
 .day-banner{border-radius:var(--r);background:var(--s);border:1px solid var(--b);display:flex;overflow:hidden}
 .banner-bar{width:5px;flex-shrink:0}
-.banner-body{padding:16px;flex:1}
+.banner-body{padding:16px;flex:1;position:relative;overflow:hidden;min-height:100px}
 .banner-daytype{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px}
 .banner-name{font-size:26px;font-weight:900;color:var(--t1);line-height:1.1;margin-bottom:6px}
 .banner-sub{font-size:12px;color:var(--t3);line-height:1.5}
@@ -136,9 +136,13 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
   <div class="day-banner" id="dayBanner">
     <div class="banner-bar" id="bannerBar"></div>
     <div class="banner-body">
-      <div class="banner-daytype" id="dayType"></div>
-      <div class="banner-name" id="dayName"></div>
-      <div class="banner-sub" id="daySub"></div>
+      <div style="padding-right:64px">
+        <div class="banner-daytype" id="dayType"></div>
+        <div class="banner-name" id="dayName"></div>
+        <div class="banner-sub" id="daySub"></div>
+      </div>
+      <div id="bannerIllus" style="position:absolute;right:-6px;top:50%;transform:translateY(-50%);opacity:0.15;pointer-events:none;line-height:0"></div>
+      <div id="bannerArc" style="position:absolute;top:12px;right:12px;line-height:0"></div>
     </div>
   </div>
 
@@ -427,6 +431,7 @@ var BANNER_GRADS = {
   6:'linear-gradient(160deg,rgba(110,45,5,.6),rgba(80,30,3,.25))',
 };
 var WAKE_TIMES   = {0:'07:30',1:'07:30',2:'06:15',3:'07:30',4:'06:15',5:'07:30',6:'08:00'};
+var BED_TIMES    = {0:'22:00',1:'22:00',2:'22:00',3:'22:30',4:'22:00',5:'22:30',6:'23:00'};
 var KEY_EVENTS   = {
   0:'Gym 09:00 · Pool & recovery 11:00',
   1:'Club training 18:00–19:30 · Leave 17:30',
@@ -447,6 +452,83 @@ function dateKey(d){ d=d||new Date(); return d.getFullYear()+'-'+('0'+(d.getMont
 function todayDow(){ return new Date().getDay(); }
 function setSyncDot(id,state){ var dot=gel(id); if(!dot) return; dot.className='sync-dot'+(state?' '+state:''); }
 
+/* ── Day banner illustrations ── */
+function getBannerSVG(dow,c){
+  var t=DAY_TYPES[dow];
+  if(t==='Morning Training Day'){
+    return '<svg width="100" height="100" viewBox="0 0 100 100" fill="none">'+
+      '<circle cx="50" cy="64" r="20" fill="'+c+'"/>'+
+      '<line x1="50" y1="37" x2="50" y2="24" stroke="'+c+'" stroke-width="3.5" stroke-linecap="round"/>'+
+      '<line x1="69" y1="47" x2="79" y2="37" stroke="'+c+'" stroke-width="3.5" stroke-linecap="round"/>'+
+      '<line x1="31" y1="47" x2="21" y2="37" stroke="'+c+'" stroke-width="3.5" stroke-linecap="round"/>'+
+      '<line x1="76" y1="62" x2="90" y2="60" stroke="'+c+'" stroke-width="3.5" stroke-linecap="round"/>'+
+      '<line x1="24" y1="62" x2="10" y2="60" stroke="'+c+'" stroke-width="3.5" stroke-linecap="round"/>'+
+      '<line x1="8" y1="90" x2="92" y2="90" stroke="'+c+'" stroke-width="2.5" stroke-linecap="round"/>'+
+      '</svg>';
+  }
+  if(t==='Evening Training Day'){
+    return '<svg width="100" height="100" viewBox="0 0 100 100" fill="none">'+
+      '<path d="M56 18 A30 30 0 1 0 56 78 A20 20 0 1 1 56 18Z" fill="'+c+'"/>'+
+      '<circle cx="78" cy="22" r="3" fill="'+c+'"/>'+
+      '<circle cx="86" cy="42" r="2" fill="'+c+'"/>'+
+      '<circle cx="72" cy="12" r="1.8" fill="'+c+'"/>'+
+      '<circle cx="88" cy="30" r="1.5" fill="'+c+'"/>'+
+      '<circle cx="82" cy="57" r="1.5" fill="'+c+'"/>'+
+      '</svg>';
+  }
+  if(t==='Match Day'){
+    return '<svg width="100" height="100" viewBox="0 0 100 100" fill="none">'+
+      '<circle cx="50" cy="50" r="36" stroke="'+c+'" stroke-width="3"/>'+
+      '<polygon points="50,30 66,43 60,62 40,62 34,43" fill="none" stroke="'+c+'" stroke-width="2.5" stroke-linejoin="round"/>'+
+      '<line x1="50" y1="30" x2="50" y2="14" stroke="'+c+'" stroke-width="2"/>'+
+      '<line x1="66" y1="43" x2="80" y2="36" stroke="'+c+'" stroke-width="2"/>'+
+      '<line x1="60" y1="62" x2="70" y2="76" stroke="'+c+'" stroke-width="2"/>'+
+      '<line x1="40" y1="62" x2="30" y2="76" stroke="'+c+'" stroke-width="2"/>'+
+      '<line x1="34" y1="43" x2="20" y2="36" stroke="'+c+'" stroke-width="2"/>'+
+      '</svg>';
+  }
+  if(t==='Free Day'){
+    return '<svg width="100" height="100" viewBox="0 0 100 100" fill="none">'+
+      '<circle cx="74" cy="26" r="10" fill="'+c+'"/>'+
+      '<polyline points="5,88 28,48 46,68 65,30 82,56 95,36" fill="none" stroke="'+c+'" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>'+
+      '<line x1="5" y1="88" x2="95" y2="88" stroke="'+c+'" stroke-width="2" stroke-linecap="round"/>'+
+      '</svg>';
+  }
+  if(t==='Recovery Day'){
+    return '<svg width="100" height="100" viewBox="0 0 100 100" fill="none">'+
+      '<path d="M5 42 Q22 25 38 42 Q55 59 72 42 Q88 25 95 35" fill="none" stroke="'+c+'" stroke-width="3.5" stroke-linecap="round"/>'+
+      '<path d="M5 60 Q22 43 38 60 Q55 77 72 60 Q88 43 95 53" fill="none" stroke="'+c+'" stroke-width="3.5" stroke-linecap="round"/>'+
+      '<path d="M15 26 Q28 14 42 26 Q56 38 70 26 Q82 14 90 21" fill="none" stroke="'+c+'" stroke-width="2" stroke-linecap="round" opacity="0.6"/>'+
+      '</svg>';
+  }
+  return '';
+}
+function buildArcSVG(color){
+  var circ=(2*Math.PI*20).toFixed(2);
+  return '<svg width="52" height="52" viewBox="0 0 52 52">'+
+    '<circle cx="26" cy="26" r="20" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="3.5"/>'+
+    '<circle id="arcProgress" cx="26" cy="26" r="20" fill="none" stroke="'+color+'" stroke-width="3.5"'+
+    ' stroke-dasharray="'+circ+'" stroke-dashoffset="'+circ+'" stroke-linecap="round" transform="rotate(-90 26 26)"/>'+
+    '<text id="arcPct" x="26" y="30" text-anchor="middle" font-size="10" font-weight="700"'+
+    ' fill="'+color+'" font-family="-apple-system,BlinkMacSystemFont,sans-serif">0%</text>'+
+    '</svg>';
+}
+function updateDayArc(){
+  var dow=todayDow();
+  var now=new Date();
+  var ws=WAKE_TIMES[dow].split(':'); var bs=BED_TIMES[dow].split(':');
+  var wakeMins=parseInt(ws[0])*60+parseInt(ws[1]);
+  var bedMins=parseInt(bs[0])*60+parseInt(bs[1]);
+  var nowMins=now.getHours()*60+now.getMinutes();
+  var total=bedMins-wakeMins;
+  var pct=total>0?Math.max(0,Math.min(1,(nowMins-wakeMins)/total)):0;
+  var pctInt=Math.round(pct*100);
+  var circ=125.66;
+  var arcEl=gel('arcProgress'); var pctEl=gel('arcPct');
+  if(arcEl)arcEl.setAttribute('stroke-dashoffset',(circ*(1-pct)).toFixed(1));
+  if(pctEl)pctEl.textContent=pctInt+'%';
+}
+
 /* ── Day banner ── */
 function initDayBanner(){
   var dow=todayDow();
@@ -459,6 +541,8 @@ function initDayBanner(){
   for(var k in SCHED_IDS){ var el=gel(SCHED_IDS[k]); if(el) el.style.display='none'; }
   var sel=gel(SCHED_IDS[dow]); if(sel) sel.style.display='flex';
   var wel=gel(WEEK_DOW_IDS[dow]); if(wel) wel.classList.add('today');
+  var ilEl=gel('bannerIllus'); if(ilEl) ilEl.innerHTML=getBannerSVG(dow,color);
+  var arcEl=gel('bannerArc'); if(arcEl){ arcEl.innerHTML=buildArcSVG(color); updateDayArc(); }
 }
 
 /* ── Garmin ── */
@@ -771,6 +855,7 @@ function sbPush(key,val,dotId){
 })();
 
 initDayBanner();
+setInterval(updateDayArc,60000);
 renderGarmin();
 renderHabits();
 renderWater();
