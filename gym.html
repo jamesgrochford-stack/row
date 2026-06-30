@@ -70,6 +70,43 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
 .sync-dot.synced{background:var(--green)}
 .sync-dot.syncing{background:var(--yellow)}
 
+/* ── Today's Session / per-exercise progression ── */
+.ex-block{background:var(--bg2);border:1px solid var(--b);border-radius:var(--rs);padding:12px;margin-bottom:8px}
+.ex-block:last-child{margin-bottom:0}
+.ex-block-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ex-block-name-wrap{display:flex;align-items:center;gap:6px;min-width:0;flex:1}
+.ex-block-name{font-size:13px;font-weight:700;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex-spark-wrap{flex-shrink:0;display:flex;align-items:center}
+.ex-spark-empty{font-size:9px;color:var(--t4);font-style:italic;white-space:nowrap}
+.ex-expand-arrow{font-size:10px;color:var(--t4);transition:transform .2s;flex-shrink:0}
+.ex-expand-arrow.open{transform:rotate(180deg)}
+.ex-last-time{margin-top:10px;padding:8px 10px;background:var(--bg);border:1px solid var(--b);border-radius:8px}
+.ex-last-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--t4);margin-bottom:3px}
+.ex-last-val{font-size:13px;font-weight:700;color:var(--t1)}
+.ex-last-ago{font-size:11px;color:var(--t4);margin-left:6px}
+.ex-last-empty{font-size:12px;color:var(--t4);font-style:italic}
+.presc-card{margin-top:8px;padding:9px 11px;border-radius:8px;background:var(--bg);border:1px solid var(--b);border-left:3px solid var(--t4)}
+.presc-card.presc-green{border-left-color:var(--green)}
+.presc-card.presc-amber{border-left-color:var(--yellow)}
+.presc-card.presc-red{border-left-color:var(--red)}
+.presc-tag{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.presc-tag.presc-green{color:var(--green)}
+.presc-tag.presc-amber{color:var(--yellow)}
+.presc-tag.presc-red{color:var(--red)}
+.presc-headline{font-size:18px;font-weight:800;font-family:var(--mono);color:var(--t1);line-height:1.2}
+.presc-reason{font-size:11px;color:var(--t3);line-height:1.4;margin-top:4px}
+.ex-log-row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:6px;margin-top:10px;align-items:end}
+.ex-log-input{background:var(--bg);border:1px solid var(--b2);border-radius:8px;padding:7px 8px;color:var(--t1);font-size:13px;font-family:var(--mono);width:100%;outline:none;-webkit-appearance:none}
+.ex-log-btn{padding:7px 12px;border-radius:8px;border:1px solid rgba(110,231,183,.3);background:rgba(110,231,183,.09);color:var(--green);font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.ex-history{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.ex-hist-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid var(--b);font-size:11px}
+.ex-hist-row:last-child{border-bottom:none}
+.ex-hist-date{color:var(--t4);font-family:var(--mono);width:64px;flex-shrink:0}
+.ex-hist-val{color:var(--t2);flex:1}
+.ex-hist-del{background:none;border:none;color:var(--t4);font-size:16px;cursor:pointer;padding:0 0 0 4px;line-height:1;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.pb-badge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.06em;color:#050506;background:var(--green);padding:2px 7px;border-radius:999px;margin-left:6px;animation:pbPop .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes pbPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.2);opacity:1}100%{transform:scale(1)}}
+
 .bnav{position:fixed;bottom:0;left:0;right:0;display:flex;background:rgba(5,5,6,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--b);padding:6px max(0px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(0px,env(safe-area-inset-left));z-index:100}
 .ntab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;text-decoration:none;color:var(--t4);font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;-webkit-tap-highlight-color:transparent;transition:color .15s}
 .ntab .ni{font-size:20px;line-height:1}
@@ -116,6 +153,13 @@ body{padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-rig
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="card" id="todaySessionCard" style="display:none">
+    <div class="card-hd">
+      <span class="card-title" id="todaySessionTitle">🎯 Today's Session <span class="sync-dot" id="sessSyncDot"></span></span>
+    </div>
+    <div id="todaySessionList"></div>
   </div>
 
   <div id="strengthChartWrap" class="card" style="display:none">
@@ -402,6 +446,246 @@ function renderLog(){
   gel('logList').innerHTML=html;
 }
 
+// ── Per-exercise progression engine ─────────────────────────────────────────
+var EXERCISE_META={
+  'Squat':              {repMin:3, repMax:5,  unit:'reps', incType:'weight', incKg:5},
+  'Trap bar deadlift':  {repMin:3, repMax:5,  unit:'reps', incType:'weight', incKg:5},
+  'Speed trap bar deadlift':{repMin:3, repMax:5, unit:'reps', incType:'weight', incKg:5},
+  'Bulgarian split squat':{repMin:8, repMax:12, unit:'reps', incType:'weight', incKg:2.5},
+  'RDL':                {repMin:8, repMax:12, unit:'reps', incType:'weight', incKg:2.5},
+  'Nordics':            {repMin:8, repMax:12, unit:'reps', incType:'bodyweight'},
+  'Bench press':        {repMin:5, repMax:8,  unit:'reps', incType:'weight', incKg:2.5},
+  'Pull-ups':           {repMin:5, repMax:8,  unit:'reps', incType:'bodyweight'},
+  'Copenhagen plank':   {repMin:20,repMax:30, unit:'sec',  incType:'bodyweight'},
+  'Pallof press':       {repMin:8, repMax:12, unit:'reps', incType:'weight', incKg:2.5},
+  'Box jumps':          {repMin:8, repMax:12, unit:'reps', incType:'bodyweight'},
+  'Pogos':              {repMin:8, repMax:12, unit:'reps', incType:'bodyweight'},
+  'Accelerations':      {repMin:8, repMax:12, unit:'reps', incType:'bodyweight'},
+  'Single-leg hip thrust':{repMin:8, repMax:12, unit:'reps', incType:'weight', incKg:2.5},
+  'Single-arm landmine press':{repMin:5, repMax:8, unit:'reps', incType:'weight', incKg:2.5},
+  'Bent-over row':      {repMin:5, repMax:8,  unit:'reps', incType:'weight', incKg:2.5},
+  'Hip flexor KB hold': {repMin:20,repMax:30, unit:'sec',  incType:'bodyweight'},
+  'Isometric calf raise':{repMin:30,repMax:45, unit:'sec', incType:'bodyweight'},
+  'Tibialis raises':    {repMin:8, repMax:12, unit:'reps', incType:'weight', incKg:2.5},
+};
+function slugify(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,''); }
+function exKey(slug){ return 'jm_gym_ex_'+slug; }
+function getExHistory(name){ return lsGet(exKey(slugify(name)),[]); }
+function saveExHistory(name,arr){ lsSet(exKey(slugify(name)),arr); }
+function sbPushKeyed(key,val,dotEl){
+  if(dotEl) dotEl.className='sync-dot syncing';
+  if(!sb){ if(dotEl) dotEl.className='sync-dot'; return; }
+  sb.from('app_state').upsert({key:key,data:val,updated_at:new Date().toISOString()},{onConflict:'key'})
+    .then(function(){ if(dotEl){ dotEl.className='sync-dot synced'; setTimeout(function(){dotEl.className='sync-dot';},2000);} })
+    .catch(function(){ if(dotEl) dotEl.className='sync-dot'; });
+}
+function relativeDay(dateStr){
+  var d=new Date(dateStr); d.setHours(0,0,0,0);
+  var now=new Date(); now.setHours(0,0,0,0);
+  var diff=Math.round((now-d)/86400000);
+  if(diff<=0) return 'today';
+  if(diff===1) return 'yesterday';
+  return diff+' days ago';
+}
+function migrateFlatLogToPerExercise(){
+  if(lsGet('jm_gym_ex_migrated',false)) return;
+  var logs=lsGet(LOG_KEY,[]);
+  if(logs.length){
+    var byEx={};
+    logs.forEach(function(l){
+      if(!byEx[l.ex]) byEx[l.ex]=[];
+      byEx[l.ex].push({id:l.id,wt:l.wt,reps:l.reps,sets:l.sets,notes:l.notes,date:l.date});
+    });
+    Object.keys(byEx).forEach(function(name){
+      var existing=getExHistory(name);
+      var merged=existing.concat(byEx[name].filter(function(e){
+        return !existing.some(function(x){return x.id===e.id;});
+      }));
+      merged.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+      saveExHistory(name,merged);
+      sbPushKeyed(exKey(slugify(name)),merged,null);
+    });
+  }
+  lsSet('jm_gym_ex_migrated',true);
+}
+function computePrescription(meta,history){
+  if(!history.length) return null;
+  var last=history[0];
+  var lastVal=meta.unit==='sec'?last.reps:last.reps;
+  var streak=1;
+  for(var i=1;i<history.length;i++){
+    if(history[i].wt===last.wt) streak++; else break;
+  }
+  var noneHitRange=true;
+  for(var j=0;j<streak && j<history.length;j++){
+    if(history[j].reps>=meta.repMax){ noneHitRange=false; break; }
+  }
+  var unitWord=meta.unit==='sec'?'s':' reps';
+  var unitWordSingle=meta.unit==='sec'?'second':'rep';
+  if(streak>=3 && noneHitRange && meta.incType==='weight'){
+    var deloadWt=Math.round(last.wt*0.9*2)/2;
+    return{tag:'Deload',color:'red',
+      headline:deloadWt+'kg × '+meta.repMin+'-'+meta.repMax+unitWord,
+      reason:'Stuck at '+last.wt+'kg for '+streak+' sessions without hitting the rep range — deload 10% and rebuild.'};
+  }
+  if(lastVal>=meta.repMax){
+    if(meta.incType==='bodyweight'){
+      return{tag:'Add rep',color:'green',
+        headline:(last.wt?last.wt+'kg × ':'')+(lastVal+1)+unitWord,
+        reason:'You hit the top of your rep range — add one more '+unitWordSingle+' next session.'};
+    }
+    var newWt=last.wt+meta.incKg;
+    return{tag:'Add weight',color:'green',
+      headline:newWt+'kg × '+meta.repMin+unitWord,
+      reason:'You hit the top of your rep range last time — add '+meta.incKg+'kg and reset to '+meta.repMin+unitWord+'.'};
+  }
+  return{tag:'Hold',color:'amber',
+    headline:(last.wt?last.wt+'kg × ':'')+meta.repMax+unitWord,
+    reason:'You were below the rep range last time — repeat the same weight and aim for '+meta.repMax+unitWord+'.'};
+}
+function renderSparkline(history){
+  if(history.length<2) return '<span class="ex-spark-empty">Log 2+ sessions to see trend</span>';
+  var pts=history.slice(0,8).slice().reverse();
+  var weights=pts.map(function(p){return p.wt||0;});
+  var w=70,h=24,pad=3,n=weights.length;
+  var minW=Math.min.apply(null,weights),maxW=Math.max.apply(null,weights);
+  if(minW===maxW){minW-=1;maxW+=1;}
+  var coords=weights.map(function(val,i){
+    var x=pad+(i*(w-2*pad)/(n-1));
+    var y=h-pad-((val-minW)/(maxW-minW))*(h-2*pad);
+    return[x,y];
+  });
+  var d='M'+coords[0][0]+','+coords[0][1];
+  for(var i=0;i<coords.length-1;i++){
+    var c1=coords[i],c2=coords[i+1];
+    var mx=(c1[0]+c2[0])/2,my=(c1[1]+c2[1])/2;
+    d+=' Q'+c1[0]+','+c1[1]+' '+mx+','+my;
+  }
+  d+=' L'+coords[coords.length-1][0]+','+coords[coords.length-1][1];
+  var areaD=d+' L'+coords[coords.length-1][0]+','+h+' L'+coords[0][0]+','+h+' Z';
+  var lastPt=coords[coords.length-1];
+  var gid='spark'+Math.random().toString(36).slice(2,8);
+  return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'">'+
+    '<defs><linearGradient id="'+gid+'" x1="0" y1="0" x2="0" y2="1">'+
+      '<stop offset="0%" stop-color="#7DD3FC" stop-opacity="0.35"/>'+
+      '<stop offset="100%" stop-color="#7DD3FC" stop-opacity="0"/>'+
+    '</linearGradient></defs>'+
+    '<path d="'+areaD+'" fill="url(#'+gid+')" stroke="none"/>'+
+    '<path d="'+d+'" fill="none" stroke="#7DD3FC" stroke-width="1.4" stroke-linecap="round"/>'+
+    '<circle cx="'+lastPt[0]+'" cy="'+lastPt[1]+'" r="2.6" fill="#bae6fd"/>'+
+  '</svg>';
+}
+var EX_PB_FLAG={};
+function renderExBlock(name){
+  var meta=EXERCISE_META[name];
+  var history=getExHistory(name);
+  var slug=slugify(name);
+  var last=history[0];
+  var lastTimeHtml=last?
+    '<div class="ex-last-label">Last Time</div>'+
+    '<div><span class="ex-last-val">'+(last.wt?last.wt+'kg × ':'')+last.reps+(meta.unit==='sec'?'s':' reps')+'</span>'+
+    '<span class="ex-last-ago">'+relativeDay(last.date)+'</span></div>'
+    : '<div class="ex-last-empty">First time logging this exercise</div>';
+  var presc=computePrescription(meta,history);
+  var prescHtml=presc?
+    '<div class="presc-card presc-'+presc.color+'">'+
+      '<div class="presc-tag presc-'+presc.color+'">'+(presc.color==='green'?'↑ ':presc.color==='red'?'↓ ':'• ')+presc.tag+'</div>'+
+      '<div class="presc-headline">'+presc.headline+'</div>'+
+      '<div class="presc-reason">'+presc.reason+'</div>'+
+    '</div>' : '';
+  var histHtml=history.map(function(h){
+    var d=new Date(h.date);
+    var ds=('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();
+    return '<div class="ex-hist-row"><span class="ex-hist-date">'+ds+'</span>'+
+      '<span class="ex-hist-val">'+(h.wt?h.wt+'kg × ':'')+h.reps+(meta.unit==='sec'?'s':' reps')+(h.sets?' × '+h.sets+' sets':'')+'</span>'+
+      '<button class="ex-hist-del" onclick="deleteExHistoryEntry(\''+esc(name).replace(/'/g,"\\'")+'\','+h.id+')">×</button>'+
+    '</div>';
+  }).join('')||'<div class="ex-last-empty">No sessions logged yet</div>';
+  var pbBadge=EX_PB_FLAG[slug]?'<span class="pb-badge">NEW PB</span>':'';
+  return '<div class="ex-block">'+
+    '<div class="ex-block-hd" onclick="toggleExHistory(\''+slug+'\')">'+
+      '<div class="ex-block-name-wrap">'+
+        '<span class="ex-block-name">'+esc(name)+'</span>'+pbBadge+
+      '</div>'+
+      '<span class="ex-spark-wrap">'+renderSparkline(history)+'</span>'+
+      '<span class="ex-expand-arrow" id="exarrow-'+slug+'">▾</span>'+
+    '</div>'+
+    '<div class="ex-last-time">'+lastTimeHtml+'</div>'+
+    prescHtml+
+    '<div class="ex-log-row">'+
+      '<input class="ex-log-input" type="number" inputmode="decimal" step="0.5" min="0" placeholder="kg" id="exwt-'+slug+'">'+
+      '<input class="ex-log-input" type="number" inputmode="numeric" min="1" placeholder="'+(meta.unit==='sec'?'sec':'reps')+'" id="exreps-'+slug+'">'+
+      '<input class="ex-log-input" type="number" inputmode="numeric" min="1" placeholder="sets" id="exsets-'+slug+'">'+
+      '<button class="ex-log-btn" onclick="logExercise(\''+esc(name).replace(/'/g,"\\'")+'\')">Log</button>'+
+    '</div>'+
+    '<div class="ex-history" id="exhist-'+slug+'">'+histHtml+'</div>'+
+  '</div>';
+}
+function renderTodaySession(){
+  var card=gel('todaySessionCard');
+  var dow=new Date().getDay();
+  var exercises=dow===3?WED_EX:(dow===0?SUN_EX:null);
+  if(!exercises){ card.style.display='none'; return; }
+  card.style.display='block';
+  gel('todaySessionTitle').innerHTML=(dow===3?'🎯 Wednesday Session':'🎯 Sunday Session')+' <span class="sync-dot" id="sessSyncDot"></span>';
+  gel('todaySessionList').innerHTML=exercises.map(function(name){ return renderExBlock(name); }).join('');
+}
+function toggleExHistory(slug){
+  var el=gel('exhist-'+slug); var arrow=gel('exarrow-'+slug);
+  if(!el) return;
+  var isOpen=el.style.maxHeight && el.style.maxHeight!=='0px';
+  if(isOpen){ el.style.maxHeight='0px'; if(arrow) arrow.classList.remove('open'); }
+  else{ el.style.maxHeight=el.scrollHeight+'px'; if(arrow) arrow.classList.add('open'); }
+}
+function logExercise(name){
+  var slug=slugify(name);
+  var wt=parseFloat(gel('exwt-'+slug).value)||0;
+  var reps=parseInt(gel('exreps-'+slug).value)||0;
+  var sets=parseInt(gel('exsets-'+slug).value)||0;
+  if(!reps){ gel('exreps-'+slug).focus(); return; }
+  var history=getExHistory(name);
+  var prevMaxWt=history.reduce(function(m,h){return Math.max(m,h.wt||0);},0);
+  var isPB=wt>0 && wt>prevMaxWt;
+  var entry={id:Date.now(),wt:wt,reps:reps,sets:sets,notes:'',date:new Date().toISOString()};
+  history.unshift(entry);
+  saveExHistory(name,history);
+  EX_PB_FLAG[slug]=isPB;
+  renderTodaySession();
+  renderWeeklyVolume();
+  sbPushKeyed(exKey(slug),history,gel('sessSyncDot'));
+  // keep flat log in sync for weekly volume / legacy workout log
+  var logs=lsGet(LOG_KEY,[]);
+  logs.unshift({id:entry.id,ex:name,wt:wt,reps:reps,sets:sets,notes:'',date:entry.date});
+  lsSet(LOG_KEY,logs);
+  renderLog();
+  sbPush(logs);
+}
+function deleteExHistoryEntry(name,id){
+  if(!confirm('Delete this entry?')) return;
+  var slug=slugify(name);
+  var history=getExHistory(name).filter(function(h){return h.id!==id;});
+  saveExHistory(name,history);
+  renderTodaySession();
+  sbPushKeyed(exKey(slug),history,gel('sessSyncDot'));
+  var logs=lsGet(LOG_KEY,[]).filter(function(l){return l.id!==id;});
+  lsSet(LOG_KEY,logs);
+  renderLog();
+}
+function fetchPerExerciseFromSupabase(){
+  if(!sb) return;
+  sb.from('app_state').select('key,data').like('key','jm_gym_ex_%')
+    .then(function(res){
+      if(res&&res.data){
+        res.data.forEach(function(row){
+          if(row.key==='jm_gym_ex_migrated') return;
+          var local=lsGet(row.key,[]);
+          if((row.data||[]).length>=local.length) lsSet(row.key,row.data);
+        });
+        renderTodaySession();
+      }
+    }).catch(function(){});
+}
+
 (function(){
   if(!sb) return;
   sb.from('app_state').select('data').eq('key',LOG_KEY).maybeSingle()
@@ -435,6 +719,9 @@ initLogExField();
 renderLog();
 renderStrengthChart();
 renderWeeklyVolume();
+migrateFlatLogToPerExercise();
+renderTodaySession();
+fetchPerExerciseFromSupabase();
 </script>
 </body>
 </html>
